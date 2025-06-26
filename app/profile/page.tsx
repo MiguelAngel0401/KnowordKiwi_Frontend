@@ -1,5 +1,5 @@
 //import { Avatar } from "@/components/ui/userProfile/Avatar";
-import { Banner } from "./[userId]/components/Banner";
+import { Banner } from "../page";
 //import { Banner } from "./components/Banner";
 //import { Navbar } from "@/components/ui/navbar/Navbar";
 //import NavbarCopy from "@/components/ui/navbar/NavbarCopy";

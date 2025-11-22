@@ -55,7 +55,7 @@ export function NotificationItem({
   };
 
   return (
-    <div className="flex items-start p-4 border-b border-gray-100 last:border-b-0 hover:bg-gray-100">
+    <div className="flex items-start p-4 border-b border-gray-100 last:border-b-0 hover:bg-gray-800">
       <div className="flex-shrink-0 mr-3">{renderIcon()}</div>
       <div className="flex-grow">
         <p className="text-sm font-medium">{notification.title}</p>
@@ -69,7 +69,7 @@ export function NotificationItem({
         )}
         <p className="text-xs text-gray-400 mt-1">{notification.date}</p>
         {notification.actionText && (
-          <button className="mt-2 px-4 py-1.5 bg-black text-white text-xs font-semibold rounded-full hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-600">
+          <button className="mt-2 px-4 py-1.5 bg-primary text-white text-xs font-semibold rounded-full hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-gray-600">
             {notification.actionText}
           </button>
         )}

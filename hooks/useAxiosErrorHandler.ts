@@ -12,9 +12,7 @@ export function useAxiosErrorHandler() {
 
     if (axios.isAxiosError(error)) {
       const apiMessage =
-        error.response?.data?.error ||
-        error.response?.data?.message ||
-        "Ocurrió un error inesperado.";
+        error.response?.data?.message || "Ocurrió un error inesperado.";
       setMessage(apiMessage);
     } else {
       setMessage("Error desconocido.");

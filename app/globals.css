@@ -1,36 +1,71 @@
 @import "tailwindcss";
 
 :root {
-  --background: #eef5ff;
-  --foreground: #171717;
+  --white: #eef5ff;
+  --foreground: #0a060e;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-inter);
-  --color-primary: #4caf50;
-  --color-primary-hover: #428d46;
+  --color-primary: #4f7be3;
+  --color-primary-hover: #3c64d7;
   --color-accent: #2196f3;
   --color-accent-hover: #1976d2;
   --color-text: #333333;
   --color-text-secondary: #757575;
-  --color-secondary: #ff4081;
-  --color-secondary-hover: #f50057;
+  --color-secondary: #ea6f65;
+  --color-secondary-hover: #e64a3f;
+  --color-terciary: #60c5a8;
   --color-text-error: #f44336;
   --color-error: #e53935;
   --color-error-hover: #d32f2f;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-bg-gray: #1f1e28;
+  --color-bg-default: #0a060e;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--foreground);
+  color: var(--white);
+  font-family: --font-sans, sans-serif;
+}
+
+@keyframes rainbow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-rainbow-bg {
+  background: linear-gradient(
+    90deg,
+    #ff0000,
+    #ff7700,
+    #ffff00,
+    #00ff00,
+    #0080ff,
+    #8b00ff,
+    #ff0080
+  );
+  background-size: 300% 300%;
+  animation: rainbow 6s ease infinite;
+}
+
+@layer base {
+  .prose h1 {
+    @apply text-4xl font-bold mb-4;
+  }
+  .prose h2 {
+    @apply text-3xl font-bold mb-4;
+  }
+  .prose h3 {
+    @apply text-2xl font-bold mb-4;
+  }
 }

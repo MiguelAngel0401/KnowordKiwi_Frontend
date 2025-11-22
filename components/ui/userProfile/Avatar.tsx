@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 type AvatarProps = {
-  src: string;
+  src?: string;
   size: "sm" | "md" | "lg" | "xl";
   editable?: boolean;
 };
@@ -25,7 +25,7 @@ export function Avatar({ src, size = "md", editable = false }: AvatarProps) {
   return (
     <div className={`rounded-full overflow-hidden ${sizeClasses[size]}`}>
       <Image
-        src={src}
+        src={src || "/default-avatar.jpeg"}
         width={pixelSizes[size]}
         height={pixelSizes[size]}
         alt="Avatar"

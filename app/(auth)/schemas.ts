@@ -30,6 +30,7 @@ export const registerSchema = z.object({
     .string()
     .max(160, "Tu biografía no puede tener más de 160 caracteres.")
     .optional(),
+  avatar: z.string().optional(),
 });
 
 // Este esquema define las reglas de validación para el formulario de restablecimiento de contraseña

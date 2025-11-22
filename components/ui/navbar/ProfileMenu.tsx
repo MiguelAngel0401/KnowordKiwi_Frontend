@@ -9,8 +9,16 @@ import {
 } from "@headlessui/react";
 import { User } from "lucide-react";
 import Link from "next/link";
+import privateApiClient from "@/services/client/privateApiClient";
 
 export function ProfileMenu() {
+  const logoutFromBackend = async () => {
+    try {
+      await privateApiClient.post(`/auth/logout`);
+    } catch (error) {
+      console.error("Error al cerrar sesión:", error);
+    }
+  };
   return (
     <Menu as="div" className="relative">
       <MenuButton className="focus:outline-none p-2 rounded-full hover:bg-gray-700 transition-colors duration-200">
@@ -26,13 +34,13 @@ export function ProfileMenu() {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <MenuItems className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 ring-1 ring-black ring-opacity-5 focus:outline-none text-gray-900 z-50">
+        <MenuItems className="absolute right-0 mt-2 w-48 bg-bg-gray rounded-md shadow-lg py-1 ring-1 ring-gray-700 ring-opacity-5 focus:outline-none z-50">
           <MenuItem>
             {({ active }) => (
               <Link
-                href="/profile"
+                href="/profile/me"
                 className={`block px-4 py-4 text-sm ${
-                  active ? "bg-gray-100 text-gray-900" : "text-gray-700"
+                  active ? "bg-gray-700" : "text-white"
                 }`}
               >
                 Ver perfil
@@ -42,9 +50,9 @@ export function ProfileMenu() {
           <MenuItem>
             {({ active }) => (
               <Link
-                href="/profile/123/edit"
+                href="/profile/me/edit"
                 className={`block px-4 py-4 text-sm ${
-                  active ? "bg-gray-100 text-gray-900" : "text-gray-700"
+                  active ? "bg-gray-700" : "text-white"
                 }`}
               >
                 Editar perfil
@@ -53,14 +61,15 @@ export function ProfileMenu() {
           </MenuItem>
           <MenuItem>
             {({ active }) => (
-              <button
-                onClick={() => console.log("Cerrar sesión")}
+              <Link
+                href="/login"
+                onClick={() => logoutFromBackend()}
                 className={`block w-full text-left px-4 py-4 text-sm ${
-                  active ? "bg-red-100 text-red-700" : "text-gray-700"
+                  active ? "bg-red-400 text-red-900" : "text-white"
                 }`}
               >
                 Cerrar Sesión
-              </button>
+              </Link>
             )}
           </MenuItem>
         </MenuItems>

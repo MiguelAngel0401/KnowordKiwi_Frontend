@@ -8,29 +8,31 @@ import {
   Label,
   Legend,
 } from "@headlessui/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import axios from "axios";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "../schemas";
-import { useAuthStore } from "@/store/authStore";
 import { useAxiosErrorHandler } from "@/hooks/useAxiosErrorHandler";
 import ErrorModal from "@/components/shared/ErrorModal";
-import publicApiClient from "@/services/publicApiClient";
-import { useRouter } from "next/navigation";
+import InfoModal from "@/components/shared/InfoModal";
+import { useAuthStore } from "@/store/authStore";
+import { login } from "@/services/auth/authService";
 
 type LoginFormData = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
+  const router = useRouter();
+  const { isAuthenticated, setIsAuthenticated } = useAuthStore();
+  const searchParams = useSearchParams();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [backendError, setBackendError] = useState<string | null>(null);
   const [submissionError, setSubmissionError] = useState<string | null>(null);
   const [showErrorModal, setShowErrorModal] = useState(false);
-  const router = useRouter();
-
-  const loginUser = useAuthStore((state) => state.loginUser);
+  const [showInfoModal, setShowInfoModal] = useState(false);
+  const [infoModalMessage, setInfoModalMessage] = useState("");
 
   const {
     register,
@@ -49,30 +51,49 @@ export default function LoginPage() {
 
   const { handleAxiosError } = useAxiosErrorHandler();
 
+  useEffect(() => {
+    // Si el usuario ya está autenticado, no debería estar en la página de login.
+    // Lo redirigimos a su perfil. Usamos replace para no ensuciar el historial.
+    if (isAuthenticated) {
+      router.replace("/profile/me");
+    }
+  }, [isAuthenticated, router]);
+
+  useEffect(() => {
+    const reason = searchParams.get("reason");
+    const from = searchParams.get("from");
+    // Solo mostramos el modal si la razón es 'unauthorized' Y el usuario NO está autenticado.
+    if (reason === "unauthorized" && from && !isAuthenticated) {
+      setInfoModalMessage(
+        `Para acceder a todo el contenido de Knoword, primero debes iniciar sesión.`,
+      );
+      setShowInfoModal(true);
+    }
+  }, [searchParams, isAuthenticated]);
+
   const onSubmit = async (data: LoginFormData) => {
     setIsSubmitting(true);
-    setBackendError(null); // Limipiar errores previos del backend
+    setBackendError(null); // Limpiar errores previos del backend
     setSubmissionError(null); // Limpiar errores de envío previos
     setShowErrorModal(false); // Cerrar modal de error si estaba abierto
 
     try {
-      const response = await publicApiClient.post(
-        "http://localhost:8000/api/login/",
-        data,
-      );
+      await login(data);
 
-      const { user } = response.data;
-
-      loginUser(user);
-      //Redirige al perfil dinámico (por ID o username)
-      router.push(`/profile/${user.id}`); // usar user.username si queremos
-    } catch (error) {
-      if (axios.isAxiosError(error) && error.response) {
-        setBackendError(error.response.data.non_field_errors);
-        //Errores manuales para indicar error en las credenciales
+      // Si login() es exitoso (no lanza error), las cookies ya están seteadas.
+      router.push("/profile/me");
+      setIsAuthenticated(true);
+    } catch (error: any) {
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        setBackendError(error.response.data.message);
         setError("email", { type: "manual" });
         setError("password", { type: "manual" });
       } else {
+        // Error de red u otro problema
         handleAxiosError(error);
         setSubmissionError(
           "Ocurrió un error al iniciar sesión. Por favor, inténtalo de nuevo más tarde.",
@@ -96,7 +117,7 @@ export default function LoginPage() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Fieldset className="space-y-8 bg-gray-900 rounded-lg shadow-lg max-w-lg p-8">
+      <Fieldset className="space-y-8 bg-bg-gray rounded-lg shadow-lg max-w-lg p-8">
         <Legend className="text-3xl font-bold text-center">
           Inicia sesión en tu cuenta
         </Legend>
@@ -118,7 +139,7 @@ export default function LoginPage() {
             {...register("email")}
           />
           {errors.email && (
-            <p className="text-red-500 font-light text-sm mt-2">
+            <p className="text-red-500 font-light text-md mt-2">
               {errors.email.message}
             </p>
           )}
@@ -135,13 +156,13 @@ export default function LoginPage() {
             {...register("password")}
           />
           {errors.password && (
-            <p className="text-red-500 font-light text-sm mt-2">
+            <p className="text-red-500 font-light text-md mt-2">
               {errors.password.message}
             </p>
           )}
         </Field>
         {backendError && ( //Mostrar error del backend si existe
-          <p className="text-text-error font-medium text-sm text-center mt-2">
+          <p className="text-text-error font-medium text-md text-center">
             {backendError}
           </p>
         )}
@@ -165,6 +186,13 @@ export default function LoginPage() {
           message={submissionError}
           onClose={handleCloseErrorModal}
           onRetry={handleRetryConnection}
+        />
+      )}
+      {showInfoModal && (
+        <InfoModal
+          isOpen={showInfoModal}
+          message={infoModalMessage}
+          onClose={() => setShowInfoModal(false)}
         />
       )}
     </form>

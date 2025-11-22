@@ -1,8 +1,8 @@
 "use client";
 import { useEffect, useRef } from "react";
-import axios from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAxiosErrorHandler } from "@/hooks/useAxiosErrorHandler";
+import { confirmEmail } from "@/services/auth/authService";
 
 export default function VerifyEmailPage() {
   const router = useRouter();
@@ -31,11 +31,10 @@ export default function VerifyEmailPage() {
       setMessage("Verificando tu cuenta...");
 
       try {
-        const response = await axios.get(
-          `http://localhost:8000/api/verify-email/${token}`,
-        );
+        const response = await confirmEmail(token);
+        console.log("respuesta dentro del componente" + response);
         setStatus("success");
-        setMessage(response.data.message || "Cuenta verificada exitosamente.");
+        setMessage(response.message || "Cuenta verificada exitosamente.");
         setTimeout(() => {
           router.push("/login");
         }, 3000);
@@ -110,8 +109,7 @@ export default function VerifyEmailPage() {
             Error de Verificación
           </h1>
           <p className="text-gray-100 mb-6">
-            {message} {""}
-            Vuelve a generar un enlace de verificación.
+            {message}. Vuelve a generar un enlace de verificación.
           </p>
           <button
             onClick={() => router.push("/")}

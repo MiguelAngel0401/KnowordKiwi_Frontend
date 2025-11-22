@@ -1,17 +1,38 @@
+"use client";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
 export default function AuthLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const pathname = usePathname();
+  const isLoginPage = pathname === "/login";
+  const isRegisterPage = pathname === "/register";
+
   return (
     <div className="w-full min-h-screen flex flex-col">
       <nav className="w-full inline-flex items-center px-5 py-3">
         <h1 className="text-xl font-bold mr-auto">KnoWord</h1>
         <ul className="flex space-x-4">
           <li>
-            <button className="px-4 py-2 bg-secondary text-color-text font-bold rounded hover:bg-secondary-hover transition duration-300">
-              Registrate
-            </button>
+            {isLoginPage && (
+              <Link
+                href={"/register"}
+                className="px-4 py-2 bg-primary text-color-text font-bold rounded hover:bg-primary-hover transition duration-300"
+              >
+                Registrate
+              </Link>
+            )}
+            {isRegisterPage && (
+              <Link
+                href={"/login"}
+                className="px-4 py-2 bg-secondary text-color-text font-bold rounded hover:bg-secondary-hover transition duration-300"
+              >
+                Inicia Sesión
+              </Link>
+            )}
           </li>
         </ul>
       </nav>

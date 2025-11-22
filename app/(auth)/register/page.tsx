@@ -10,9 +10,8 @@ import {
   Textarea,
   Transition,
 } from "@headlessui/react";
-import publicApiClient from "@/services/publicApiClient";
-import snakecaseKeys from "snakecase-keys";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { registerSchema } from "../schemas";
@@ -20,15 +19,25 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useAxiosErrorHandler } from "@/hooks/useAxiosErrorHandler";
 import ErrorModal from "@/components/shared/ErrorModal";
 import { debounce } from "lodash";
+import { Eye, EyeOff } from "lucide-react";
+import {
+  checkEmail,
+  checkUsername,
+  registerUser,
+} from "@/services/auth/authService";
+import { uploadToCloudinary } from "@/services/cloudinary/cloudinaryService";
 
 type RegisterFormData = z.infer<typeof registerSchema>;
 
 export default function RegisterPage() {
   const [step, setStep] = useState(1);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [avatar, setAvatar] = useState<string | null>(null);
+  const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
+  const [isUploadingAvatar, setIsUploadingAvatar] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionError, setSubmissionError] = useState<string | null>(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const [avatarError, setAvatarError] = useState<string | null>(null);
   const { handleAxiosError } = useAxiosErrorHandler();
 
   //Estados para validacion asíncrona
@@ -48,19 +57,24 @@ export default function RegisterPage() {
     handleSubmit,
     trigger,
     watch,
+    setValue,
     setError,
     clearErrors,
     formState: { errors },
   } = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
+    // `onTouched` valida en el primer blur para errores de formato.
+    // `reValidateMode: 'onSubmit'` evita que se re-valide en cada cambio,
+    // lo que previene que el error de disponibilidad que establecimos manualmente sea borrado.
     mode: "onTouched",
+    reValidateMode: "onSubmit",
   });
 
   const email = watch("email");
   const password = watch("password");
   const username = watch("username");
   const realName = watch("realName");
-  const bio = watch("bio");
+  watch("bio");
 
   // Validar solo los campos del paso actual
   const stepFields: Record<number, (keyof RegisterFormData)[]> = {
@@ -79,18 +93,15 @@ export default function RegisterPage() {
       }
       setIsEmailChecking(true);
       try {
-        const response = await publicApiClient.post(
-          "http://localhost:8000/api/check-email/",
-          { email },
-        );
-        if (response.data.available) {
+        const response = await checkEmail(email);
+        if (response.available) {
           setIsEmailAvailable(true);
           clearErrors("email");
         } else {
           setIsEmailAvailable(false);
           setError("email", {
             type: "manual",
-            message: response.data.message || "Este correo ya está en uso.",
+            message: response.message,
           });
         }
       } catch (error) {
@@ -104,7 +115,7 @@ export default function RegisterPage() {
       } finally {
         setIsEmailChecking(false);
       }
-    }, 500), // Esperar 500ms antes de hacer la petición
+    }, 1000), // Esperar 500ms antes de hacer la petición
     [setError, clearErrors],
   );
 
@@ -127,11 +138,9 @@ export default function RegisterPage() {
       }
       setIsUsernameChecking(true);
       try {
-        const response = await publicApiClient.post(
-          "http://localhost:8000/api/check-username/",
-          { username },
-        );
-        if (response.data.available) {
+        const response = await checkUsername(username);
+        console.log(response);
+        if (response.available) {
           setIsUsernameAvailable(true);
           clearErrors("username");
         } else {
@@ -139,7 +148,7 @@ export default function RegisterPage() {
           setError("username", {
             type: "manual",
             message:
-              response.data.message || "Este nombre de usuario ya está en uso.",
+              response.message || "Este nombre de usuario ya está en uso.",
           });
         }
       } catch (error) {
@@ -152,7 +161,7 @@ export default function RegisterPage() {
       } finally {
         setIsUsernameChecking(false);
       }
-    }, 500), // Debounce de 500ms
+    }, 1000), // Debounce de 500ms
     [setError, clearErrors],
   );
 
@@ -208,23 +217,45 @@ export default function RegisterPage() {
 
   const handlePrevStep = () => setStep((prev) => prev - 1);
 
-  // En el último paso, enviar todo el formulario
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const localURL = URL.createObjectURL(file);
+    setAvatarPreview(localURL);
+    setIsUploadingAvatar(true);
+    setAvatarError(null);
+    try {
+      const cloudinaryUrl = await uploadToCloudinary(file);
+      setValue("avatar", cloudinaryUrl, {
+        shouldValidate: true,
+        shouldDirty: true,
+      });
+    } catch (error) {
+      console.error("Error al subir la imagen de avatar:", error);
+      setAvatarError(
+        "No se pudo subir la imagen de avatar. Inténtalo de nuevo.",
+      );
+      setAvatarPreview(null);
+      setValue("avatar", "", {
+        shouldValidate: true,
+        shouldDirty: true,
+      });
+    } finally {
+      setIsUploadingAvatar(false);
+    }
+  };
+
   const onSubmit = async (data: RegisterFormData) => {
     setIsSubmitting(true);
     setSubmissionError(null);
-    const dataSnakeCase = snakecaseKeys(data, { deep: true });
     try {
-      const response = await publicApiClient.post(
-        "http://localhost:8000/api/register/",
-        dataSnakeCase,
-      );
-      console.log("Registro exitoso:", response.data);
-      // Redirigir al usuario a la página de verificación de correo
+      console.log(data);
+      await registerUser(data);
       router.push("/verify-account");
     } catch (error) {
       handleAxiosError(error);
       console.error("Error en el registro:", error);
-      // Manejar errores de envío
       setSubmissionError(
         "Hubo un problema al conectar con nuestros servidores. Por favor, revisa tu conexión a internet e inténtalo de nuevo.",
       );
@@ -240,7 +271,7 @@ export default function RegisterPage() {
           step === 3 ? handleSubmit(onSubmit) : (e) => e.preventDefault()
         }
       >
-        <Fieldset className="max-w-lg mx-auto space-y-8 rounded-lg shadow-lg p-8 bg-gray-900">
+        <Fieldset className="max-w-lg mx-auto space-y-8 rounded-lg shadow-lg p-8 bg-bg-gray">
           <Legend className="text-3xl font-bold mb-6 text-center">
             {step === 1 && "¡Bienvenido! Empecemos creando tu cuenta"}
             {step === 2 && "¿Cómo te gustaría que te conozcan?"}
@@ -269,7 +300,6 @@ export default function RegisterPage() {
                   type="email"
                   id="email"
                   autoComplete="email"
-                  value={email}
                   className={`
                     mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none sm:text-sm transition duration-150 ease-in-out
                     ${errors.email ? "border-red-500 focus:border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-secondary focus:border-secondary"}
@@ -296,13 +326,27 @@ export default function RegisterPage() {
                 <Label htmlFor="password" className="block text-sm font-medium">
                   Contraseña
                 </Label>
-                <Input
-                  type="password"
-                  id="password"
-                  value={password}
-                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-secondary focus:border-secondary sm:text-sm transition duration-150 ease-in-out"
-                  {...register("password")}
-                />
+                <div className="relative">
+                  <Input
+                    type={showPassword ? "text" : "password"}
+                    id="password"
+                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-secondary focus:border-secondary sm:text-sm transition duration-150 ease-in-out pr-10"
+                    {...register("password")}
+                  />
+                  <button
+                    type="button"
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400"
+                    onMouseDown={() => setShowPassword(true)}
+                    onMouseUp={() => setShowPassword(false)}
+                    onMouseLeave={() => setShowPassword(false)}
+                  >
+                    {showPassword ? (
+                      <EyeOff className="h-5 w-5" />
+                    ) : (
+                      <Eye className="h-5 w-5" />
+                    )}
+                  </button>
+                </div>
                 {errors.password && (
                   <p className="text-red-500 font-light text-sm mt-2">
                     {errors.password.message}
@@ -345,7 +389,6 @@ export default function RegisterPage() {
                     mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none sm:text-sm transition duration-150 ease-in-out
                     ${errors.username ? "border-red-500 focus:border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-secondary focus:border-secondary"}
                   `}
-                  value={username}
                   {...register("username")}
                 />
                 {/* Mostrar VERDE solo si no hay errores (ni de Zod ni manuales) y está disponible */}
@@ -372,7 +415,6 @@ export default function RegisterPage() {
                   type="text"
                   id="realName"
                   className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-secondary focus:border-secondary sm:text-sm transition duration-150 ease-in-out"
-                  value={realName}
                   {...register("realName")}
                 />
                 {errors.realName && (
@@ -420,40 +462,41 @@ export default function RegisterPage() {
 
                 <input
                   type="file"
-                  name="avatar"
                   id="avatar"
                   accept="image/*"
                   className="hidden"
-                  onChange={(e) => {
-                    const file = e.target.files?.[0];
-                    if (file) {
-                      const reader = new FileReader();
-                      reader.onloadend = () => {
-                        setAvatar(reader.result as string);
-                      };
-                      reader.readAsDataURL(file);
-                    }
-                  }}
+                  onChange={handleImageUpload}
                   ref={fileInputRef}
+                  disabled={isUploadingAvatar}
                 />
 
                 <Button
                   type="button"
-                  className="px-4 py-2 mt-4 bg-accent text-white rounded hover:bg-accent-hover transition duration-150 ease-in-out"
-                  onClick={() => {
-                    fileInputRef.current?.click();
-                  }}
+                  className="px-4 py-2 mt-4 bg-accent text-white rounded hover:bg-accent-hover transition duration-150 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed"
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={isUploadingAvatar}
                 >
-                  {avatar ? "Cambiar foto" : "Subir foto"}
+                  {isUploadingAvatar
+                    ? "Subiendo..."
+                    : avatarPreview
+                      ? "Cambiar foto"
+                      : "Subir foto"}
                 </Button>
-                {avatar && (
-                  <div className="w-full flex justify-center">
-                    <img
-                      src={avatar}
+                {avatarPreview && (
+                  <div className="w-full flex justify-center mt-4">
+                    <Image
+                      src={avatarPreview}
+                      width={64}
+                      height={64}
                       alt="Avatar preview"
-                      className="mt-2 w-16 h-16 rounded-full object-cover inline-block "
+                      className="w-16 h-16 rounded-full object-cover"
                     />
                   </div>
+                )}
+                {avatarError && (
+                  <p className="text-red-500 font-light text-sm mt-2 text-center">
+                    {avatarError}
+                  </p>
                 )}
               </Field>
               <Field>
@@ -464,7 +507,6 @@ export default function RegisterPage() {
                   id="bio"
                   className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-secondary focus:border-secondary sm:text-sm transition duration-150 ease-in-out"
                   rows={3}
-                  value={bio}
                   {...register("bio")}
                 />
                 {errors.bio && (

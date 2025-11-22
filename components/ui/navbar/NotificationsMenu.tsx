@@ -21,21 +21,21 @@ const notifications: Notification[] = [
     type: "achievement",
     title: "El primer brote desbloqueado.",
     points: "+5 ptos",
-    date: "21.05.2025",
+    date: "21/05/2025",
     actionText: "RECLAMA LA MEDALLA",
   },
   {
     id: 2,
     type: "rank",
     title: "Conseguiste nuevo rango Aspirante",
-    date: "21.05.2025",
+    date: "21/05/2025",
   },
   {
     id: 3,
     type: "achievement-knoword",
     title: "Espacio Brainly desbloqueado.",
     points: "+5 ptos",
-    date: "12.05.2025",
+    date: "12/05/2025",
   },
 ];
 
@@ -60,13 +60,13 @@ const communityUpdates = [
   {
     id: 1,
     title: "Nuevo evento: Maratón de Matemáticas",
-    date: "20.06.2025",
+    date: "20/06/25",
     description: "¡Inscríbete ya y demuestra tus habilidades!",
   },
   {
     id: 2,
     title: "Reglas actualizadas del foro",
-    date: "15.06.2025",
+    date: "15/06/2025",
     description: "Por favor, revisa los cambios para una mejor convivencia.",
   },
 ];
@@ -91,13 +91,13 @@ export function NotificationsMenu() {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <MenuItems className="absolute right-0 mt-2 w-80 max-h-96 overflow-y-auto bg-white rounded-md shadow-lg py-1 ring-1 ring-black ring-opacity-5 focus:outline-none text-gray-900 z-50">
-          <div className="flex justify-around items-center py-3 border-b border-gray-200">
+        <MenuItems className="absolute right-0 mt-2 w-80 max-h-96 overflow-y-auto bg-[#1f1e28] rounded-md shadow-lg py-1 ring-1 ring-gray-700 focus:outline-none z-50">
+          <div className="flex justify-around items-center py-3 border-b border-gray-700">
             <div
               className={`flex flex-col items-center cursor-pointer p-2 rounded-md ${
                 activeTab === "notifications"
-                  ? "text-blue-600 bg-blue-50"
-                  : "text-gray-600 hover:text-blue-600 hover:bg-gray-100"
+                  ? "text-terciary bg-gray-800"
+                  : "text-gray-500 hover:text-secondary hover:bg-gray-800"
               }`}
               onClick={() => setActiveTab("notifications")}
             >
@@ -106,8 +106,8 @@ export function NotificationsMenu() {
             <div
               className={`flex flex-col items-center cursor-pointer p-2 rounded-md ${
                 activeTab === "messages"
-                  ? "text-blue-600 bg-blue-50"
-                  : "text-gray-600 hover:text-blue-600 hover:bg-gray-100"
+                  ? "text-terciary bg-gray-800"
+                  : "text-gray-500 hover:text-secondary hover:bg-gray-800"
               }`}
               onClick={() => setActiveTab("messages")}
             >
@@ -116,8 +116,8 @@ export function NotificationsMenu() {
             <div
               className={`flex flex-col items-center cursor-pointer p-2 rounded-md ${
                 activeTab === "community"
-                  ? "text-blue-600 bg-blue-50"
-                  : "text-gray-600 hover:text-blue-600 hover:bg-gray-100"
+                  ? "text-terciary bg-gray-800"
+                  : "text-gray-500 hover:text-secondary hover:bg-gray-800"
               }`}
               onClick={() => setActiveTab("community")}
             >
@@ -128,7 +128,7 @@ export function NotificationsMenu() {
           <div>
             {activeTab === "notifications" && (
               <>
-                <div className="px-4 py-4 font-bold text-lg border-b border-gray-200">
+                <div className="px-4 py-4 font-bold text-lg border-b border-gray-700">
                   Notificaciones
                 </div>
                 {notifications.length > 0 ? (
@@ -148,7 +148,7 @@ export function NotificationsMenu() {
             )}
             {activeTab === "messages" && (
               <>
-                <div className="px-4 py-4 font-bold text-lg border-b border-gray-200">
+                <div className="px-4 py-4 font-bold text-lg border-b border-gray-700">
                   Mensajes
                 </div>
                 {messages.length > 0 ? (
@@ -168,7 +168,7 @@ export function NotificationsMenu() {
             )}
             {activeTab === "community" && (
               <>
-                <div className="px-4 py-4 font-bold text-lg border-b border-gray-200">
+                <div className="px-4 py-4 font-bold text-lg border-b border-gray-700">
                   Tus Comunidades
                 </div>
                 {communityUpdates.length > 0 ? (

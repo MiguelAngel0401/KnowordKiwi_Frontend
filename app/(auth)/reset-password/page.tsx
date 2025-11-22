@@ -15,7 +15,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { resetPasswordSchema } from "../schemas";
 import { useRouter } from "next/navigation";
 import { useAxiosErrorHandler } from "@/hooks/useAxiosErrorHandler";
-import publicApiClient from "@/services/publicApiClient";
+import publicApiClient from "@/services/client/publicApiClient";
 import axios from "axios";
 import ErrorModal from "@/components/shared/ErrorModal";
 

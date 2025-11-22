@@ -11,7 +11,7 @@ interface Message {
 
 export function MessageItem({ message }: { message: Message }) {
   return (
-    <div className="flex items-start p-4 border-b border-gray-100 last:border-b-0 hover:bg-gray-100">
+    <div className="flex items-start p-4 border-b border-gray-100 last:border-b-0 hover:bg-gray-800">
       <div className="flex-shrink-0 mr-3">
         <img
           src={message.avatar}
@@ -20,8 +20,8 @@ export function MessageItem({ message }: { message: Message }) {
         />
       </div>
       <div className="flex-grow">
-        <p className="text-sm font-medium">{message.sender}</p>
-        <p className="text-sm text-gray-700 mt-0.5">{message.message}</p>
+        <p className="text-sm font-bold">{message.sender}</p>
+        <p className="text-sm font-light mt-0.5">{message.message}</p>
         <p className="text-xs text-gray-400 mt-1">{message.time}</p>
       </div>
     </div>

@@ -34,12 +34,12 @@ export function ProfileMenu() {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <MenuItems className="absolute right-0 mt-2 w-48 bg-bg-gray rounded-md shadow-lg py-1 ring-1 ring-gray-400 ring-opacity-5 focus:outline-none z-50">
+        <MenuItems className="absolute right-0 mt-2 w-48 bg-bg-gray rounded-md shadow-lg py-1 ring-1 ring-gray-400 ring-opacity-5 focus:outline-none z-50 sm:right-0 sm:mt-2">
           <MenuItem>
             {({ active }) => (
               <Link
                 href="/profile/me"
-                className={`block px-4 py-4 text-sm ${
+                className={`block px-4 py-3 text-sm ${
                   active ? "bg-bg-default" : "text-gray-900"
                 }`}
               >
@@ -51,7 +51,7 @@ export function ProfileMenu() {
             {({ active }) => (
               <Link
                 href="/profile/me/edit"
-                className={`block px-4 py-4 text-sm ${
+                className={`block px-4 py-3 text-sm ${
                   active ? "bg-bg-default" : "text-gray-900"
                 }`}
               >
@@ -64,7 +64,7 @@ export function ProfileMenu() {
               <Link
                 href="/login"
                 onClick={() => logoutFromBackend()}
-                className={`block w-full text-left px-4 py-4 text-sm ${
+                className={`block w-full text-left px-4 py-3 text-sm ${
                   active ? "bg-red-400 text-red-900" : "text-gray-900"
                 }`}
               >

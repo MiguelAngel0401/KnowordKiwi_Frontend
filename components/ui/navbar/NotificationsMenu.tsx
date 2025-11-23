@@ -91,7 +91,7 @@ export function NotificationsMenu() {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <MenuItems className="absolute right-0 mt-2 w-80 max-h-96 overflow-y-auto bg-bg-gray rounded-md shadow-lg py-1 ring-1 ring-gray-400 focus:outline-none z-50">
+        <MenuItems className="absolute right-0 mt-2 w-80 max-h-96 overflow-y-auto bg-bg-gray rounded-md shadow-lg py-1 ring-1 ring-gray-400 focus:outline-none z-50 sm:right-0 sm:mt-2">
           <div className="flex justify-around items-center py-3 border-b border-gray-400">
             <div
               className={`flex flex-col items-center cursor-pointer p-2 rounded-md ${

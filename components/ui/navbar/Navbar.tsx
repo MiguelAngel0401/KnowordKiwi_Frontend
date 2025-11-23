@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 export default function Navbar() {
   const pathname = usePathname();
   return (
-    <nav className="p-4 flex items-center justify-between z-50 relative border-b border-gray-900">
+    <nav className="p-4 flex items-center justify-between z-50 relative border-b border-gray-400">
       <div className="flex items-center">
         <h1 className="text-2xl font-bold mr-8">KnoWord</h1>
       </div>
@@ -16,7 +16,7 @@ export default function Navbar() {
         {pathname.includes("communities") && (
           <Link
             href={"/communities/create"}
-            className="text-sm bg-primary text-white px-4 py-2 rounded hover:bg-primary-hover cursor-pointer transition-colors ease-in"
+            className="text-sm bg-primary text-gray-900 px-4 py-2 rounded hover:bg-primary-hover cursor-pointer transition-colors ease-in"
           >
             Crear comunidad
           </Link>

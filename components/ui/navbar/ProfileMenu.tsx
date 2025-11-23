@@ -21,8 +21,8 @@ export function ProfileMenu() {
   };
   return (
     <Menu as="div" className="relative">
-      <MenuButton className="focus:outline-none p-2 rounded-full hover:bg-gray-700 transition-colors duration-200">
-        <User className="w-6 h-6 text-white" />
+      <MenuButton className="focus:outline-none p-2 rounded-full hover:bg-bg-default transition-colors duration-200">
+        <User className="w-6 h-6 text-gray-900" />
       </MenuButton>
 
       <Transition
@@ -34,13 +34,13 @@ export function ProfileMenu() {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <MenuItems className="absolute right-0 mt-2 w-48 bg-bg-gray rounded-md shadow-lg py-1 ring-1 ring-gray-700 ring-opacity-5 focus:outline-none z-50">
+        <MenuItems className="absolute right-0 mt-2 w-48 bg-bg-gray rounded-md shadow-lg py-1 ring-1 ring-gray-400 ring-opacity-5 focus:outline-none z-50">
           <MenuItem>
             {({ active }) => (
               <Link
                 href="/profile/me"
                 className={`block px-4 py-4 text-sm ${
-                  active ? "bg-gray-700" : "text-white"
+                  active ? "bg-bg-default" : "text-gray-900"
                 }`}
               >
                 Ver perfil
@@ -52,7 +52,7 @@ export function ProfileMenu() {
               <Link
                 href="/profile/me/edit"
                 className={`block px-4 py-4 text-sm ${
-                  active ? "bg-gray-700" : "text-white"
+                  active ? "bg-bg-default" : "text-gray-900"
                 }`}
               >
                 Editar perfil
@@ -65,7 +65,7 @@ export function ProfileMenu() {
                 href="/login"
                 onClick={() => logoutFromBackend()}
                 className={`block w-full text-left px-4 py-4 text-sm ${
-                  active ? "bg-red-400 text-red-900" : "text-white"
+                  active ? "bg-red-400 text-red-900" : "text-gray-900"
                 }`}
               >
                 Cerrar Sesión

@@ -11,7 +11,7 @@ interface Message {
 
 export function MessageItem({ message }: { message: Message }) {
   return (
-    <div className="flex items-start p-4 border-b border-gray-100 last:border-b-0 hover:bg-gray-800">
+    <div className="flex items-start p-4 border-b border-gray-100 last:border-b-0 hover:bg-bg-default">
       <div className="flex-shrink-0 mr-3">
         <img
           src={message.avatar}

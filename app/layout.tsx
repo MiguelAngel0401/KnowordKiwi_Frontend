@@ -1,11 +1,24 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Nunito, Lora, Indie_Flower } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
-  weight: "variable",
+const lora = Lora({
+  variable: "--font-lora",
   subsets: ["latin"],
+  display: "swap",
+});
+
+const nunito = Nunito({
+  variable: "--font-sans",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const indieFlower = Indie_Flower({
+  variable: "--font-indie-flower",
+  subsets: ["latin"],
+  weight: ["400"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -19,8 +32,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es">
-      <body className={`${inter.className} antialiased`}>{children}</body>
+    <html
+      lang="es"
+      className={`${nunito.variable} ${lora.variable} ${indieFlower.variable}`}
+    >
+      <body className="font-sans antialiased">{children}</body>
     </html>
   );
 }

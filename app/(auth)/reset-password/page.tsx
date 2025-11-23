@@ -119,8 +119,8 @@ export default function ResetPasswordPage() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Fieldset className="space-y-8 bg-gray-900 rounded-lg shadow-lg max-w-lg p-8 mx-auto my-12">
-        <Legend className="text-3xl font-bold text-center">
+      <Fieldset className="space-y-8 bg-bg-gray rounded-lg shadow-lg max-w-lg p-8 mx-auto my-12">
+        <Legend className="text-3xl font-bold text-center mb-12" as="h2">
           Crea una nueva contraseña
         </Legend>
 
@@ -130,7 +130,9 @@ export default function ResetPasswordPage() {
             type="password"
             autoComplete="new-password"
             required
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-secondary focus:border-secondary sm:text-sm transition duration-150 ease-in-out"
+            className={`mt-1 block w-full border-b py-2 px-1 focus:outline-none focus:ring-0 focus:border-secondary sm:text-sm transition duration-150 ease-in-out ${
+              errors.password ? "border-red-500" : "border-gray-300"
+            }`}
             {...register("password")}
           />
           {errors.password && (
@@ -148,7 +150,9 @@ export default function ResetPasswordPage() {
             type="password"
             autoComplete="new-password"
             required
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-secondary focus:border-secondary sm:text-sm transition duration-150 ease-in-out"
+            className={`mt-1 block w-full border-b py-2 px-1 focus:outline-none focus:ring-0 focus:border-secondary sm:text-sm transition duration-150 ease-in-out ${
+              errors.confirmPassword ? "border-red-500" : "border-gray-300"
+            }`}
             {...register("confirmPassword")}
           />
           {errors.confirmPassword && (

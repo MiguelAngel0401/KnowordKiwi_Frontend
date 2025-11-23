@@ -271,8 +271,8 @@ export default function RegisterPage() {
           step === 3 ? handleSubmit(onSubmit) : (e) => e.preventDefault()
         }
       >
-        <Fieldset className="max-w-lg mx-auto space-y-8 rounded-lg shadow-lg p-8 bg-bg-gray">
-          <Legend className="text-3xl font-bold mb-6 text-center">
+        <Fieldset className="space-y-6 bg-amber-50 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] max-w-xl w-full mx-4 p-6 sm:p-8">
+          <Legend className="text-2xl sm:text-3xl font-bold text-center font-lora text-gray-800">
             {step === 1 && "¡Bienvenido! Empecemos creando tu cuenta"}
             {step === 2 && "¿Cómo te gustaría que te conozcan?"}
             {step === 3 && "Haz que tu perfil cuente"}
@@ -289,11 +289,14 @@ export default function RegisterPage() {
             leaveTo="opacity-0"
           >
             <div className="space-y-4">
-              <h3 className="font-light text-center mb-8 text-gray-300">
+              <h3 className="font-light text-center text-gray-600 text-sm sm:text-base mb-8">
                 Solo necesitamos tu correo y una contraseña segura.
               </h3>
               <Field>
-                <Label htmlFor="email" className="block text-sm font-medium">
+                <Label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
                   Correo electrónico
                 </Label>
                 <Input
@@ -301,8 +304,8 @@ export default function RegisterPage() {
                   id="email"
                   autoComplete="email"
                   className={`
-                    mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none sm:text-sm transition duration-150 ease-in-out
-                    ${errors.email ? "border-red-500 focus:border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-secondary focus:border-secondary"}
+                    mt-1 block w-full border-b py-2 px-1 focus:outline-none focus:ring-0 focus:border-secondary text-base transition duration-150 ease-in-out
+                    ${errors.email ? "border-red-500" : "border-gray-400"}
                   `}
                   {...register("email")}
                 />
@@ -311,7 +314,7 @@ export default function RegisterPage() {
                   !errors.email &&
                   isEmailAvailable === true &&
                   email && (
-                    <p className="text-green-500 text-sm mt-2">
+                    <p className="text-green-800 font-light text-sm mt-2">
                       Correo disponible 👍
                     </p>
                   )}
@@ -323,19 +326,22 @@ export default function RegisterPage() {
                 )}
               </Field>
               <Field>
-                <Label htmlFor="password" className="block text-sm font-medium">
+                <Label
+                  htmlFor="password"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
                   Contraseña
                 </Label>
                 <div className="relative">
                   <Input
                     type={showPassword ? "text" : "password"}
                     id="password"
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-secondary focus:border-secondary sm:text-sm transition duration-150 ease-in-out pr-10"
+                    className="mt-1 block w-full border-b py-2 px-1 focus:outline-none focus:ring-0 focus:border-secondary text-base transition duration-150 ease-in-out pr-8"
                     {...register("password")}
                   />
                   <button
                     type="button"
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400"
+                    className="absolute inset-y-0 right-0 pr-1 flex items-center text-gray-500"
                     onMouseDown={() => setShowPassword(true)}
                     onMouseUp={() => setShowPassword(false)}
                     onMouseLeave={() => setShowPassword(false)}
@@ -356,7 +362,7 @@ export default function RegisterPage() {
               <div className="flex justify-end pt-4">
                 <Button
                   type="button"
-                  className="bg-primary text-white px-4 py-2 rounded hover:bg-primary-hover disabled:opacity-50"
+                  className="bg-primary text-white font-bold py-3 px-4 rounded-full hover:bg-primary-hover disabled:opacity-50 transition duration-300"
                   disabled={
                     !email ||
                     !password ||
@@ -374,20 +380,23 @@ export default function RegisterPage() {
           {/* Paso 2 */}
           <Transition show={step === 2}>
             <div className="space-y-4">
-              <h3 className="font-light text-center mb-8 text-gray-300">
+              <h3 className="font-light text-center mb-4 text-gray-600 text-sm sm:text-base">
                 Tu nombre de usuario será visible para otros. El nombre real es
                 opcional, pero puede ayudar a conectar mejor.
               </h3>
               <Field>
-                <Label htmlFor="username" className="block text-sm font-medium">
+                <Label
+                  htmlFor="username"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
                   Nombre de usuario
                 </Label>
                 <Input
                   type="text"
                   id="username"
                   className={`
-                    mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none sm:text-sm transition duration-150 ease-in-out
-                    ${errors.username ? "border-red-500 focus:border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-secondary focus:border-secondary"}
+                    mt-1 block w-full border-b py-2 px-1 focus:outline-none focus:ring-0 focus:border-secondary text-base transition duration-150 ease-in-out
+                    ${errors.username ? "border-red-500" : "border-gray-400"}
                   `}
                   {...register("username")}
                 />
@@ -396,7 +405,7 @@ export default function RegisterPage() {
                   !errors.username &&
                   isUsernameAvailable === true &&
                   username && (
-                    <p className="text-green-500 text-sm mt-2">
+                    <p className="text-green-800 font-light text-sm mt-2">
                       Nombre de usuario disponible 👍
                     </p>
                   )}
@@ -408,13 +417,16 @@ export default function RegisterPage() {
                 )}
               </Field>
               <Field>
-                <Label htmlFor="realName" className="block text-sm font-medium">
+                <Label
+                  htmlFor="realName"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
                   Nombre real
                 </Label>
                 <Input
                   type="text"
                   id="realName"
-                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-secondary focus:border-secondary sm:text-sm transition duration-150 ease-in-out"
+                  className="mt-1 block w-full border-b py-2 px-1 focus:outline-none focus:ring-0 focus:border-secondary text-base transition duration-150 ease-in-out"
                   {...register("realName")}
                 />
                 {errors.realName && (
@@ -426,14 +438,14 @@ export default function RegisterPage() {
               <div className="flex justify-between pt-4">
                 <Button
                   type="button"
-                  className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300"
+                  className="px-4 py-2 bg-gray-500 text-white rounded-full hover:bg-gray-600 transition duration-300"
                   onClick={handlePrevStep}
                 >
                   Atrás
                 </Button>
                 <Button
                   type="button"
-                  className="px-4 py-2 bg-primary text-white rounded hover:bg-primary-hover disabled:opacity-50"
+                  className="px-4 py-2 bg-primary text-white font-bold rounded-full hover:bg-primary-hover disabled:opacity-50 transition duration-300"
                   disabled={
                     !username ||
                     !realName ||
@@ -451,12 +463,15 @@ export default function RegisterPage() {
           {/* Paso 3 */}
           <Transition show={step === 3}>
             <div className="space-y-4">
-              <h3 className="font-light text-center mb-8 text-gray-300">
+              <h3 className="font-light text-center mb-4 text-gray-600 text-sm sm:text-base">
                 Agrega una imagen y una pequeña descripción para mostrar tu
                 personalidad desde el primer día.
               </h3>
               <Field>
-                <Label htmlFor="avatar" className="block text-sm font-medium">
+                <Label
+                  htmlFor="avatar"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
                   Imagen de perfil (Opcional)
                 </Label>
 
@@ -472,7 +487,7 @@ export default function RegisterPage() {
 
                 <Button
                   type="button"
-                  className="px-4 py-2 mt-4 bg-accent text-white rounded hover:bg-accent-hover transition duration-150 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-4 py-2 mt-2 bg-secondary text-white font-bold rounded-full hover:bg-accent-hover transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                   onClick={() => fileInputRef.current?.click()}
                   disabled={isUploadingAvatar}
                 >
@@ -500,12 +515,15 @@ export default function RegisterPage() {
                 )}
               </Field>
               <Field>
-                <Label htmlFor="bio" className="block text-sm font-medium">
+                <Label
+                  htmlFor="bio"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
                   Descripción (también opcional pero recomendado 🥸)
                 </Label>
                 <Textarea
                   id="bio"
-                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-secondary focus:border-secondary sm:text-sm transition duration-150 ease-in-out"
+                  className="mt-1 block w-full border-b py-2 px-1 focus:outline-none focus:ring-0 focus:border-secondary text-base transition duration-150 ease-in-out"
                   rows={3}
                   {...register("bio")}
                 />
@@ -518,14 +536,14 @@ export default function RegisterPage() {
               <div className="flex justify-between pt-4">
                 <Button
                   type="button"
-                  className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300"
+                  className="px-4 py-2 bg-gray-500 text-white rounded-full hover:bg-gray-600 transition duration-300"
                   onClick={handlePrevStep}
                 >
                   Atrás
                 </Button>
                 <Button
                   type="submit"
-                  className="px-4 py-2 bg-primary text-white rounded hover:bg-primary-hover"
+                  className="px-4 py-2 bg-primary text-white font-bold rounded-full hover:bg-primary-hover disabled:opacity-50 transition duration-300"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? "Registrando..." : "Finalizar registro"}

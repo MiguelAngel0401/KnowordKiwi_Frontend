@@ -20,7 +20,7 @@ export default function AuthLayout({
             {isLoginPage && (
               <Link
                 href={"/register"}
-                className="px-4 py-2 bg-primary text-color-text font-bold rounded hover:bg-primary-hover transition duration-300"
+                className="text-amber-50 px-4 py-2 bg-primary text-color-text font-bold rounded hover:bg-primary-hover transition duration-300"
               >
                 Registrate
               </Link>
@@ -28,7 +28,7 @@ export default function AuthLayout({
             {isRegisterPage && (
               <Link
                 href={"/login"}
-                className="px-4 py-2 bg-secondary text-color-text font-bold rounded hover:bg-secondary-hover transition duration-300"
+                className="text-amber-50 px-4 py-2 bg-secondary text-color-text font-bold rounded hover:bg-secondary-hover transition duration-300"
               >
                 Inicia Sesión
               </Link>
@@ -39,7 +39,7 @@ export default function AuthLayout({
       <main className="flex-1 flex items-center justify-center text-color-text">
         {children}
       </main>
-      <footer className="w-full bg-gray-900 text-color-text text-center p-8 mt-8 flex text-sm font-light">
+      <footer className="w-full bg-default text-gray-900 text-center p-8 mt-8 flex text-sm font-light">
         <p className="">© 2025 KnoWord || Un trabajo de AlphaTech 🦙</p>
         <div className="flex space-x-4 ml-auto">
           <p>Términos y condiciones</p>

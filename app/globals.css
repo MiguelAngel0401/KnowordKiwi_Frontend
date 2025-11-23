@@ -2,32 +2,48 @@
 
 :root {
   --white: #eef5ff;
-  --foreground: #0a060e;
+  --gray: #333333;
+  --background: #fdfbf7;
+  --foreground: #2c2a29;
+}
+
+.font-lora {
+  font-family: var(--font-lora), serif;
+}
+
+.font-sans {
+  font-family: var(--font-nunito), sans-serif;
+}
+
+.font-indie-flower {
+  font-family: var(--font-indie-flower), cursive;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter);
-  --color-primary: #4f7be3;
-  --color-primary-hover: #3c64d7;
+  --font-sans: "Nunito", sans-serif;
+  --font-lora: "Lora", serif;
+  --font-indie-flower: "Indie Flower", cursive;
+  --color-primary: #b590ca;
+  --color-primary-hover: #9e6ba3;
   --color-accent: #2196f3;
   --color-accent-hover: #1976d2;
-  --color-text: #333333;
+  --color-text: #212121;
   --color-text-secondary: #757575;
-  --color-secondary: #ea6f65;
-  --color-secondary-hover: #e64a3f;
+  --color-secondary: #8fbc8f;
+  --color-secondary-hover: #6fa86f;
   --color-terciary: #60c5a8;
   --color-text-error: #f44336;
   --color-error: #e53935;
   --color-error-hover: #d32f2f;
-  --color-bg-gray: #1f1e28;
-  --color-bg-default: #0a060e;
+  --color-bg-gray: #f5f5dc;
+  --color-bg-default: #faebd7;
 }
 
 body {
-  background: var(--foreground);
-  color: var(--white);
+  background: var(--background);
+  color: var(--gray);
   font-family: --font-sans, sans-serif;
 }
 
@@ -67,5 +83,26 @@ body {
   }
   .prose h3 {
     @apply text-2xl font-bold mb-4;
+  }
+}
+
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-lora;
+  }
+}
+
+@layer base {
+  p,
+  span,
+  a,
+  li,
+  div {
+    @apply font-sans;
   }
 }

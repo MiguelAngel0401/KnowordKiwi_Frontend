@@ -7,7 +7,7 @@ export default function VerifyEmailPage() {
   const router = useRouter();
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-gray-900 rounded-lg shadow-lg text-center text-white">
+    <div className="max-w-md mx-auto p-6 bg-bg-gray rounded-lg shadow-lg text-center text-white">
       <h1 className="text-3xl font-bold mb-4 text-primary">
         ¡Revisa tu correo!
       </h1>
@@ -18,7 +18,7 @@ export default function VerifyEmailPage() {
         height={100}
         className="mx-auto my-6"
       />
-      <p className="text-gray-300 leading-relaxed">
+      <p className="text-gray-900 leading-relaxed">
         Te hemos enviado un enlace para verificar tu cuenta. Si no ves el
         correo, revisa tu carpeta de spam.
       </p>

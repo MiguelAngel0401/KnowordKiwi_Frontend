@@ -289,7 +289,7 @@ export default function RegisterPage() {
             leaveTo="opacity-0"
           >
             <div className="space-y-4">
-              <h3 className="font-light text-center mb-4 text-gray-600 text-sm sm:text-base mb-8">
+              <h3 className="font-light text-center text-gray-600 text-sm sm:text-base mb-8">
                 Solo necesitamos tu correo y una contraseña segura.
               </h3>
               <Field>

@@ -33,7 +33,7 @@ export default function Navbar() {
         {pathname.includes("communities") && (
           <Link
             href={"/communities/create"}
-            className="text-sm bg-primary text-gray-900 px-4 py-2 rounded-full hover:bg-primary-hover cursor-pointer transition-colors ease-in mb-2 sm:mb-0"
+            className="w-full text-center sm:w-auto text-sm bg-primary text-slate-50 font-bold px-4 py-2 rounded-full hover:bg-primary-hover cursor-pointer transition-colors ease-in mb-2 sm:mb-0"
           >
             Crear comunidad
           </Link>

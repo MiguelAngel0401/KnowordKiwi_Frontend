@@ -58,7 +58,7 @@ export default function LateralMenu() {
                           "w-full inline-flex flex-col md:flex-row items-center justify-center md:justify-between gap-1 md:gap-2 rounded-md py-2 px-2 md:px-4 transition-colors duration-200 text-xs md:text-base",
                           active
                             ? "bg-secondary text-white"
-                            : "text-stone-900 hover:bg-primary-hover hover:text-white",
+                            : "text-stone-900 hover:bg-secondary-hover hover:text-white",
                         )}
                       >
                         <div
@@ -85,7 +85,7 @@ export default function LateralMenu() {
                             <Link
                               key={subItem.name}
                               href={subItem.href}
-                              className="inline-flex items-center gap-2 rounded-md py-2 px-4 text-sm text-gray-900 hover:bg-primary-hover hover:text-white transition-colors duration-200"
+                              className="inline-flex items-center gap-2 rounded-md py-2 px-4 text-sm text-gray-900 hover:bg-secondary-hover hover:text-white transition-colors duration-200"
                             >
                               {subItem.name}
                             </Link>
@@ -100,7 +100,7 @@ export default function LateralMenu() {
                         "inline-flex flex-col md:flex-row items-center justify-center md:justify-start gap-1 md:gap-2 rounded-md py-2 px-2 md:px-4 transition-colors duration-200 w-full text-xs md:text-base",
                         active
                           ? "bg-secondary text-white"
-                          : "text-stone-900 hover:bg-primary-hover hover:text-white",
+                          : "text-stone-900 hover:bg-secondary hover:text-white",
                       )}
                     >
                       <item.icon size={20} />

@@ -8,7 +8,7 @@ import Followers from "./Followers";
 import { getMe } from "@/services/users/userServices";
 import { User } from "@/types/users/user";
 import ErrorMessageScreen from "@/components/shared/ErrorMessageScreen";
-import { Users, BookUser, Pencil } from "lucide-react";
+import { Users, BookUser } from "lucide-react";
 
 type ActiveTab = "posts" | "communities" | "followers";
 

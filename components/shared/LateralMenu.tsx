@@ -54,7 +54,7 @@ export default function LateralMenu() {
                           "w-full inline-flex items-center justify-between gap-2 rounded-md py-2 px-4 transition-colors duration-200",
                           active
                             ? "bg-secondary text-white"
-                            : "text-white hover:bg-primary-hover",
+                            : "text-gray-900 hover:bg-primary-hover hover:text-white",
                         )}
                       >
                         <div className="flex items-center gap-2">
@@ -77,7 +77,7 @@ export default function LateralMenu() {
                             <Link
                               key={subItem.name}
                               href={subItem.href}
-                              className="inline-flex items-center gap-2 rounded-md py-2 px-4 text-sm text-gray-300 hover:bg-primary-hover hover:text-white transition-colors duration-200"
+                              className="inline-flex items-center gap-2 rounded-md py-2 px-4 text-sm text-gray-900 hover:bg-primary-hover hover:text-white transition-colors duration-200"
                             >
                               {subItem.name}
                             </Link>
@@ -92,7 +92,7 @@ export default function LateralMenu() {
                         "inline-flex items-center gap-2 rounded-md py-2 px-4 transition-colors duration-200 w-full",
                         active
                           ? "bg-secondary text-white"
-                          : "text-white hover:bg-primary-hover",
+                          : "text-gray-900 hover:bg-primary-hover hover:text-white",
                       )}
                     >
                       <item.icon size={20} />

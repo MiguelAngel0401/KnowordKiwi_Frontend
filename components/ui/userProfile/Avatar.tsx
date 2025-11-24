@@ -23,7 +23,7 @@ export function Avatar({ src, size = "md", editable = false }: AvatarProps) {
   };
 
   return (
-    <div className={`rounded-full overflow-hidden ${sizeClasses[size]}`}>
+    <div className={`rounded-md overflow-hidden ${sizeClasses[size]}`}>
       <Image
         src={src || "/default-avatar.jpeg"}
         width={pixelSizes[size]}

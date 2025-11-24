@@ -55,7 +55,7 @@ export function NotificationItem({
   };
 
   return (
-    <div className="flex items-start p-4 border-b border-gray-100 last:border-b-0 hover:bg-gray-800">
+    <div className="flex items-start p-4 border-b border-gray-100 last:border-b-0 hover:bg-bg-default">
       <div className="flex-shrink-0 mr-3">{renderIcon()}</div>
       <div className="flex-grow">
         <p className="text-sm font-medium">{notification.title}</p>

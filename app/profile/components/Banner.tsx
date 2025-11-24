@@ -8,6 +8,7 @@ import Followers from "./Followers";
 import { getMe } from "@/services/users/userServices";
 import { User } from "@/types/users/user";
 import ErrorMessageScreen from "@/components/shared/ErrorMessageScreen";
+import { Users, BookUser } from "lucide-react";
 
 type ActiveTab = "posts" | "communities" | "followers";
 
@@ -53,48 +54,60 @@ export function Banner() {
 
   const getButtonClasses = (tab: ActiveTab) => {
     const baseClasses = "px-4 py-2 transition-colors duration-300 outline-none";
+    // Usaremos colores más oscuros para el texto sobre el fondo claro de la app
     if (activeTab === tab) {
-      return `${baseClasses} border-b-2 border-primary text-white font-semibold`;
+      return `${baseClasses} border-b-2 border-primary text-gray-900 font-semibold`;
     }
-    return `${baseClasses} text-gray-400 hover:text-gray-200`;
+    return `${baseClasses} text-gray-500 hover:text-gray-800`;
   };
 
   return (
-    <div className="w-full flex flex-col">
-      <section className="w-full max-w-5xl mx-auto bg-[#1f1e28] text-white mt-4 px-8 py-12 rounded-md shadow-md flex flex-col gap-y-6">
-        <div className="flex flex-col md:flex-row md:items-start md:justify-around gap-8">
-          {/* Avatar + seguidores */}
-          <div className="flex flex-col items-center gap-4">
-            <Avatar src={userData.avatar || ""} size="lg" />
-
-            <div className="flex gap-8 text-center">
-              <div>
-                <p className="text-xl font-semibold">1</p>
-                <span className="text-sm text-gray-400">Seguidores</span>
-              </div>
-              <div>
-                <p className="text-xl font-semibold">1</p>
-                <span className="text-sm text-gray-400">Siguiendo</span>
-              </div>
+    <div className="w-full flex flex-col items-center px-4">
+      <section className="bg-bg-default w-full max-w-5xl mx-auto mt-8 p-6 sm:p-8 md:p-10 rounded-2xl shadow-lg flex flex-col gap-y-8">
+        <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
+          <div className="relative flex-shrink-0">
+            {/* Marco estilo "Polaroid" */}
+            <div className="bg-white p-2 rounded-md shadow-md transform -rotate-3">
+              <Avatar src={userData.avatar || ""} size="lg" />
             </div>
+            {/* Decoración: "Washi Tape" simulado */}
+            <div className="absolute -top-2 -right-4 w-16 h-6 bg-teal-200 bg-opacity-50 transform rotate-12 pointer-events-none"></div>
           </div>
 
-          {/* Información del usuario */}
-          <div className="space-y-4 max-w-2xl text-center md:text-left">
-            <div className="space-y-1">
-              <h1 className="text-3xl sm:text-4xl font-bold leading-snug">
+          {/* 3 & 4. Tipografía e Información del usuario */}
+          <div className="flex-grow flex flex-col items-center md:items-start text-center md:text-left gap-4">
+            {/* Nombre de usuario y real */}
+            <div className="text-stone-800">
+              <h1 className="font-lora text-3xl sm:text-4xl font-bold">
                 {userData.username}
               </h1>
-              <p className="text-base text-gray-300">{userData.realName}</p>
+              <p className="font-sans text-lg text-stone-600">
+                {userData.realName}
+              </p>
             </div>
 
-            <div className="text-sm text-gray-400 leading-relaxed space-y-2">
-              <p>{userData.bio}</p>
+            {/* Biografía */}
+            <p className="font-indie-flower text-base text-stone-500 leading-relaxed max-w-xl">
+              {userData.bio || "Este usuario aún no ha añadido una biografía."}
+            </p>
+
+            {/* 4. Estadísticos (Seguidores): Integración Amigable */}
+            <div className="flex flex-wrap gap-4 text-sm mt-2">
+              <div className="flex items-center gap-2 bg-rose-100 text-rose-800 px-3 py-1 rounded-full">
+                <Users size={16} />
+                <span className="font-medium">1 Seguidor</span>
+              </div>
+              <div className="flex items-center gap-2 bg-sky-100 text-sky-800 px-3 py-1 rounded-full">
+                <BookUser size={16} />
+                <span className="font-medium">1 Siguiendo</span>
+              </div>
             </div>
           </div>
         </div>
       </section>
-      <div className="flex w-full max-w-5xl mx-auto justify-evenly border-b border-gray-800 mt-8 ">
+
+      {/* Pestañas de Navegación */}
+      <div className="flex w-full max-w-5xl mx-auto justify-start border-b border-gray-200 mt-12 gap-x-4 sm:gap-x-8">
         <button
           className={getButtonClasses("posts")}
           onClick={() => setActiveTab("posts")}
@@ -114,7 +127,8 @@ export function Banner() {
           Seguidores
         </button>
       </div>
-      {/**Area de contenido dinámico */}
+
+      {/* Área de contenido dinámico */}
       <div className="w-full max-w-5xl mx-auto mt-8">
         {activeTab === "posts" && <Posts />}
         {activeTab === "communities" && <Communities />}

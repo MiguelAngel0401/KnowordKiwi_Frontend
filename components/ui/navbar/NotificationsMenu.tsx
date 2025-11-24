@@ -78,8 +78,8 @@ export function NotificationsMenu() {
 
   return (
     <Menu as="div" className="relative">
-      <MenuButton className="focus:outline-none p-2 rounded-full hover:bg-gray-700 transition-colors duration-200">
-        <Bell className="w-6 h-6 text-white" />
+      <MenuButton className="focus:outline-none p-2 rounded-full hover:bg-bg-default transition-colors duration-200">
+        <Bell className="w-6 h-6 text-gray-900" />
       </MenuButton>
 
       <Transition
@@ -91,13 +91,13 @@ export function NotificationsMenu() {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <MenuItems className="absolute right-0 mt-2 w-80 max-h-96 overflow-y-auto bg-[#1f1e28] rounded-md shadow-lg py-1 ring-1 ring-gray-700 focus:outline-none z-50">
-          <div className="flex justify-around items-center py-3 border-b border-gray-700">
+        <MenuItems className="absolute right-0 mt-2 w-80 max-h-96 overflow-y-auto bg-bg-gray rounded-md shadow-lg py-1 ring-1 ring-gray-400 focus:outline-none z-50 sm:right-0 sm:mt-2">
+          <div className="flex justify-around items-center py-3 border-b border-gray-400">
             <div
               className={`flex flex-col items-center cursor-pointer p-2 rounded-md ${
                 activeTab === "notifications"
-                  ? "text-terciary bg-gray-800"
-                  : "text-gray-500 hover:text-secondary hover:bg-gray-800"
+                  ? "text-primary bg-gray"
+                  : "text-gray-500 hover:text-secondary hover:bg-gray"
               }`}
               onClick={() => setActiveTab("notifications")}
             >
@@ -106,8 +106,8 @@ export function NotificationsMenu() {
             <div
               className={`flex flex-col items-center cursor-pointer p-2 rounded-md ${
                 activeTab === "messages"
-                  ? "text-terciary bg-gray-800"
-                  : "text-gray-500 hover:text-secondary hover:bg-gray-800"
+                  ? "text-primary bg-gray"
+                  : "text-gray-500 hover:text-secondary hover:bg-gray"
               }`}
               onClick={() => setActiveTab("messages")}
             >
@@ -116,8 +116,8 @@ export function NotificationsMenu() {
             <div
               className={`flex flex-col items-center cursor-pointer p-2 rounded-md ${
                 activeTab === "community"
-                  ? "text-terciary bg-gray-800"
-                  : "text-gray-500 hover:text-secondary hover:bg-gray-800"
+                  ? "text-primary bg-gray"
+                  : "text-gray-500 hover:text-secondary hover:bg-gray"
               }`}
               onClick={() => setActiveTab("community")}
             >
@@ -128,7 +128,7 @@ export function NotificationsMenu() {
           <div>
             {activeTab === "notifications" && (
               <>
-                <div className="px-4 py-4 font-bold text-lg border-b border-gray-700">
+                <div className="px-4 py-4 font-bold text-lg border-b border-gray-400">
                   Notificaciones
                 </div>
                 {notifications.length > 0 ? (
@@ -148,7 +148,7 @@ export function NotificationsMenu() {
             )}
             {activeTab === "messages" && (
               <>
-                <div className="px-4 py-4 font-bold text-lg border-b border-gray-700">
+                <div className="px-4 py-4 font-bold text-lg border-b border-gray-400">
                   Mensajes
                 </div>
                 {messages.length > 0 ? (

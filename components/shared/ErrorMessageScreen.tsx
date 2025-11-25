@@ -23,13 +23,13 @@ export default function ErrorMessageScreen({ error }: ErrorMessageScreenProps) {
           </div>
         </div>
 
-        <h2 className="text-2xl font-bold text-gray-200">
+        <h2 className="text-2xl font-bold text-text-color">
           ¡Ups! Algo salió mal
         </h2>
         {(error && (
           <p className="text-sm text-error font-medium">{error}</p>
         )) || (
-          <p className="text-gray-400">
+          <p className="text-gray-800">
             No pudimos conectar con el servidor. ¡Pero no te preocupes! Estamos
             trabajando para solucionarlo.
           </p>

@@ -96,15 +96,15 @@ export default function LeaveCommunityModal({
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-90"
           >
-            <DialogPanel className="w-full max-w-md rounded-xl bg-gray-900 shadow-2xl border border-gray-700 overflow-hidden">
+            <DialogPanel className="w-full max-w-md rounded-xl bg-bg-gray shadow-2xl border border-gray-700 overflow-hidden">
               {/* Header */}
               <div className="px-6 pt-6 pb-4 text-center">
                 {!isDeleted ? (
                   <>
-                    <DialogTitle className="text-xl font-bold text-red-400">
+                    <DialogTitle className="text-xl font-bold text-red-500">
                       ⚠️ ¡Advertencia!
                     </DialogTitle>
-                    <DialogTitle className="text-2xl font-bold text-white mt-1">
+                    <DialogTitle className="text-2xl font-bold text-text-color mt-1">
                       ¿Deseas salir de esta comunidad?
                     </DialogTitle>
                   </>
@@ -119,9 +119,9 @@ export default function LeaveCommunityModal({
               <div className="px-6 pb-6">
                 {!isDeleted ? (
                   <>
-                    <Description className="text-gray-300 text-sm leading-relaxed mb-5 text-center">
+                    <Description className="text-gray-600 text-sm leading-relaxed mb-5 text-center">
                       Estás a punto de abandonar la comunidad{" "}
-                      <span className="font-semibold text-white">
+                      <span className="font-semibold text-text-color">
                         {communityName}
                       </span>
                       . Tus publicaciones y comentarios permanecerán visibles,
@@ -135,13 +135,13 @@ export default function LeaveCommunityModal({
                         value={communityNameInput}
                         onChange={(e) => validateCommunityName(e.target.value)}
                         disabled={isDeleting}
-                        className={`w-full px-4 py-3 rounded-lg border text-white placeholder-gray-500 focus:outline-none transition-all duration-200
+                        className={`w-full px-4 py-3 rounded-lg border text-text-color placeholder-gray-500 focus:outline-none transition-all duration-200
                           ${
                             isConfirmed
                               ? "bg-green-900/30 border-green-600 ring-1 ring-green-600"
                               : communityNameInput && !isConfirmed
                                 ? "bg-red-900/20 border-red-600"
-                                : "bg-gray-800 border-gray-600 hover:border-gray-500 focus:border-blue-500"
+                                : "bg-green-100 border-gray-600 hover:border-gray-500 focus:border-blue-500"
                           }
                         `}
                       />
@@ -159,7 +159,7 @@ export default function LeaveCommunityModal({
                     )}
                   </>
                 ) : (
-                  <Description className="text-gray-200 text-center text-sm">
+                  <Description className="text-text-color text-center text-sm">
                     Has salido de la comunidad{" "}
                     <span className="font-semibold">{communityName}</span>{" "}
                     correctamente.
@@ -169,7 +169,7 @@ export default function LeaveCommunityModal({
               </div>
 
               {/* Footer */}
-              <div className="flex flex-col sm:flex-row gap-3 px-6 pb-6 pt-4 bg-gray-800/50 border-t border-gray-700">
+              <div className="flex flex-col sm:flex-row gap-3 px-6 pb-6 pt-4 bg-bg-default border-t border-gray-700">
                 {!isDeleted ? (
                   <>
                     <button
@@ -199,7 +199,7 @@ export default function LeaveCommunityModal({
                   <button
                     type="button"
                     onClick={handleCancel}
-                    className="w-full px-4 py-2.5 bg-primary hover:bg-primary-hover text-white font-medium rounded-lg transition-colors duration-200"
+                    className="w-full px-4 py-2.5 bg-secondary hover:bg-secondary-hover text-white font-medium rounded-lg transition-colors duration-200"
                   >
                     Aceptar
                   </button>

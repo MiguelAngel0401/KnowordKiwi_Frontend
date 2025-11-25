@@ -103,9 +103,9 @@ export default function CommunityDetail() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto p-6">
+    <div className="max-w-6xl mx-auto p-2 sm:p-4 md:p-6">
       {/* Banner de la comunidad */}
-      <div className="relative h-64 rounded-t-xl overflow-hidden">
+      <div className="relative h-48 md:h-64 rounded-t-xl overflow-hidden">
         {community.banner ? (
           <Image
             src={community.banner.trim()}
@@ -131,14 +131,14 @@ export default function CommunityDetail() {
         )}
 
         {/* Avatar de la comunidad */}
-        <div className="absolute bottom-0 left-8 transform translate-y-1/2 z-50">
+        <div className="absolute bottom-0 left-4 md:left-8 transform translate-y-1/2 z-50">
           {community.avatar ? (
             <Image
               src={community.avatar.trim()}
               width={400}
               height={400}
               alt={community.name}
-              className="w-48 h-48 rounded-full border-4 border-white object-cover shadow-lg z-10"
+              className="w-24 h-24 md:w-48 md:h-48 rounded-full border-4 border-white object-cover shadow-lg z-10"
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
                 target.style.display = "none";
@@ -146,7 +146,7 @@ export default function CommunityDetail() {
             />
           ) : (
             <div className="w-24 h-24 rounded-full border-4 border-white bg-gray-200 flex items-center justify-center shadow-lg z-10">
-              <span className="text-3xl font-bold text-gray-600">
+              <span className="text-2xl md:text-3xl font-bold text-gray-600">
                 {community.name.charAt(0).toUpperCase()}
               </span>
             </div>
@@ -157,11 +157,11 @@ export default function CommunityDetail() {
       {/* Contenido principal */}
       <div className="bg-bg-default rounded-b-xl shadow-lg pb-8">
         {/* Información principal de la comunidad */}
-        <div className="pt-16 px-8">
-          <div className="flex flex-wrap justify-between items-start gap-4">
+        <div className="pt-16 px-4 md:px-8">
+          <div className="flex flex-col md:flex-row justify-between items-start gap-4">
             <div>
               <div className="flex items-center gap-3 mb-2">
-                <h1 className="text-3xl font-bold text-text-color">
+                <h1 className="text-2xl md:text-3xl font-bold text-text-color">
                   {community.name}
                 </h1>
                 {community.isPrivate ? (
@@ -275,7 +275,7 @@ export default function CommunityDetail() {
 
       <div className="bg-bg-gray rounded-xl shadow-lg pb-8">
         {/* Secciones futuras */}
-        <div className="mt-12 px-8 py-2">
+        <div className="mt-12 px-4 md:px-8 py-2">
           <PostsComponent communityId={communityId} />
         </div>
       </div>

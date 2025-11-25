@@ -81,17 +81,15 @@ export default function BlogPostsComponent({
   }
 
   return (
-    <div className="space-y-8 mt-6">
+    <div className="space-y-6 md:space-y-8 mt-6 mb-24">
       {blogPosts.map((post) => (
         <Link
           // Implementar la navegación al detalle del blog
           href={`/posts/blog/${post.id}`}
           key={post.id}
         >
-          <div
-            key={post.id}
-            className="rounded-lg p-6 hover:bg-bg-default transition-colors cursor-pointer"
-          >
+          {/* Se elimina la key duplicada, ya que está en el componente Link */}
+          <div className="rounded-lg p-4 md:p-6 hover:bg-bg-default transition-colors cursor-pointer">
             <div className="flex items-center gap-2 mb-4">
               <div className="w-8 h-8 rounded-full overflow-hidden bg-gray-600 flex items-center justify-center">
                 <User className="text-white w-4 h-4" />{" "}
@@ -101,12 +99,12 @@ export default function BlogPostsComponent({
               </h3>
             </div>
 
-            <h2 className="text-3xl font-extrabold text-text-color mb-2 leading-tight">
+            <h2 className="text-2xl md:text-3xl font-extrabold text-text-color mb-2 leading-tight">
               {post.title}
             </h2>
 
             {/* Subtitle/Description - Matching the image's second line */}
-            <p className="text-lg text-gray-700 mb-4">
+            <p className="text-base md:text-lg text-gray-700 mb-4">
               {post.blogContent.subtitle}
             </p>
 

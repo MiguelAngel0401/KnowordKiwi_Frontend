@@ -39,9 +39,9 @@ export default function LateralMenu() {
   };
 
   return (
-    <div className="p-4">
+    <div className="md:p-4 md:relative fixed bottom-0 left-0 right-0 bg-bg-default md:bg-transparent z-20">
       <Menu as="nav">
-        <ul className="flex flex-col gap-2">
+        <ul className="flex flex-row md:flex-col justify-around md:justify-start gap-2 p-2 md:p-0">
           {navigation.map((item) => (
             <MenuItem key={item.name}>
               {({ active }) => (
@@ -51,13 +51,17 @@ export default function LateralMenu() {
                       <button
                         onClick={() => toggleSubmenu(item.name)}
                         className={clsx(
-                          "w-full inline-flex items-center justify-between gap-2 rounded-md py-2 px-4 transition-colors duration-200",
+                          "w-full inline-flex flex-col md:flex-row items-center justify-center md:justify-between gap-1 md:gap-2 rounded-md py-2 px-2 md:px-4 transition-colors duration-200 text-xs md:text-base",
                           active
                             ? "bg-secondary text-white"
-                            : "text-white hover:bg-primary-hover",
+                            : "text-stone-900 hover:bg-secondary-hover hover:text-white",
                         )}
                       >
-                        <div className="flex items-center gap-2">
+                        <div
+                          className={clsx("flex items-center gap-2", {
+                            "flex-col md:flex-row": item.submenu,
+                          })}
+                        >
                           <item.icon size={20} />
                           {item.name}
                         </div>
@@ -72,12 +76,12 @@ export default function LateralMenu() {
 
                       {/* Submenú */}
                       {openSubmenu === item.name && (
-                        <div className="ml-6 mt-2 flex flex-col gap-1">
+                        <div className="ml-6 mt-2 flex gap-1 md:flex-col">
                           {communitySubmenu.map((subItem) => (
                             <Link
                               key={subItem.name}
                               href={subItem.href}
-                              className="inline-flex items-center gap-2 rounded-md py-2 px-4 text-sm text-gray-300 hover:bg-primary-hover hover:text-white transition-colors duration-200"
+                              className="inline-flex items-center gap-2 rounded-md py-2 px-4 text-sm text-gray-900 hover:bg-secondary-hover hover:text-white transition-colors duration-200"
                             >
                               {subItem.name}
                             </Link>
@@ -89,10 +93,10 @@ export default function LateralMenu() {
                     <Link
                       href={item.href}
                       className={clsx(
-                        "inline-flex items-center gap-2 rounded-md py-2 px-4 transition-colors duration-200 w-full",
+                        "inline-flex flex-col md:flex-row items-center justify-center md:justify-start gap-1 md:gap-2 rounded-md py-2 px-2 md:px-4 transition-colors duration-200 w-full text-xs md:text-base",
                         active
                           ? "bg-secondary text-white"
-                          : "text-white hover:bg-primary-hover",
+                          : "text-stone-900 hover:bg-secondary hover:text-white",
                       )}
                     >
                       <item.icon size={20} />

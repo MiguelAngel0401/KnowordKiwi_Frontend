@@ -117,24 +117,24 @@ export default function LoginPage() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Fieldset className="space-y-8 bg-bg-gray rounded-lg shadow-lg max-w-lg p-8">
-        <Legend className="text-3xl font-bold text-center">
-          Inicia sesión en tu cuenta
+      <Fieldset className="space-y-8 bg-bg-gray rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] max-w-2xl p-8">
+        <Legend className="text-3xl font-bold text-center font-lora text-gray-800">
+          ¿Listo para aprender algo nuevo hoy?
         </Legend>
         <Field>
-          <h3 className="font-light text-center mb-4 text-gray-300">
+          <h3 className="font-light text-center mb-10 text-gray-600">
             Aprende, comparte y crece junto a una comunidad que ama el
             conocimiento.
           </h3>
-          <Label className="block text-sm font-medium">
+          <Label className="block text-sm font-medium text-gray-700 mb-1">
             Correo Electrónico
           </Label>
           <Input
             type="email"
             autoComplete="email"
             required
-            className={`mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-secondary focus:border-secondary sm:text-sm transition duration-150 ease-in-out ${
-              errors.email ? "border-red-500" : "border-gray-300"
+            className={`mt-1 block w-full border-b py-2 px-1 focus:outline-none focus:ring-0 focus:border-secondary sm:text-sm transition duration-150 ease-in-out ${
+              errors.email ? "border-red-500" : "border-gray-400"
             }`}
             {...register("email")}
           />
@@ -145,13 +145,15 @@ export default function LoginPage() {
           )}
         </Field>
         <Field>
-          <Label className="block text-sm font-medium">Contraseña</Label>
+          <Label className="block text-sm font-medium text-gray-700 mb-1">
+            Contraseña
+          </Label>
           <Input
             type="password"
             autoComplete="current-password"
             required
-            className={`mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-secondary focus:border-secondary sm:text-sm transition duration-150 ease-in-out ${
-              errors.password ? "border-red-500" : "border-gray-300"
+            className={`mt-1 block w-full border-b py-2 px-1 focus:outline-none focus:ring-0 focus:border-secondary sm:text-sm transition duration-150 ease-in-out ${
+              errors.password ? "border-red-500" : "border-gray-400"
             }`}
             {...register("password")}
           />
@@ -166,16 +168,18 @@ export default function LoginPage() {
             {backendError}
           </p>
         )}
-        <span>¿Olvidaste tu contraseña? </span>
-        <Link
-          href="/forgot-password"
-          className="text-primary hover:text-primary-hover transition duration-150 ease-in-out"
-        >
-          Recupérala en segundos.
-        </Link>
+        <div className="flex justify-center items-center mt-2">
+          <span className="text-gray-600 mr-1">¿Olvidaste tu contraseña?</span>
+          <Link
+            href="/forgot-password"
+            className="text-primary hover:text-primary-hover transition duration-150 ease-in-out font-medium"
+          >
+            Recupérala en segundos.
+          </Link>
+        </div>
         <Button
           type="submit"
-          className="w-full bg-primary text-white font-bold py-2 px-4 rounded hover:bg-primary-hover mt-6 transition duration-300"
+          className="w-full bg-primary text-white font-bold py-3 px-4 rounded-full hover:bg-primary-hover mt-6 transition duration-300 disabled:opacity-50"
           disabled={isSubmitting} //Deshabilitar el botón mientras se envía
         >
           {isSubmitting ? "Iniciando sesión..." : "Iniciar sesión"}

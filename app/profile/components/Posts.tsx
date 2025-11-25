@@ -67,22 +67,22 @@ export default function Posts() {
     <div className="space-y-8 mt-6">
       {blogPosts.map((post) => (
         <Link href={`/posts/blog/${post.id}`} key={post.id}>
-          <div className="rounded-lg p-6 hover:bg-gray-800 transition-colors cursor-pointer">
+          <div className="rounded-lg p-6 hover:bg-bg-gray transition-colors cursor-pointer">
             <div className="flex items-center gap-2 mb-4">
               <div className="w-8 h-8 rounded-full overflow-hidden bg-gray-600 flex items-center justify-center">
                 <User className="text-gray-300 w-4 h-4" />
               </div>
-              <h3 className="font-semibold text-white text-sm">
+              <h3 className="font-semibold text-stone-900 text-sm">
                 {post.author.user.username}
               </h3>
             </div>
 
-            <h2 className="text-3xl font-extrabold text-white mb-2 leading-tight">
+            <h2 className="text-3xl font-extrabold text-text-color mb-2 leading-tight">
               {post.title}
             </h2>
 
             {/* Subtitle/Description */}
-            <p className="text-lg text-gray-400 mb-4">
+            <p className="text-lg text-gray-700 mb-4">
               {post.blogContent.subtitle}
             </p>
 

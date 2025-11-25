@@ -47,16 +47,16 @@ export default function VerifyEmailPage() {
   }, [searchParams, handleAxiosError, setStatus, setMessage, router, status]);
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-gray-900 rounded-lg shadow-lg text-center text-white">
+    <div className="max-w-md mx-auto p-6 bg-bg-gray rounded-lg shadow-lg text-center text-white">
       {status === "loading" && (
         <>
-          <h2 className="text-2xl font-semibold text-gray-100 mb-4">
+          <h2 className="text-2xl font-semibold text-gray-900 mb-4">
             {message}
           </h2>
           <div className="flex justify-center items-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
           </div>
-          <p className="mt-4 text-gray-100">Por favor, espera un momento...</p>
+          <p className="mt-4 text-gray-900">Por favor, espera un momento...</p>
         </>
       )}
       {status === "success" && (
@@ -77,7 +77,7 @@ export default function VerifyEmailPage() {
             </svg>
           </div>
           <h1 className="text-3xl font-bold text-primary mb-4">{message}</h1>
-          <p className="text-gray-100 mb-6">
+          <p className="text-gray-800 mb-6">
             Serás redirigido a la página de inicio de sesión en breve.
           </p>
           <button
@@ -108,12 +108,12 @@ export default function VerifyEmailPage() {
           <h1 className="text-3xl font-bold text-text-error mb-4">
             Error de Verificación
           </h1>
-          <p className="text-gray-100 mb-6">
+          <p className="text-gray-900 mb-6">
             {message}. Vuelve a generar un enlace de verificación.
           </p>
           <button
             onClick={() => router.push("/")}
-            className="bg-error hover:bg-error-hover text-gray-100 font-bold py-2 px-6 rounded-lg transition duration-300"
+            className="bg-error hover:bg-error-hover font-bold py-2 px-6 rounded-lg transition duration-300"
           >
             Volver a Inicio
           </button>

@@ -31,12 +31,12 @@ export default function ForgotPasswordPage() {
         // lógica para enviar la solicitud de recuperación
       })}
     >
-      <Fieldset className="space-y-8 bg-gray-900 rounded-lg shadow-lg max-w-lg p-8 mx-auto my-12">
-        <Legend className="text-3xl font-bold text-center">
+      <Fieldset className="space-y-8 bg-bg-gray rounded-lg shadow-lg max-w-lg p-8 mx-auto my-12">
+        <Legend className="text-3xl font-bold text-center" as="h2">
           Restablece tu contraseña
         </Legend>
         <Field>
-          <h3 className="font-light text-center mb-4 text-gray-300">
+          <h3 className="font-light text-center text-gray-600 mb-8">
             Ingresa tu correo electrónico para recibir un enlace de
             recuperación.
           </h3>
@@ -47,7 +47,9 @@ export default function ForgotPasswordPage() {
             type="email"
             autoComplete="email"
             required
-            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary sm:text-sm transition duration-150 ease-in-out"
+            className={`mt-1 block w-full border-b py-2 px-1 focus:outline-none focus:ring-0 focus:border-secondary sm:text-sm transition duration-150 ease-in-out ${
+              errors.email ? "border-red-500" : "border-gray-300"
+            }`}
             {...register("email")}
           />
           {errors.email && (

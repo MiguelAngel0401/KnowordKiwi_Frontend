@@ -9,9 +9,9 @@ export default function ProfileLayout({
   return (
     <div>
       <Navbar />
-      <div className="flex">
+      <div className="flex flex-col md:flex-row">
         <LateralMenu />
-        <div className="flex-1">{children}</div>
+        <div className="flex-1 pb-20 md:pb-0">{children}</div>
       </div>
     </div>
   );

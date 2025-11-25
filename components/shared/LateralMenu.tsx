@@ -43,11 +43,7 @@ export default function LateralMenu() {
       <Menu as="nav">
         <ul className="flex flex-row md:flex-col justify-around md:justify-start gap-2 p-2 md:p-0">
           {navigation.map((item) => (
-            <MenuItem
-              as="li"
-              key={item.name}
-              className="flex-1 md:flex-initial"
-            >
+            <MenuItem key={item.name}>
               {({ active }) => (
                 <li>
                   {item.submenu ? (

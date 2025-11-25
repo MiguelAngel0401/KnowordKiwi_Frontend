@@ -51,9 +51,9 @@ export default function ExploreCommunitiesPage() {
   }
 
   return (
-    <main className="min-h-screen text-white p-6 md:p-12 lg:p-16">
+    <main className="min-h-screen text-text-color p-4 sm:p-6 md:p-12 lg:p-16 mb-24">
       <h1 className="text-3xl md:text-4xl font-bold mb-8">
-        Explorar Comunidades 🌍
+        Explorar Comunidades
       </h1>
       <div className="space-y-12">
         {tagToCommunitiesData.map((tag, index) => (
@@ -64,17 +64,17 @@ export default function ExploreCommunitiesPage() {
               </h2>
               <Link
                 href={`/communities/${tag.name.toLowerCase()}`}
-                className="text-sm text-gray-400 hover:text-terciary transition-colors duration-200"
+                className="text-sm text-gray-600 hover:text-terciary transition-colors duration-200"
               >
                 Ver todo →
               </Link>
             </div>
-            <div className="flex overflow-x-auto gap-4 p-2 -m-2 custom-scrollbar">
+            <div className="flex overflow-x-auto gap-4 pb-4 custom-scrollbar">
               {tag.communities.map((community, idx) => (
                 <Link
                   href={`/communities/community/${community.id}`}
                   key={idx}
-                  className="flex-none w-64 h-40 rounded-lg relative overflow-hidden group transition-transform transform hover:scale-105 duration-300"
+                  className="flex-shrink-0 w-56 sm:w-64 h-36 sm:h-40 rounded-lg relative overflow-hidden group transition-transform transform hover:scale-105 duration-300"
                 >
                   {community.banner ? (
                     <Image
@@ -82,7 +82,7 @@ export default function ExploreCommunitiesPage() {
                       alt={`Banner de la comunidad ${community.name}`}
                       layout="fill"
                       objectFit="cover"
-                      sizes="(max-width: 640px) 100vw, 33vw"
+                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                       priority={idx < 4}
                     />
                   ) : (

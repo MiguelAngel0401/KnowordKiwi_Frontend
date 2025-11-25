@@ -69,32 +69,34 @@ export default function ExploreCommunitiesPage() {
                 Ver todo →
               </Link>
             </div>
-            <div className="flex overflow-x-auto gap-4 pb-4 custom-scrollbar">
-              {tag.communities.map((community, idx) => (
-                <Link
-                  href={`/communities/community/${community.id}`}
-                  key={idx}
-                  className="flex-shrink-0 w-56 sm:w-64 h-36 sm:h-40 rounded-lg relative overflow-hidden group transition-transform transform hover:scale-105 duration-300"
-                >
-                  {community.banner ? (
-                    <Image
-                      src={community.banner}
-                      alt={`Banner de la comunidad ${community.name}`}
-                      layout="fill"
-                      objectFit="cover"
-                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                      priority={idx < 4}
-                    />
-                  ) : (
-                    <div className="bg-[#121212] w-full h-full"></div>
-                  )}
-                  <div className="absolute inset-0  bg-opacity-40 flex items-end p-4 group-hover:bg-opacity-60 transition-colors duration-200">
-                    <span className="text-white text-lg font-medium leading-tight">
-                      {community.name}
-                    </span>
-                  </div>
-                </Link>
-              ))}
+            <div className="w-full">
+              <div className="flex overflow-x-auto gap-4 pb-4 custom-scrollbar">
+                {tag.communities.map((community, idx) => (
+                  <Link
+                    href={`/communities/community/${community.id}`}
+                    key={idx}
+                    className="flex-shrink-0 w-56 sm:w-64 h-36 sm:h-40 rounded-lg relative overflow-hidden group transition-transform transform hover:scale-105 duration-300"
+                  >
+                    {community.banner ? (
+                      <Image
+                        src={community.banner}
+                        alt={`Banner de la comunidad ${community.name}`}
+                        layout="fill"
+                        objectFit="cover"
+                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                        priority={idx < 4}
+                      />
+                    ) : (
+                      <div className="bg-[#121212] w-full h-full"></div>
+                    )}
+                    <div className="absolute inset-0  bg-opacity-40 flex items-end p-4 group-hover:bg-opacity-60 transition-colors duration-200">
+                      <span className="text-white text-lg font-medium leading-tight">
+                        {community.name}
+                      </span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
         ))}

@@ -8,9 +8,9 @@ export default function PostActionComponent({
   label,
 }: PostActionComponentProps) {
   return (
-    <div className="flex-1 bg-bg-gray rounded-xl shadow-lg p-4 flex flex-col items-center gap-2 hover:bg-bg-default transition-colors cursor-pointer">
+    <div className="flex-1 bg-bg-gray rounded-xl  p-4 flex flex-col items-center gap-2 hover:bg-secondary hover:text-white transition-colors cursor-pointer">
       {icon}
-      <p className="text-sm text-center">{label}</p>
+      <p className="text-sm text-center ">{label}</p>
     </div>
   );
 }

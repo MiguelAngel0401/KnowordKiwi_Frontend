@@ -16,13 +16,13 @@ export default function PostsComponent({ communityId }: PostsComponentProps) {
       <PostsBarComponent />
 
       {/* Tabs */}
-      <div className="border-b border-gray-700 py-2 mt-4">
+      <div className="py-2 mt-4">
         <nav className="flex space-x-8">
           <button
             className={`py-2 px-1 font-medium text-sm ${
               activeTab === "blog"
-                ? "text-terciary border-b-2 border-terciary"
-                : "text-gray-400 hover:text-gray-300 hover:border-secondary border-b-2 border-transparent"
+                ? "text-text-color border-b-2 border-terciary"
+                : "text-gray-600 hover:text-gray-900 hover:border-secondary border-b-2 border-transparent"
             }`}
             onClick={() => setActiveTab("blog")}
           >
@@ -31,8 +31,8 @@ export default function PostsComponent({ communityId }: PostsComponentProps) {
           <button
             className={`py-2 px-1 font-medium text-sm ${
               activeTab === "polls"
-                ? "text-terciary border-b-2 border-terciary"
-                : "text-gray-400 hover:text-gray-300 hover:border-secondary border-b-2 border-transparent"
+                ? "text-text-color border-b-2 border-terciary"
+                : "text-gray-600 hover:text-gray-900 hover:border-secondary border-b-2 border-transparent"
             }`}
             onClick={() => setActiveTab("polls")}
           >
@@ -41,8 +41,8 @@ export default function PostsComponent({ communityId }: PostsComponentProps) {
           <button
             className={`py-2 px-1 font-medium text-sm ${
               activeTab === "members"
-                ? "text-terciary border-b-2 border-terciary"
-                : "text-gray-400 hover:text-gray-300 hover:border-secondary border-b-2 border-transparent"
+                ? "text-text-color border-b-2 border-terciary"
+                : "text-gray-600 hover:text-gray-900 hover:border-secondary border-b-2 border-transparent"
             }`}
             onClick={() => setActiveTab("members")}
           >

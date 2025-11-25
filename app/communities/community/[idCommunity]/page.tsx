@@ -95,7 +95,7 @@ export default function CommunityDetail() {
   if (!community) {
     return (
       <div className="text-center py-12">
-        <h3 className="text-lg font-medium text-gray-900 dark:text-white">
+        <h3 className="text-lg font-medium text-text-color">
           No se encontró la comunidad
         </h3>
       </div>
@@ -112,7 +112,7 @@ export default function CommunityDetail() {
             width={800}
             height={200}
             alt={`Banner de ${community.name}`}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover z-0"
             onError={(e) => {
               const target = e.target as HTMLImageElement;
               target.parentElement!.innerHTML = `
@@ -131,21 +131,21 @@ export default function CommunityDetail() {
         )}
 
         {/* Avatar de la comunidad */}
-        <div className="absolute bottom-0 left-8 transform translate-y-1/2">
+        <div className="absolute bottom-0 left-8 transform translate-y-1/2 z-50">
           {community.avatar ? (
             <Image
               src={community.avatar.trim()}
               width={400}
               height={400}
               alt={community.name}
-              className="w-48 h-48 rounded-full border-4 border-white dark:border-gray-800 object-cover shadow-lg"
+              className="w-48 h-48 rounded-full border-4 border-white object-cover shadow-lg z-10"
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
                 target.style.display = "none";
               }}
             />
           ) : (
-            <div className="w-24 h-24 rounded-full border-4 border-white dark:border-gray-800 bg-gray-200 flex items-center justify-center shadow-lg z-10">
+            <div className="w-24 h-24 rounded-full border-4 border-white bg-gray-200 flex items-center justify-center shadow-lg z-10">
               <span className="text-3xl font-bold text-gray-600">
                 {community.name.charAt(0).toUpperCase()}
               </span>
@@ -155,13 +155,13 @@ export default function CommunityDetail() {
       </div>
 
       {/* Contenido principal */}
-      <div className="bg-bg-gray rounded-b-xl shadow-lg pb-8">
+      <div className="bg-bg-default rounded-b-xl shadow-lg pb-8">
         {/* Información principal de la comunidad */}
         <div className="pt-16 px-8">
           <div className="flex flex-wrap justify-between items-start gap-4">
             <div>
               <div className="flex items-center gap-3 mb-2">
-                <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+                <h1 className="text-3xl font-bold text-text-color">
                   {community.name}
                 </h1>
                 {community.isPrivate ? (
@@ -171,9 +171,7 @@ export default function CommunityDetail() {
                 )}
               </div>
 
-              <p className="text-gray-600 dark:text-gray-300 max-w-3xl">
-                {community.description}
-              </p>
+              <p className="text-gray-600 max-w-3xl">{community.description}</p>
             </div>
           </div>
 
@@ -182,7 +180,7 @@ export default function CommunityDetail() {
             {community.tags.map((tag) => (
               <span
                 key={tag.id}
-                className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100"
+                className="inline-flex items-center px-3 py-1 rounded-full text-sm font-bold text-white bg-tag"
               >
                 <Tag className="w-4 h-4 mr-1" />
                 {tag.name}
@@ -191,7 +189,7 @@ export default function CommunityDetail() {
           </div>
 
           {community.isOwner && (
-            <p className="text-terciary italic mt-8">
+            <p className="text-tag italic mt-8 font-bold">
               ¡Eres dueño de esta comunidad! Puedes editar su información o
               incluso eliminarla.
             </p>
@@ -201,7 +199,7 @@ export default function CommunityDetail() {
             {/* Botón de Unirse: solo si no es miembro ni dueño */}
             {!community.isOwner && !community.isMember && (
               <button
-                className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition-colors"
+                className="px-4 py-2 bg-secondary text-white rounded-lg hover:bg-primary-hover transition-colors"
                 onClick={handleJoin}
               >
                 {isJoining ? "Uniendo..." : "Unirse"}
@@ -237,32 +235,28 @@ export default function CommunityDetail() {
             )}
 
             {/* Botón de compartir siempre visible */}
-            <button className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+            <button className="px-4 py-2 border bg-secondary text-white rounded-lg hover:bg-secondary-hover transition-colors">
               Compartir
             </button>
           </div>
 
           {/* Información adicional */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8 pt-6 border-t dark:border-gray-700">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8 pt-6 border-t">
             <div className="flex items-center">
-              <Calendar className="w-5 h-5 text-gray-500 dark:text-gray-400 mr-2" />
+              <Calendar className="w-5 h-5 text-gray-500 mr-2" />
               <div>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Creada
-                </p>
-                <p className="font-medium text-gray-900 dark:text-white">
+                <p className="text-sm text-gray-600">Creada</p>
+                <p className="font-medium text-text-color">
                   {formatDate(community.createdAt)}
                 </p>
               </div>
             </div>
 
             <div className="flex items-center">
-              <Users className="w-5 h-5 text-gray-500 dark:text-gray-400 mr-2" />
+              <Users className="w-5 h-5 text-gray-500 mr-2" />
               <div>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Miembros
-                </p>
-                <p className="font-medium text-gray-900 dark:text-white">
+                <p className="text-sm text-gray-500">Miembros</p>
+                <p className="font-medium text-text-color">
                   {community.memberCount} miembros
                 </p>
               </div>
@@ -271,12 +265,8 @@ export default function CommunityDetail() {
             <div className="flex items-center">
               <div className="bg-gray-200 border-2 border-dashed rounded-xl w-16 h-16" />
               <div className="ml-3">
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Creador
-                </p>
-                <p className="font-medium text-gray-900 dark:text-white">
-                  Usuario
-                </p>
+                <p className="text-sm text-gray-500">Creador</p>
+                <p className="font-medium text-text-color">Usuario</p>
               </div>
             </div>
           </div>

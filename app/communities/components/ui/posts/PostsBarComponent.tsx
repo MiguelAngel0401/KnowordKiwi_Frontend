@@ -22,7 +22,7 @@ const postActions = [
 
 export default function PostsBarComponent() {
   return (
-    <div className="border border-gray-700 rounded-xl shadow-lg w-full flex gap-4 px-4 py-2 mt-4 items-center">
+    <div className="rounded-xl shadow-lg w-full flex gap-4 px-4 py-2 mt-4 items-center">
       {postActions.map((action) => (
         <PostActionComponent
           key={action.key}

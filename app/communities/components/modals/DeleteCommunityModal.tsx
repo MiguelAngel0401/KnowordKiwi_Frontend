@@ -176,7 +176,7 @@ export default function DeleteCommunityModal({
                       type="button"
                       onClick={handleCancel}
                       disabled={isDeleting}
-                      className="flex-1 px-4 py-2.5 bg-gray-700 hover:bg-gray-600 text-white font-medium rounded-lg transition-colors duration-200 disabled:opacity-50"
+                      className="flex-1 px-4 py-2.5 bg-gray-600 hover:bg-gray-700 text-white font-medium rounded-lg transition-colors duration-200 disabled:opacity-50"
                     >
                       Cancelar
                     </button>

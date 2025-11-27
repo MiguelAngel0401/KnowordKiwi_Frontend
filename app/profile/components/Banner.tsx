@@ -58,7 +58,7 @@ export function Banner() {
     if (activeTab === tab) {
       return `${baseClasses} border-b-2 border-primary text-gray-900 font-semibold`;
     }
-    return `${baseClasses} text-gray-500 hover:text-gray-800`;
+    return `${baseClasses} text-gray-600 hover:text-gray-800`;
   };
 
   return (

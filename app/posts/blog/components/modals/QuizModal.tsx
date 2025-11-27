@@ -35,7 +35,7 @@ export default function QuizModal({
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm" />
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" />
         </TransitionChild>
 
         <div className="fixed inset-0 overflow-y-auto">
@@ -53,13 +53,13 @@ export default function QuizModal({
                 <div className="flex justify-between items-center">
                   <DialogTitle
                     as="h2"
-                    className="text-2xl font-bold leading-6 text-white"
+                    className="text-2xl font-bold leading-6 text-text-color"
                   >
                     {title}
                   </DialogTitle>
                   <button
                     onClick={onClose}
-                    className="p-2 rounded-full text-gray-400 hover:bg-gray-700 hover:text-white transition-colors"
+                    className="p-2 rounded-full text-gray-500 hover:bg-tag hover:text-white transition-colors"
                   >
                     <X size={24} />
                   </button>

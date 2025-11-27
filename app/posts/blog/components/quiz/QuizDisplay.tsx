@@ -11,7 +11,7 @@ const QuizDisplay: React.FC<QuizDisplayProps> = ({ questions, onEdit }) => {
   return (
     <div className="w-full p-8 my-8 text-gray-100 font-sans">
       <div className="flex justify-between items-center mb-8">
-        <p className="text-gray-400 mt-2">
+        <p className="text-gray-700 mt-2">
           Preguntas guardadas: {questions.length}
         </p>
         <Button
@@ -28,7 +28,7 @@ const QuizDisplay: React.FC<QuizDisplayProps> = ({ questions, onEdit }) => {
             key={question.id || questionIndex}
             className="p-6 rounded-xl bg-bg-gray border border-gray-700 shadow-lg"
           >
-            <h4 className="text-xl font-bold text-white mb-4">
+            <h4 className="text-xl font-bold text-text-color mb-4">
               Pregunta {questionIndex + 1}: {question.title}
             </h4>
 
@@ -40,7 +40,7 @@ const QuizDisplay: React.FC<QuizDisplayProps> = ({ questions, onEdit }) => {
                     flex items-center p-4 rounded-xl
                     ${
                       option.isCorrect
-                        ? "bg-green-900/30 border-2 border-green-500"
+                        ? "bg-secondary border-2 border-green-500"
                         : "bg-bg-gray border border-gray-600"
                     }
                   `}
@@ -52,7 +52,7 @@ const QuizDisplay: React.FC<QuizDisplayProps> = ({ questions, onEdit }) => {
                     ${
                       option.isCorrect
                         ? "bg-green-500 border-green-500"
-                        : "bg-gray-700 border-gray-600"
+                        : "bg-tag border-gray-600"
                     }
                   `}
                   >
@@ -62,14 +62,14 @@ const QuizDisplay: React.FC<QuizDisplayProps> = ({ questions, onEdit }) => {
                     <span
                       className={
                         option.isCorrect
-                          ? "text-green-400 font-medium"
-                          : "text-gray-300"
+                          ? "text-white font-bold"
+                          : "text-gray-800"
                       }
                     >
                       {option.text}
                     </span>
                     {option.isCorrect && (
-                      <span className="ml-2 text-green-400 font-medium">
+                      <span className="ml-2 text-white font-medium">
                         (Correcta)
                       </span>
                     )}

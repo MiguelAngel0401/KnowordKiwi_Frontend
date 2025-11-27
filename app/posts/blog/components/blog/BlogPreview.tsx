@@ -71,18 +71,18 @@ export default function BlogPreview({
   return (
     <div className="bg-bg-gray border border-gray-700 rounded-md p-6">
       <header className="mb-6">
-        <h1 className="text-3xl font-bold text-white mb-2">
+        <h1 className="text-3xl font-bold text-text-color mb-2">
           {title || "Título del blog"}
         </h1>
-        <h3 className="text-gray-400 text-lg mb-2">{subtitle}</h3>
-        <div className="flex items-center text-gray-400 text-sm">
+        <h3 className="text-gray-800 text-lg mb-2">{subtitle}</h3>
+        <div className="flex items-center text-gray-600 text-sm">
           <span>Por Autor del Blog</span>
           <span className="mx-2">•</span>
         </div>
       </header>
 
       <div
-        className="prose prose-invert max-w-none"
+        className="prose prose-invert max-w-none text-text-color"
         dangerouslySetInnerHTML={{
           __html: sanitizedContent,
         }}

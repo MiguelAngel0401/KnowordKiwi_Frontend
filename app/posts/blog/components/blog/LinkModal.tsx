@@ -23,7 +23,7 @@ export default function LinkModal({ editor }: LinkModalProps) {
       const selectedText = editor.state.doc.textBetween(
         selection.from,
         selection.to,
-        " "
+        " ",
       );
       setText(selectedText);
     };
@@ -39,19 +39,20 @@ export default function LinkModal({ editor }: LinkModalProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!url || !editor) return;
-    
+
     // Validar URL
-    const urlPattern = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+    const urlPattern =
+      /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
     if (!urlPattern.test(url)) {
       alert("Por favor ingresa una URL válida");
       return;
     }
-    
+
     // Asegurarse de que la URL tenga el protocolo
     const fullUrl = url.startsWith("http") ? url : `https://${url}`;
-    
+
     // Si hay texto seleccionado, usarlo como texto del enlace
     if (text) {
       editor.chain().focus().setLink({ href: fullUrl }).run();
@@ -74,7 +75,7 @@ export default function LinkModal({ editor }: LinkModalProps) {
         })
         .run();
     }
-    
+
     // Reset form
     setUrl("");
     setText("");
@@ -100,7 +101,7 @@ export default function LinkModal({ editor }: LinkModalProps) {
         className={`p-2 rounded-md transition-colors ${
           isLinkActive()
             ? "bg-gray-700 text-white"
-            : "text-gray-400 hover:bg-gray-800 hover:text-white"
+            : "text-gray-600 hover:bg-secondary hover:text-white"
         }`}
         title="Insertar enlace"
       >
@@ -108,14 +109,17 @@ export default function LinkModal({ editor }: LinkModalProps) {
       </Button>
 
       {isOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-gray-800 rounded-lg p-6 w-full max-w-md">
-            <h3 className="text-lg font-semibold text-white mb-4">
+        <div className="fixed inset-0 bg-black/50 bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-bg-default rounded-lg p-6 w-full max-w-md">
+            <h3 className="text-lg font-semibold text-text-color mb-4">
               {isLinkActive() ? "Editar enlace" : "Insertar enlace"}
             </h3>
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
-                <label htmlFor="link-text" className="block text-sm font-medium text-gray-300 mb-1">
+                <label
+                  htmlFor="link-text"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
                   Texto a mostrar
                 </label>
                 <input
@@ -123,16 +127,19 @@ export default function LinkModal({ editor }: LinkModalProps) {
                   type="text"
                   value={text}
                   onChange={(e) => setText(e.target.value)}
-                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-3 py-2 bg-bg-gray border-b border-secondary text-text-color placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary"
                   placeholder="Texto del enlace"
                 />
-                <p className="mt-1 text-xs text-gray-400">
+                <p className="mt-1 text-xs text-gray-600">
                   Si no se especifica, se usará la URL como texto
                 </p>
               </div>
-              
+
               <div className="mb-4">
-                <label htmlFor="link-url" className="block text-sm font-medium text-gray-300 mb-1">
+                <label
+                  htmlFor="link-url"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
                   URL
                 </label>
                 <input
@@ -140,12 +147,12 @@ export default function LinkModal({ editor }: LinkModalProps) {
                   type="text"
                   value={url}
                   onChange={(e) => setUrl(e.target.value)}
-                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-3 py-2 bg-bg-gray border-b border-secondary  text-text-color placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary"
                   placeholder="https://example.com"
                   required
                 />
               </div>
-              
+
               <div className="flex justify-end space-x-3">
                 {isLinkActive() && (
                   <Button
@@ -159,7 +166,7 @@ export default function LinkModal({ editor }: LinkModalProps) {
                 <Button
                   type="button"
                   onClick={() => setIsOpen(false)}
-                  className="px-4 py-2 text-gray-300 hover:text-white transition-colors"
+                  className="px-4 py-2 text-gray-600 hover:text-text-color transition-colors"
                 >
                   Cancelar
                 </Button>

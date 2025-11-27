@@ -22,19 +22,19 @@ export default function BlogHeader({
 }: BlogHeaderProps) {
   return (
     <header className="flex items-center justify-between">
-      <h1 className="text-2xl font-bold text-white">
+      <h1 className="text-2xl font-bold text-text-color">
         {isEditing ? "Editar blog" : "Crear nuevo blog"}
       </h1>
       <div className="flex items-center gap-4">
         <Button
           onClick={onCancel}
-          className="text-gray-400 hover:text-white transition-colors"
+          className="text-gray-600 hover:text-text-color transition-colors"
         >
           {isEditing ? "Descartar" : "Cancelar"}
         </Button>
         <Button
           onClick={onTogglePreview}
-          className="flex items-center gap-2 px-4 py-2 border border-gray-600 text-white rounded-md hover:border-gray-500 transition-colors font-semibold"
+          className="flex items-center gap-2 px-4 py-2 border border-gray-600 text-text-color rounded-md hover:border-gray-500 transition-colors font-semibold"
         >
           {isPreviewMode ? (
             <>
@@ -50,7 +50,7 @@ export default function BlogHeader({
         </Button>
         <Button
           onClick={onSave}
-          className="px-4 py-2 border border-primary text-white rounded-md hover:border-primary-hover  transition-colors font-semibold"
+          className="px-4 py-2 border border-primary text-text-color rounded-md hover:border-primary-hover  transition-colors font-semibold"
         >
           <span>Guardar borrador</span>
         </Button>

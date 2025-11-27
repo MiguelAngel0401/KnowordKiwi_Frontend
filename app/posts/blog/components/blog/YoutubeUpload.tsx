@@ -36,23 +36,23 @@ export default function YoutubeUpload({ editor }: YoutubeUploadProps) {
       <Button
         type="button"
         onClick={() => setIsOpen(true)}
-        className="p-2 rounded-md text-gray-400 hover:bg-gray-800 hover:text-white transition-colors"
+        className="p-2 rounded-md text-gray-600 hover:bg-secondary hover:text-white transition-colors"
         title="Insertar video de YouTube"
       >
         <Youtube className="size-4" />
       </Button>
 
       {isOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-gray-800 rounded-lg p-6 w-full max-w-md">
-            <h3 className="text-lg font-semibold text-white mb-4">
+        <div className="fixed inset-0 bg-black/50 bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-bg-default rounded-lg p-6 w-full max-w-md">
+            <h3 className="text-lg font-semibold text-text-color mb-4">
               Insertar video de YouTube
             </h3>
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
                 <label
                   htmlFor="youtube-url"
-                  className="block text-sm font-medium text-gray-300 mb-1"
+                  className="block text-sm font-medium text-gray-700 mb-1"
                 >
                   URL del video
                 </label>
@@ -61,7 +61,7 @@ export default function YoutubeUpload({ editor }: YoutubeUploadProps) {
                   type="text"
                   value={url}
                   onChange={(e) => setUrl(e.target.value)}
-                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-3 py-2 bg-bg-gray border-b border-secondary text-text-color placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary"
                   placeholder="https://www.youtube.com/watch?v=..."
                   required
                 />
@@ -70,7 +70,7 @@ export default function YoutubeUpload({ editor }: YoutubeUploadProps) {
               <div className="mb-4">
                 <label
                   htmlFor="start-time"
-                  className="block text-sm font-medium text-gray-300 mb-1"
+                  className="block text-sm font-medium text-gray-700 mb-1"
                 >
                   Tiempo de inicio (opcional)
                 </label>
@@ -79,11 +79,11 @@ export default function YoutubeUpload({ editor }: YoutubeUploadProps) {
                   type="number"
                   value={startTime}
                   onChange={(e) => setStartTime(e.target.value)}
-                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-3 py-2 bg-bg-gray border-b border-secondary text-text-color placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary"
                   placeholder="0"
                   min="0"
                 />
-                <p className="mt-1 text-xs text-gray-400">
+                <p className="mt-1 text-xs text-gray-600">
                   Segundos después del inicio del video
                 </p>
               </div>
@@ -92,7 +92,7 @@ export default function YoutubeUpload({ editor }: YoutubeUploadProps) {
                 <Button
                   type="button"
                   onClick={() => setIsOpen(false)}
-                  className="px-4 py-2 text-gray-300 hover:text-white transition-colors"
+                  className="px-4 py-2 text-gray-600 hover:text-text-color transition-colors"
                 >
                   Cancelar
                 </Button>

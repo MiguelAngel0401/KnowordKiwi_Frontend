@@ -55,7 +55,7 @@ export default function BlogDraftCofirmationModal({
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-black bg-opacity-50" />
+          <div className="fixed inset-0 bg-black/50 bg-opacity-50" />
         </TransitionChild>
 
         <div className="fixed inset-0 overflow-y-auto">
@@ -69,21 +69,21 @@ export default function BlogDraftCofirmationModal({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <DialogPanel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-gray-800 p-6 text-left align-middle shadow-xl transition-all">
+              <DialogPanel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-bg-default p-6 text-left align-middle shadow-xl transition-all">
                 <DialogTitle
                   as="h3"
-                  className="text-lg font-medium leading-6 text-white"
+                  className="text-lg font-medium leading-6 text-text-color"
                 >
                   {title}
                 </DialogTitle>
                 <div className="mt-4">
-                  <div className="text-sm text-gray-300">{children}</div>
+                  <div className="text-sm text-gray-800">{children}</div>
                 </div>
 
                 <div className="mt-6 flex justify-end space-x-3">
                   <button
                     type="button"
-                    className="inline-flex justify-center rounded-md border border-gray-600 bg-transparent px-4 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-terciary"
+                    className="inline-flex justify-center rounded-md border border-secondary bg-transparent px-4 py-2 text-sm font-medium text-text-color hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-terciary"
                     onClick={handleCancel}
                   >
                     {cancelText}

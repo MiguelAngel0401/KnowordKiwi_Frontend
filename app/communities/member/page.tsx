@@ -53,7 +53,7 @@ export default function CommunitiesUserBelongs() {
   }
 
   return (
-    <div className="min-h-screen text-white p-6 md:p-12 lg:p-16">
+    <div className="min-h-screen text-text-color p-6 md:p-12 lg:p-16 mb-24">
       <h2 className="text-3xl md:text-4xl font-bold mb-8">
         Comunidades a las que pertenezco ({communities.length})
       </h2>
@@ -61,10 +61,10 @@ export default function CommunitiesUserBelongs() {
       {communities.length === 0 ? (
         <div className="text-center py-12">
           <div className="bg-gray-200 border-2 border-dashed rounded-xl w-16 h-16 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-1">
+          <h3 className="text-lg font-medium text-text-color mb-2">
             Aún no perteneces a comunidades
           </h3>
-          <p className="text-gray-500 dark:text-gray-400">
+          <p className="text-gray-600">
             Únete a comunidades para empezar a colaborar
           </p>
         </div>
@@ -77,7 +77,7 @@ export default function CommunitiesUserBelongs() {
             >
               <div
                 key={community.id}
-                className="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+                className="bg-bg-default rounded-xl shadow-md overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
               >
                 {/* Banner de la comunidad */}
                 <div className="h-32 relative">
@@ -104,14 +104,14 @@ export default function CommunitiesUserBelongs() {
                         width={48}
                         height={48}
                         alt={community.name}
-                        className="w-16 h-16 rounded-full border-4 border-white dark:border-gray-800 object-cover"
+                        className="w-16 h-16 rounded-full border-4 border-white object-cover"
                         onError={(e) => {
                           const target = e.target as HTMLImageElement;
                           target.style.display = "none";
                         }}
                       />
                     ) : (
-                      <div className="w-16 h-16 rounded-full border-4 border-white dark:border-gray-800 bg-gray-200 flex items-center justify-center">
+                      <div className="w-16 h-16 rounded-full border-4 border-gray-800 bg-gray-200 flex items-center justify-center">
                         <span className="text-2xl font-bold text-gray-600">
                           {community.name.charAt(0).toUpperCase()}
                         </span>
@@ -122,7 +122,7 @@ export default function CommunitiesUserBelongs() {
 
                 <div className="pt-10 pb-6 px-4">
                   <div className="flex justify-between items-start mb-2">
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white truncate">
+                    <h3 className="text-xl font-bold text-text-color truncate">
                       {community.name}
                     </h3>
                     {community.isPrivate && (
@@ -132,7 +132,7 @@ export default function CommunitiesUserBelongs() {
                     )}
                   </div>
 
-                  <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-2">
+                  <p className="text-gray-600 text-sm mb-4 line-clamp-2">
                     {community.description}
                   </p>
 
@@ -141,19 +141,19 @@ export default function CommunitiesUserBelongs() {
                     {community.tags.slice(0, 3).map((tag) => (
                       <span
                         key={tag.id}
-                        className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100"
+                        className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-tag text-white"
                       >
                         {tag.name}
                       </span>
                     ))}
                     {community.tags.length > 3 && (
-                      <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">
+                      <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-secondary text-white">
                         +{community.tags.length - 3}
                       </span>
                     )}
                   </div>
 
-                  <div className="flex justify-between items-center text-xs text-gray-500 dark:text-gray-400">
+                  <div className="flex justify-between items-center text-xs text-gray-500">
                     <span>Creada: {formatDate(community.createdAt)}</span>
                     <span className="inline-flex items-center">
                       <svg

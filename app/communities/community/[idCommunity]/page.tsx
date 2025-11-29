@@ -103,7 +103,7 @@ export default function CommunityDetail() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto p-2 sm:p-4 md:p-6">
+    <div className="max-w-100 md:max-w-4xl lg:max-w-6xl mx-auto p-2 sm:p-4 md:p-6">
       {/* Banner de la comunidad */}
       <div className="relative h-48 md:h-64 rounded-t-xl overflow-hidden">
         {community.banner ? (
@@ -274,7 +274,6 @@ export default function CommunityDetail() {
       </div>
 
       <div className="bg-bg-gray rounded-xl shadow-lg pb-8">
-        {/* Secciones futuras */}
         <div className="mt-12 px-4 md:px-8 py-2">
           <PostsComponent communityId={communityId} />
         </div>

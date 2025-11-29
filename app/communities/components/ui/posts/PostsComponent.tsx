@@ -13,11 +13,11 @@ export default function PostsComponent({ communityId }: PostsComponentProps) {
 
   return (
     <div className="mt-6">
-      <PostsBarComponent />
+      <PostsBarComponent communityId={communityId} />
 
       {/* Tabs */}
-      <div className="py-2 mt-4">
-        <nav className="flex space-x-8">
+      <div className="py-2 mt-4 border-b border-gray-200">
+        <nav className="flex space-x-4 sm:space-x-8 -mb-px overflow-x-auto">
           <button
             className={`py-2 px-1 font-medium text-sm ${
               activeTab === "blog"

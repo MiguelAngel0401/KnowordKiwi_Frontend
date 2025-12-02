@@ -15,6 +15,7 @@ import {
 import { CommunityWithOwnership } from "@/types/community";
 import LeaveCommunityModal from "../../components/modals/LeaveCommunityModal";
 import PostsComponent from "../../components/ui/posts/PostsComponent";
+import UserGamificationBar from "@/components/communities/gamification/UserGamificationBar";
 
 export default function CommunityDetail() {
   const params = useParams();
@@ -239,6 +240,18 @@ export default function CommunityDetail() {
               Compartir
             </button>
           </div>
+
+          {/* Gamification Bar - Only show if user is a member of the community */}
+          {community.isMember && (
+            <div className="mt-6">
+              <UserGamificationBar
+                currentRank="Aprendiz"
+                currentXp={1250}
+                nextRankXp={2000}
+                nextRankName="Experto"
+              />
+            </div>
+          )}
 
           {/* Información adicional */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8 pt-6 border-t">

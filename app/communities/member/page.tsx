@@ -136,18 +136,28 @@ export default function CommunitiesUserBelongs() {
                     {community.description}
                   </p>
 
-                  {/* Etiquetas */}
+                  {/* Etiquetas con estilo washi tape */}
                   <div className="flex flex-wrap gap-1 mb-4">
                     {community.tags.slice(0, 3).map((tag) => (
                       <span
                         key={tag.id}
-                        className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-tag text-white"
+                        className="inline-flex items-center px-2 py-1 text-xs font-medium text-stone-700 bg-transparent border border-opacity-30 rounded-sm shadow-sm"
+                        style={{
+                          backgroundColor: `hsl(${(tag.id * 37) % 360}, 50%, 95%)`,
+                          borderColor: `hsl(${(tag.id * 37) % 360}, 40%, 70%)`
+                        }}
                       >
                         {tag.name}
                       </span>
                     ))}
                     {community.tags.length > 3 && (
-                      <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-secondary text-white">
+                      <span
+                        className="inline-flex items-center px-2 py-1 text-xs font-medium text-stone-700 bg-transparent border border-opacity-30 rounded-sm shadow-sm"
+                        style={{
+                          backgroundColor: `hsl(${(37 * 37) % 360}, 50%, 95%)`,
+                          borderColor: `hsl(${(37 * 37) % 360}, 40%, 70%)`
+                        }}
+                      >
                         +{community.tags.length - 3}
                       </span>
                     )}

@@ -106,52 +106,57 @@ export default function CommunityDetail() {
   return (
     <div className="max-w-100 md:max-w-4xl lg:max-w-6xl mx-auto p-2 sm:p-4 md:p-6">
       {/* Banner de la comunidad */}
-      <div className="relative h-48 md:h-64 rounded-t-xl overflow-hidden">
-        {community.banner ? (
-          <Image
-            src={community.banner.trim()}
-            width={800}
-            height={200}
-            alt={`Banner de ${community.name}`}
-            className="w-full h-full object-cover z-0"
-            onError={(e) => {
-              const target = e.target as HTMLImageElement;
-              target.parentElement!.innerHTML = `
-                <div class="w-full h-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
-                  <span class="text-white text-2xl font-bold">${community.name}</span>
-                </div>
-              `;
-            }}
-          />
-        ) : (
-          <div className="w-full h-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
-            <span className="text-white text-2xl font-bold">
-              {community.name}
-            </span>
-          </div>
-        )}
-
-        {/* Avatar de la comunidad */}
-        <div className="absolute bottom-0 left-4 md:left-8 transform translate-y-1/2 z-50">
-          {community.avatar ? (
-            <Image
-              src={community.avatar.trim()}
-              width={400}
-              height={400}
-              alt={community.name}
-              className="w-24 h-24 md:w-48 md:h-48 rounded-full border-4 border-white object-cover shadow-lg z-10"
-              onError={(e) => {
-                const target = e.target as HTMLImageElement;
-                target.style.display = "none";
-              }}
-            />
+      <div className="p-1 shadow-lg rounded-2xl bg-white/50">
+        <div className="relative h-48 md:h-64 rounded-2xl overflow-hidden">
+          {community.banner ? (
+            <>
+              <Image
+                src={community.banner.trim()}
+                width={800}
+                height={200}
+                alt={`Banner de ${community.name}`}
+                className="w-full h-full object-cover z-0"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.parentElement!.innerHTML = `
+                    <div class="w-full h-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
+                      <span class="text-white text-2xl font-bold">${community.name}</span>
+                    </div>
+                  `;
+                }}
+              />
+              <div className="absolute inset-0 bg-warm-gray-800/20"></div>
+            </>
           ) : (
-            <div className="w-24 h-24 rounded-full border-4 border-white bg-gray-200 flex items-center justify-center shadow-lg z-10">
-              <span className="text-2xl md:text-3xl font-bold text-gray-600">
-                {community.name.charAt(0).toUpperCase()}
+            <div className="w-full h-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
+              <span className="text-white text-2xl font-bold">
+                {community.name}
               </span>
             </div>
           )}
+
+          {/* Avatar de la comunidad */}
+          <div className="absolute bottom-0 left-4 md:left-8 transform translate-y-1/2 z-50">
+            {community.avatar ? (
+              <Image
+                src={community.avatar.trim()}
+                width={400}
+                height={400}
+                alt={community.name}
+                className="w-24 h-24 md:w-48 md:h-48 rounded-full border-4 border-white object-cover shadow-lg z-10"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = "none";
+                }}
+              />
+            ) : (
+              <div className="w-24 h-24 rounded-full border-4 border-white bg-gray-200 flex items-center justify-center shadow-lg z-10">
+                <span className="text-2xl md:text-3xl font-bold text-gray-600">
+                  {community.name.charAt(0).toUpperCase()}
+                </span>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 

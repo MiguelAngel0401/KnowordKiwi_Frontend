@@ -281,10 +281,10 @@ export default function CommunityDetail() {
           {community.isMember && (
             <div className="mt-6">
               <UserGamificationBar
-                currentRank="Aprendiz"
-                currentXp={1250}
-                nextRankXp={2000}
-                nextRankName="Experto"
+                currentRank={community.userCurrentRank || "Novato"}
+                currentXp={community.userTotalXp || 0}
+                nextRankXp={community.userNextRankXp || 100}
+                nextRankName={community.userNextRankName || "Aprendiz"}
               />
             </div>
           )}
@@ -333,7 +333,7 @@ export default function CommunityDetail() {
           isOpen={isDeleting}
           onClose={() => setIsDeleting(false)}
           communityName={community.name}
-          communityId={community.id}
+          communityId={community.id.toString()}
         />
       )}
 
@@ -352,7 +352,7 @@ export default function CommunityDetail() {
           isOpen={isLeaving}
           onClose={() => setIsLeaving(false)}
           communityName={community.name}
-          communityId={community.id}
+          communityId={community.id.toString()}
         />
       )}
     </div>

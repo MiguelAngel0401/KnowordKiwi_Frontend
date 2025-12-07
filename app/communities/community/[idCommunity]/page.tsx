@@ -16,6 +16,7 @@ import { CommunityWithOwnership } from "@/types/community";
 import LeaveCommunityModal from "../../components/modals/LeaveCommunityModal";
 import PostsComponent from "../../components/ui/posts/PostsComponent";
 import UserGamificationBar from "@/app/communities/components/gamification/UserGamificationBar";
+import { useCommunityRankingStore } from "@/store/communityRankingStore";
 
 export default function CommunityDetail() {
   const params = useParams();
@@ -31,6 +32,10 @@ export default function CommunityDetail() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // Get community ranking data from the store
+  const { communityRanking, updateCommunityRankingIfNeeded } =
+    useCommunityRankingStore();
+
   useEffect(() => {
     if (!communityId) {
       setError("ID de comunidad no proporcionado.");
@@ -44,7 +49,19 @@ export default function CommunityDetail() {
       try {
         const data = await getCommunityById(communityId);
         setCommunity(data);
-      } catch (err) {
+
+        // Extract the ranking information from the API response and store it in the Zustand store
+        const rankingData = {
+          userTotalXp: data.userTotalXp || 0,
+          userCurrentRank: data.userCurrentRank || "Novato",
+          userNextRankXp: data.userNextRankXp || 100,
+          userNextRankName: data.userNextRankName || "Aprendiz",
+        };
+        console.log(rankingData);
+
+        // Update the store with the new ranking data for this community
+        updateCommunityRankingIfNeeded(communityId, rankingData);
+      } catch (err: any) {
         setError(
           err.response?.data?.message ||
             "No se pudo cargar la comunidad. Inténtalo más tarde.",
@@ -56,7 +73,7 @@ export default function CommunityDetail() {
     };
 
     fetchCommunity();
-  }, [communityId]);
+  }, [communityId, updateCommunityRankingIfNeeded]);
 
   const handleJoin = async () => {
     try {
@@ -281,10 +298,10 @@ export default function CommunityDetail() {
           {community.isMember && (
             <div className="mt-6">
               <UserGamificationBar
-                currentRank={community.userCurrentRank || "Novato"}
-                currentXp={community.userTotalXp || 0}
-                nextRankXp={community.userNextRankXp || 100}
-                nextRankName={community.userNextRankName || "Aprendiz"}
+                currentRank={communityRanking?.userCurrentRank || "Novato"}
+                currentXp={communityRanking?.userTotalXp || 0}
+                nextRankXp={communityRanking?.userNextRankXp || 100}
+                nextRankName={communityRanking?.userNextRankName || "Aprendiz"}
               />
             </div>
           )}

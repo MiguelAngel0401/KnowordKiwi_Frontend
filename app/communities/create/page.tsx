@@ -198,7 +198,7 @@ export default function CreateCommunityPage() {
             <Input
               type="text"
               placeholder="Ej. Matemáticas y física"
-              className={`w-full px-4 py-2 rounded-lg bg-green-100 text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-600 ${errors.name ? "border-text-error focus:border-text-error focus:ring-red-500" : "border-gray-300 focus:ring-secondary focus:border-secondary"}`}
+              className={`w-full px-4 py-2 rounded-lg bg-green-100 text-text-color placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-600 ${errors.name ? "border-text-error focus:border-text-error focus:ring-red-500" : "border-gray-300 focus:ring-secondary focus:border-secondary"}`}
               {...register("name")}
             />
             {errors.name && (
@@ -213,7 +213,7 @@ export default function CreateCommunityPage() {
             <Input
               type="text"
               placeholder="Ej. Un lugar para discutir y aprender sobre matemáticas y física."
-              className={`w-full px-4 py-2 rounded-lg bg-green-100 text-white placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-600 ${errors.description ? "border-text-error focus:border-text-error focus:ring-red-500" : "border-gray-300 focus:ring-secondary focus:border-secondary"}`}
+              className={`w-full px-4 py-2 rounded-lg bg-green-100 text-text-color placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-600 ${errors.description ? "border-text-error focus:border-text-error focus:ring-red-500" : "border-gray-300 focus:ring-secondary focus:border-secondary"}`}
               {...register("description")}
             />
             {errors.description && (

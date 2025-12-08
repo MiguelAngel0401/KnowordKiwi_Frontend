@@ -9,6 +9,7 @@ interface CozyUploadPostProps {
 
 const CozyUploadPost: React.FC<CozyUploadPostProps> = ({ isOpen, onClose }) => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [tags, setTags] = useState<string[]>([]);
   const [inputTag, setInputTag] = useState("");
@@ -160,6 +161,19 @@ const CozyUploadPost: React.FC<CozyUploadPostProps> = ({ isOpen, onClose }) => {
                       </p>
                     </div>
                   )}
+                </div>
+
+                <div className="mb-6">
+                  <label className="block text-gray-700 mb-2 font-medium">
+                    Título
+                  </label>
+                  <input
+                    type="text"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-sans bg-white"
+                    placeholder="Escribe un título para tu imagen..."
+                  />
                 </div>
 
                 <div className="mb-6">

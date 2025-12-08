@@ -8,6 +8,8 @@ import {
   ListChecks,
   Calendar,
 } from "lucide-react";
+import { useState } from "react";
+import CozyUploadPost from "@/components/CozyUploadPost";
 
 const getPostActions = (communityId: number) => [
   {
@@ -37,17 +39,35 @@ interface PostsBarComponentProps {
 export default function PostsBarComponent({
   communityId,
 }: PostsBarComponentProps) {
+  const [showImageUpload, setShowImageUpload] = useState(false);
   const postActions = getPostActions(communityId);
+
+  // Find the image action and handle click differently
+  const handleImageActionClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setShowImageUpload(true);
+  };
+
   return (
-    <div className="rounded-xl shadow-lg w-full flex gap-2 sm:gap-4 px-2 sm:px-4 py-2 mt-4 items-center overflow-x-auto">
-      {postActions.map((action) => (
-        <PostActionComponent
-          key={action.key}
-          label={action.label}
-          icon={action.icon}
-          href={action.href}
-        />
-      ))}
-    </div>
+    <>
+      <div className="rounded-xl shadow-lg w-full flex gap-2 sm:gap-4 px-2 sm:px-4 py-2 mt-4 items-center overflow-x-auto">
+        {postActions.map((action) => (
+          <PostActionComponent
+            key={action.key}
+            label={action.label}
+            icon={action.icon}
+            href={action.key === "image" ? "#" : action.href}
+            onClick={
+              action.key === "image" ? handleImageActionClick : undefined
+            }
+          />
+        ))}
+      </div>
+
+      <CozyUploadPost
+        isOpen={showImageUpload}
+        onClose={() => setShowImageUpload(false)}
+      />
+    </>
   );
 }

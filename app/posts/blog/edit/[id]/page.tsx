@@ -349,6 +349,7 @@ export default function EditBlogPost() {
         <div>
           <QuizSection
             formMethods={formMethods}
+            postId={id}
             onQuizChange={() => setQuizChanged(true)}
           />
         </div>

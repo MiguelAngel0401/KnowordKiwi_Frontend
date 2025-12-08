@@ -8,13 +8,15 @@ import QuizQuestionCreator from "./QuizQuestionCreator";
 import QuizDisplay from "./QuizDisplay";
 import ViewModeToggler, { ViewMode } from "./ViewModeToggler";
 import { Question } from "@/types/posts/quiz/question";
+import AIQuizGenerator from "./AIQuizGenerator";
 
 interface QuizCreatorProps {
   formMethods: UseFormReturn<BlogPostFormData>;
+  postId?: number; // Post ID for AI generation
   onQuizChange?: () => void;
 }
 
-export default function QuizSection({ formMethods, onQuizChange }: QuizCreatorProps) {
+export default function QuizSection({ formMethods, postId, onQuizChange }: QuizCreatorProps) {
   const { watch, setValue } = formMethods;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditingQuiz, setIsEditingQuiz] = useState(false);
@@ -104,13 +106,41 @@ export default function QuizSection({ formMethods, onQuizChange }: QuizCreatorPr
           )}
         </div>
         {!hasSavedQuiz && (
-          <Switch
-            checked={isModalOpen}
-            onChange={setIsModalOpen}
-            className="group inline-flex h-6 w-11 items-center rounded-full bg-gray-800 transition data-checked:bg-primary"
-          >
-            <span className="size-4 translate-x-1 rounded-full bg-white transition group-data-checked:translate-x-6" />
-          </Switch>
+          <div className="flex flex-col gap-4">
+            <AIQuizGenerator
+              postId={postId}
+              formMethods={formMethods}
+              onQuizGenerated={() => {
+                // When AI generates questions, we automatically open the modal to show them
+                setIsModalOpen(true);
+                if (onQuizChange) {
+                  onQuizChange();
+                }
+              }}
+            />
+            <div className="flex justify-center">
+              <Switch
+                checked={isModalOpen}
+                onChange={setIsModalOpen}
+                className="group inline-flex h-6 w-11 items-center rounded-full bg-gray-800 transition data-checked:bg-primary"
+              >
+                <span className="size-4 translate-x-1 rounded-full bg-white transition group-data-checked:translate-x-6" />
+              </Switch>
+            </div>
+          </div>
+        )}
+        {hasSavedQuiz && (
+          <AIQuizGenerator
+            postId={postId}
+            formMethods={formMethods}
+            onQuizGenerated={() => {
+              // When AI generates questions, we automatically open the modal to show them
+              setIsModalOpen(true);
+              if (onQuizChange) {
+                onQuizChange();
+              }
+            }}
+          />
         )}
       </Field>
       <QuizModal

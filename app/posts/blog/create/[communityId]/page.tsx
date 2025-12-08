@@ -194,7 +194,7 @@ export default function CreateBlogPost() {
             )}
           </div>
           <div>
-            <QuizSection formMethods={formMethods} />
+            <QuizSection formMethods={formMethods} postId={undefined} />
           </div>
         </>
       )}

@@ -1,24 +1,34 @@
 import React, { useState, useRef, Fragment } from "react";
 import { X } from "lucide-react";
 import { Dialog, Transition } from "@headlessui/react";
+import { uploadToCloudinary } from "@/services/cloudinary/cloudinaryService";
+import privateApiClient from "@/services/client/privateApiClient";
 
 interface CozyUploadPostProps {
   isOpen: boolean;
   onClose: () => void;
+  communityId: number;
 }
 
-const CozyUploadPost: React.FC<CozyUploadPostProps> = ({ isOpen, onClose }) => {
+const CozyUploadPost: React.FC<CozyUploadPostProps> = ({
+  isOpen,
+  onClose,
+  communityId,
+}) => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [tags, setTags] = useState<string[]>([]);
   const [inputTag, setInputTag] = useState("");
   const [isDragging, setIsDragging] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const fileRef = useRef<File | null>(null);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      fileRef.current = file;
       const reader = new FileReader();
       reader.onloadend = () => {
         setImagePreview(reader.result as string);
@@ -32,6 +42,7 @@ const CozyUploadPost: React.FC<CozyUploadPostProps> = ({ isOpen, onClose }) => {
     setIsDragging(false);
     const file = e.dataTransfer.files?.[0];
     if (file && file.type.startsWith("image/")) {
+      fileRef.current = file;
       const reader = new FileReader();
       reader.onloadend = () => {
         setImagePreview(reader.result as string);
@@ -83,6 +94,46 @@ const CozyUploadPost: React.FC<CozyUploadPostProps> = ({ isOpen, onClose }) => {
     return colors[Math.floor(Math.random() * colors.length)];
   };
 
+  const handlePublish = async () => {
+    if (!imagePreview || !fileRef.current || !title) return;
+
+    try {
+      setIsUploading(true);
+      // Upload image to Cloudinary
+
+      const imageUrl = await uploadToCloudinary(fileRef.current);
+
+      const response = await privateApiClient.post(
+        `/posts/image/${communityId}`,
+        {
+          title,
+          imageUrl,
+          description,
+          tags,
+        },
+      );
+
+      if (!response.data) {
+        throw new Error("Failed to create image post");
+      }
+
+      // Reset form
+      setImagePreview(null);
+      setTitle("");
+      setDescription("");
+      setTags([]);
+      fileRef.current = null;
+
+      // Close modal
+      onClose();
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      alert("Error al subir la imagen. Por favor, inténtalo de nuevo.");
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-50" onClose={onClose}>
@@ -117,6 +168,7 @@ const CozyUploadPost: React.FC<CozyUploadPostProps> = ({ isOpen, onClose }) => {
                   <button
                     onClick={onClose}
                     className="text-gray-500 hover:text-gray-700"
+                    disabled={isUploading}
                   >
                     <X size={24} />
                   </button>
@@ -139,6 +191,7 @@ const CozyUploadPost: React.FC<CozyUploadPostProps> = ({ isOpen, onClose }) => {
                     onChange={handleImageChange}
                     className="hidden"
                     accept="image/*"
+                    disabled={isUploading}
                   />
                   {imagePreview ? (
                     <div className="flex justify-center">
@@ -173,6 +226,7 @@ const CozyUploadPost: React.FC<CozyUploadPostProps> = ({ isOpen, onClose }) => {
                     onChange={(e) => setTitle(e.target.value)}
                     className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-sans bg-white"
                     placeholder="Escribe un título para tu imagen..."
+                    disabled={isUploading}
                   />
                 </div>
 
@@ -186,6 +240,7 @@ const CozyUploadPost: React.FC<CozyUploadPostProps> = ({ isOpen, onClose }) => {
                       onChange={(e) => setDescription(e.target.value)}
                       className="w-full p-4 h-32 resize-none focus:outline-none font-medium"
                       placeholder="Escribe tu descripción aquí..."
+                      disabled={isUploading}
                     />
                   </div>
                 </div>
@@ -209,6 +264,7 @@ const CozyUploadPost: React.FC<CozyUploadPostProps> = ({ isOpen, onClose }) => {
                           <button
                             onClick={() => handleRemoveTag(tag)}
                             className="ml-2 text-gray-500 hover:text-gray-700"
+                            disabled={isUploading}
                           >
                             <X size={14} />
                           </button>
@@ -223,6 +279,7 @@ const CozyUploadPost: React.FC<CozyUploadPostProps> = ({ isOpen, onClose }) => {
                     onKeyDown={handleAddTag}
                     className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-sans"
                     placeholder="Presiona Enter para agregar una etiqueta..."
+                    disabled={isUploading}
                   />
                 </div>
 
@@ -230,14 +287,16 @@ const CozyUploadPost: React.FC<CozyUploadPostProps> = ({ isOpen, onClose }) => {
                   <button
                     onClick={onClose}
                     className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 font-sans"
+                    disabled={isUploading}
                   >
                     Cancelar
                   </button>
                   <button
                     className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 font-sans"
-                    disabled={!imagePreview}
+                    disabled={!imagePreview || !title || isUploading}
+                    onClick={handlePublish}
                   >
-                    Publicar
+                    {isUploading ? "Publicando..." : "Publicar"}
                   </button>
                 </div>
               </Dialog.Panel>

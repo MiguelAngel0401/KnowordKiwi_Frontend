@@ -9,7 +9,7 @@ import {
   Calendar,
 } from "lucide-react";
 import { useState } from "react";
-import CozyUploadPost from "@/components/CozyUploadPost";
+import CozyUploadPost from "@/app/communities/components/ui/image-post/CozyUploadPost";
 
 const getPostActions = (communityId: number) => [
   {
@@ -50,7 +50,7 @@ export default function PostsBarComponent({
 
   return (
     <>
-      <div className="rounded-xl shadow-lg w-full flex gap-2 sm:gap-4 px-2 sm:px-4 py-2 mt-4 items-center overflow-x-auto">
+      <div className="bg-bg-alt rounded-xl shadow-lg w-full flex gap-2 sm:gap-4 px-2 sm:px-4 py-2 mt-4 items-center overflow-x-auto">
         {postActions.map((action) => (
           <PostActionComponent
             key={action.key}
@@ -67,6 +67,7 @@ export default function PostsBarComponent({
       <CozyUploadPost
         isOpen={showImageUpload}
         onClose={() => setShowImageUpload(false)}
+        communityId={communityId}
       />
     </>
   );

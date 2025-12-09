@@ -145,7 +145,7 @@ export default function CommunityDetail() {
               <div className="absolute inset-0 bg-warm-gray-800/20"></div>
             </>
           ) : (
-            <div className="w-full h-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
+            <div className="w-full h-full bg-linear-to-r from-blue-500 to-purple-600 flex items-center justify-center">
               <span className="text-white text-2xl font-bold">
                 {community.name}
               </span>
@@ -329,7 +329,7 @@ export default function CommunityDetail() {
             </div>
 
             <div className="flex items-center bg-stone-50 p-4 rounded-xl">
-              <div className="bg-gradient-to-br from-stone-200 to-stone-300 border-2 border-dashed rounded-xl w-16 h-16" />
+              <div className="bg-linear-to-br from-stone-200 to-stone-300 border-2 border-dashed rounded-xl w-16 h-16" />
               <div className="ml-3">
                 <p className="text-sm text-stone-500">Creador</p>
                 <p className="font-medium text-stone-800">Usuario</p>
@@ -339,7 +339,7 @@ export default function CommunityDetail() {
         </div>
       </div>
 
-      <div className="bg-gradient-to-br from-stone-100 to-amber-50 rounded-2xl shadow-lg mt-6 pb-8 border border-stone-200">
+      <div className="bg-linear-to-br from-stone-100 to-amber-50 rounded-2xl shadow-lg mt-6 pb-8 border border-stone-200">
         <div className="mt-8 px-4 md:px-8 py-2">
           <PostsComponent communityId={communityId} />
         </div>

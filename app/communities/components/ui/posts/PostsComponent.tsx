@@ -98,6 +98,14 @@ export default function PostsComponent({ communityId }: PostsComponentProps) {
               getTimeAgo={getTimeAgo}
             />
           );
+        } else if (post.excalidrawContent) {
+          return (
+            <DiagramPostCard
+              key={post.id}
+              post={post as PostByCommunity & { excalidrawContent: any }}
+              getTimeAgo={getTimeAgo}
+            />
+          );
         } else {
           // Default card for other post types
           return (
@@ -269,6 +277,73 @@ function DefaultPostCard({ post, getTimeAgo }: DefaultPostCardProps) {
         </h2>
 
         {/* Metadata/Stats Section - Mimicking the "4d ago 438 17" row */}
+        <div className="flex items-center text-gray-500 text-sm mt-4">
+          <span className="mr-4">{getTimeAgo(post.createdAt)}</span>
+
+          {/* Reactions (438) - Using a placeholder until actual data is available */}
+          <div className="flex items-center mr-4">
+            <Heart size={16} className="mr-1" />
+            <span className="font-medium">
+              {(post as any).placeholderReactions || 0}
+            </span>
+          </div>
+
+          {/* Comments (17) - Using a placeholder until actual data is available */}
+          <div className="flex items-center">
+            <MessageCircle size={16} className="mr-1" />
+            <span className="font-medium">
+              {(post as any).placeholderComments || 0}
+            </span>
+          </div>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+
+
+// Diagram Post Card Component
+interface DiagramPostCardProps {
+  post: PostByCommunity & { excalidrawContent: any };
+  getTimeAgo: (dateString: string) => string;
+}
+
+function DiagramPostCard({ post, getTimeAgo }: DiagramPostCardProps) {
+  // Use the first few elements as a preview, or show a thumbnail if available
+  const elementCount = post.excalidrawContent?.diagramData?.elements?.length || 0;
+  const diagramTitle = post.title;
+  
+  return (
+    <Link href={`/posts/diagram/${post.id}`}>
+      <div className="rounded-lg p-4 md:p-6 hover:bg-bg-default transition-colors cursor-pointer">
+        <div className="flex items-center gap-2 mb-4">
+          <div className="w-8 h-8 rounded-full overflow-hidden bg-gray-600 flex items-center justify-center">
+            <User className="text-white w-4 h-4" />
+          </div>
+          <h3 className="font-semibold text-text-color text-sm">
+            {post.author.user.username}
+          </h3>
+        </div>
+
+        <h2 className="text-2xl md:text-3xl font-extrabold text-text-color mb-2 leading-tight">
+          {diagramTitle}
+        </h2>
+
+        {/* Diagram preview */}
+        <div className="mb-4 p-4 bg-stone-50 rounded-lg border border-stone-200 min-h-[120px] flex items-center justify-center">
+          <div className="text-center">
+            <div className="inline-block p-2 bg-amber-100 rounded-full mb-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              </svg>
+            </div>
+            <p className="text-gray-600 text-sm">Diagrama de Excalidraw</p>
+            <p className="text-gray-500 text-xs mt-1">{elementCount} elementos</p>
+          </div>
+        </div>
+
+        {/* Metadata/Stats Section */}
         <div className="flex items-center text-gray-500 text-sm mt-4">
           <span className="mr-4">{getTimeAgo(post.createdAt)}</span>
 

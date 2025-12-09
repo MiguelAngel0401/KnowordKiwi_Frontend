@@ -40,7 +40,10 @@ const QuizComponent: React.FC<QuizComponentProps> = ({ questions }) => {
     return null;
   }
 
-  const handleAnswerSelect = (questionId: string | number, optionText: string) => {
+  const handleAnswerSelect = (
+    questionId: string | number,
+    optionText: string,
+  ) => {
     if (submitted[questionId]) return; // Don't allow changing answers after submission
 
     setAnswers((prev) => ({
@@ -90,7 +93,8 @@ const QuizComponent: React.FC<QuizComponentProps> = ({ questions }) => {
       <div className="space-y-8">
         {questions.map((question, index) => {
           // Use the question id if available, otherwise use a temporary id based on index
-          const questionId = question.id !== undefined ? question.id : `temp-${index}`;
+          const questionId =
+            question.id !== undefined ? question.id : `temp-${index}`;
           const selectedAnswer = answers[questionId];
           const correctOption = question.options.find((opt) => opt.isCorrect);
           const isSubmitted = submitted[questionId];
@@ -107,7 +111,7 @@ const QuizComponent: React.FC<QuizComponentProps> = ({ questions }) => {
                   : "border-gray-600 bg-bg-gray"
               }`}
             >
-              <h3 className="text-lg font-semibold text-white mb-4">
+              <h3 className="text-lg font-semibold text-text-color mb-4">
                 {question.title}
               </h3>
 
@@ -161,7 +165,7 @@ const QuizComponent: React.FC<QuizComponentProps> = ({ questions }) => {
                       >
                         {String.fromCharCode(65 + optionIndex)}
                       </div>
-                      <span className="text-gray-200 flex-1">
+                      <span className="text-text-color flex-1">
                         {option.text}
                       </span>
                       {isSubmitted && option.isCorrect && (

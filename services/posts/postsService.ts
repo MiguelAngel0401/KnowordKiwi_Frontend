@@ -31,6 +31,19 @@ export interface PostByCommunity {
       createdAt: string;
     }>
   };
+  excalidrawContent?: {
+    id: number;
+    diagramData: {
+      type: string;
+      version: number;
+      source: string;
+      elements: any[];
+      appState: any;
+    };
+    postId: number;
+    createdAt: string;
+    updatedAt: string;
+  };
   questions?: Array<{
     id: number;
     title: string;

@@ -190,11 +190,11 @@ function ImagePostCard({ post, getTimeAgo }: ImagePostCardProps) {
         </h2>
 
         {/* Image preview */}
-        <div className="mb-4">
+        <div className="mb-4 overflow-hidden">
           <img
             src={post.imageContent?.imageUrl}
             alt={post.title}
-            className="max-w-full h-auto rounded-lg border-4 border-white shadow-xl rotate-1"
+            className="max-w-full h-auto max-h-96 object-cover rounded-lg border-4 border-white shadow-xl rotate-1"
           />
         </div>
 

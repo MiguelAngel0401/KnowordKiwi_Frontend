@@ -20,7 +20,12 @@ const getPostActions = (communityId: number) => [
   },
   // eslint-disable-next-line jsx-a11y/alt-text
   { label: "Imagen", icon: <Image />, key: "image", href: "#" }, // Actualizar con la ruta correcta
-  { label: "Diagrama", icon: <Workflow />, key: "diagram", href: "#" }, // Actualizar con la ruta correcta
+  {
+    label: "Diagrama",
+    icon: <Workflow />,
+    key: "diagram",
+    href: `/posts/diagram/create/${communityId}`,
+  }, // Actualizar con la ruta correcta
   {
     label: "Pregunta",
     icon: <MessageCircleQuestion />,

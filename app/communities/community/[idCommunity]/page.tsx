@@ -137,7 +137,7 @@ export default function CommunityDetail() {
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
                   target.parentElement!.innerHTML = `
-                    <div class="w-full h-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
+                    <div class="w-full h-full bg-linear-to-r from-blue-500 to-purple-600 flex items-center justify-center">
                       <span class="text-white text-2xl font-bold">${community.name}</span>
                     </div>
                   `;
@@ -349,11 +349,11 @@ export default function CommunityDetail() {
                 userId={(() => {
                   // Helper function to decode JWT token and get user ID
                   const getAccessToken = (): string | null => {
-                    if (typeof document !== 'undefined') {
-                      const cookies = document.cookie.split(';');
+                    if (typeof document !== "undefined") {
+                      const cookies = document.cookie.split(";");
                       for (const cookie of cookies) {
-                        const [name, value] = cookie.trim().split('=');
-                        if (name === 'access-token' && value) {
+                        const [name, value] = cookie.trim().split("=");
+                        if (name === "access-token" && value) {
                           return decodeURIComponent(value);
                         }
                       }
@@ -363,10 +363,10 @@ export default function CommunityDetail() {
 
                   const decodeToken = (token: string) => {
                     try {
-                      const payload = atob(token.split('.')[1]);
+                      const payload = atob(token.split(".")[1]);
                       return JSON.parse(payload);
                     } catch (e) {
-                      console.error('Error decoding token:', e);
+                      console.error("Error decoding token:", e);
                       return null;
                     }
                   };

@@ -5,14 +5,19 @@ import type {
   AppState,
 } from "@excalidraw/excalidraw/types/types";
 import ExcalidrawWrapper from "../../components/ExcalidrawWrapper";
+import privateApiClient from "@/services/client/privateApiClient";
+import { useParams, useRouter } from "next/navigation";
+import SuccessModal from "@/components/shared/SuccessModal";
 
 export default function CreateDiagramPage() {
+  const { communityId } = useParams();
+  const router = useRouter();
   const [title, setTitle] = useState("");
   const [elements, setElements] = useState<readonly ExcalidrawElement[]>([]);
   const [appState, setAppState] = useState<AppState | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const handleDiagramChange = (
     elements: readonly ExcalidrawElement[],
@@ -30,27 +35,21 @@ export default function CreateDiagramPage() {
     }
     setIsSubmitting(true);
     setError(null);
-    setSuccess(null);
 
     const diagramData = {
       title,
       elements,
       appState,
+      communityId: parseInt(communityId as string),
     };
 
     try {
-      // Aquí harías la llamada a tu API
-      // const response = await fetch('/api/posts/diagram', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(diagramData),
-      // });
-      // if (!response.ok) throw new Error('Error al guardar el diagrama');
-
+      const response = await privateApiClient.post(
+        `/diagrams/${communityId}`,
+        diagramData,
+      );
       console.log("Enviando al backend:", JSON.stringify(diagramData, null, 2));
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simular llamada a API
-
-      setSuccess("¡Diagrama guardado con éxito!");
+      setShowSuccessModal(true);
       setTitle("");
       // Podrías resetear Excalidraw si es necesario
     } catch (err: any) {
@@ -58,6 +57,11 @@ export default function CreateDiagramPage() {
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleCloseSuccessModal = () => {
+    setShowSuccessModal(false);
+    router.push(`/communities/community/${communityId}`);
   };
 
   return (
@@ -96,13 +100,19 @@ export default function CreateDiagramPage() {
               </button>
             </div>
             {error && <p className="text-red-600 mt-2 text-sm">{error}</p>}
-            {success && (
-              <p className="text-emerald-700 mt-2 text-sm">{success}</p>
-            )}
           </div>
 
           <ExcalidrawWrapper onChange={handleDiagramChange} />
         </form>
+
+        <SuccessModal
+          isOpen={showSuccessModal}
+          title="¡Éxito!"
+          message="El diagrama ha sido guardado correctamente."
+          onClose={handleCloseSuccessModal}
+          onConfirm={handleCloseSuccessModal}
+          confirmText="Aceptar"
+        />
       </div>
     </div>
   );

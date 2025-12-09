@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@excalidraw/excalidraw": "^0.18.0",
     "@headlessui/react": "^2.2.4",
     "@hookform/resolvers": "^5.0.1",
     "@tiptap/extension-highlight": "^3.4.3",

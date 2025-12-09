@@ -4,7 +4,7 @@ import type {
   ExcalidrawElement,
   AppState,
 } from "@excalidraw/excalidraw/types/types";
-import ExcalidrawWrapper from "../components/ExcalidrawWrapper";
+import ExcalidrawWrapper from "../../components/ExcalidrawWrapper";
 
 export default function CreateDiagramPage() {
   const [title, setTitle] = useState("");
@@ -61,37 +61,49 @@ export default function CreateDiagramPage() {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Crear Nuevo Diagrama</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label htmlFor="title" className="block text-sm font-medium mb-1">
-            Título del Diagrama
-          </label>
-          <div className="flex space-x-4">
-            <input
-              id="title"
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-              placeholder="Ej. Arquitectura de la aplicación"
-              disabled={isSubmitting}
-            />
-            <button
-              type="submit"
-              className="px-4 py-2 bg-blue-600 text-white font-bold rounded-md hover:bg-blue-700 transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-              disabled={isSubmitting}
+    <div className="min-h-screen bg-stone-100 p-4 sm:p-8 font-sans">
+      <div className="max-w-5xl mx-auto">
+        <h2 className="text-3xl font-serif text-stone-800 mb-8">
+          Crea un Nuevo Diagrama
+        </h2>
+        <form
+          onSubmit={handleSubmit}
+          className="bg-white p-6 sm:p-8 rounded-xl shadow-md space-y-6"
+        >
+          <div>
+            <label
+              htmlFor="title"
+              className="block text-sm font-medium text-stone-600 mb-2"
             >
-              {isSubmitting ? "Guardando..." : "Guardar Diagrama"}
-            </button>
+              Título del Diagrama
+            </label>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4">
+              <input
+                id="title"
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                className="w-full px-4 py-2 border border-stone-300 rounded-lg bg-stone-50 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition duration-200"
+                placeholder="Ej. Arquitectura de mi aplicación..."
+                disabled={isSubmitting}
+              />
+              <button
+                type="submit"
+                className="mt-3 sm:mt-0 px-6 py-2 bg-primary text-white font-semibold rounded-lg hover:bg-primary-hover transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "Guardando..." : "Guardar"}
+              </button>
+            </div>
+            {error && <p className="text-red-600 mt-2 text-sm">{error}</p>}
+            {success && (
+              <p className="text-emerald-700 mt-2 text-sm">{success}</p>
+            )}
           </div>
-          {error && <p className="text-red-500">{error}</p>}
-          {success && <p className="text-green-500">{success}</p>}
-        </div>
 
-        <ExcalidrawWrapper onChange={handleDiagramChange} />
-      </form>
+          <ExcalidrawWrapper onChange={handleDiagramChange} />
+        </form>
+      </div>
     </div>
   );
 }

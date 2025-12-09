@@ -1,8 +1,9 @@
-import React, { useState, useRef, Fragment } from "react";
+import React, { useState, useRef, Fragment, useEffect } from "react";
 import { X } from "lucide-react";
 import { Dialog, Transition } from "@headlessui/react";
 import { uploadToCloudinary } from "@/services/cloudinary/cloudinaryService";
 import privateApiClient from "@/services/client/privateApiClient";
+import ErrorModal from "@/components/modals/ErrorModal";
 
 interface CozyUploadPostProps {
   isOpen: boolean;
@@ -22,8 +23,17 @@ const CozyUploadPost: React.FC<CozyUploadPostProps> = ({
   const [inputTag, setInputTag] = useState("");
   const [isDragging, setIsDragging] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const fileRef = useRef<File | null>(null);
+
+  useEffect(() => {
+    if (!isOpen) {
+      setShowSuccess(false);
+    }
+  }, [isOpen]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -99,8 +109,9 @@ const CozyUploadPost: React.FC<CozyUploadPostProps> = ({
 
     try {
       setIsUploading(true);
-      // Upload image to Cloudinary
+      setError(null);
 
+      // Upload image to Cloudinary
       const imageUrl = await uploadToCloudinary(fileRef.current);
 
       const response = await privateApiClient.post(
@@ -117,6 +128,9 @@ const CozyUploadPost: React.FC<CozyUploadPostProps> = ({
         throw new Error("Failed to create image post");
       }
 
+      // Show success notification
+      setShowSuccess(true);
+
       // Reset form
       setImagePreview(null);
       setTitle("");
@@ -124,11 +138,18 @@ const CozyUploadPost: React.FC<CozyUploadPostProps> = ({
       setTags([]);
       fileRef.current = null;
 
-      // Close modal
-      onClose();
-    } catch (error) {
+      // Close modal after a short delay to show success
+      setTimeout(() => {
+        onClose();
+      }, 1000);
+    } catch (error: any) {
       console.error("Error uploading image:", error);
-      alert("Error al subir la imagen. Por favor, inténtalo de nuevo.");
+      const errorMessage =
+        error.response?.data?.message ||
+        error.message ||
+        "Error al subir la imagen. Por favor, inténtalo de nuevo.";
+      setError(errorMessage);
+      setShowErrorModal(true);
     } finally {
       setIsUploading(false);
     }
@@ -304,6 +325,67 @@ const CozyUploadPost: React.FC<CozyUploadPostProps> = ({
           </div>
         </div>
       </Dialog>
+
+      {/* Success Toast */}
+      <Transition
+        show={showSuccess}
+        enter="transform ease-out duration-300 transition"
+        enterFrom="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2"
+        enterTo="translate-y-0 opacity-100 sm:translate-x-0"
+        leave="transform ease-in duration-100 transition"
+        leaveFrom="translate-y-0 opacity-100 sm:translate-x-0"
+        leaveTo="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2"
+      >
+        <div className="fixed z-50 inset-0 flex items-end px-4 py-6 pointer-events-none sm:p-6 sm:items-start">
+          <div className="w-full flex flex-col items-center space-y-4 sm:items-end">
+            <div className="max-w-sm w-full bg-green-500 shadow-lg rounded-lg pointer-events-auto ring-1 ring-black ring-opacity-5 overflow-hidden">
+              <div className="p-4">
+                <div className="flex items-start">
+                  <div className="flex-shrink-0">
+                    <svg
+                      className="h-6 w-6 text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M5 13l4 4L19 7"
+                      />
+                    </svg>
+                  </div>
+                  <div className="ml-3 w-0 flex-1 pt-0.5">
+                    <p className="text-sm font-medium text-white">
+                      ¡Imagen publicada exitosamente!
+                    </p>
+                  </div>
+                  <div className="ml-4 flex-shrink-0 flex">
+                    <button
+                      className="text-white hover:text-gray-200"
+                      onClick={() => setShowSuccess(false)}
+                    >
+                      <X className="h-5 w-5" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Transition>
+
+      {/* Error Modal */}
+      <ErrorModal
+        message={error || "Ha ocurrido un error al publicar la imagen"}
+        isOpen={showErrorModal}
+        onClose={() => {
+          setShowErrorModal(false);
+          setError(null);
+        }}
+      />
     </Transition>
   );
 };

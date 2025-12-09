@@ -15,6 +15,7 @@ import {
 import { CommunityWithOwnership } from "@/types/community";
 import LeaveCommunityModal from "../../components/modals/LeaveCommunityModal";
 import PostsComponent from "../../components/ui/posts/PostsComponent";
+import PostsBarComponent from "../../components/ui/posts/PostsBarComponent";
 import UserGamificationBar from "@/app/communities/components/gamification/UserGamificationBar";
 import { useCommunityRankingStore } from "@/store/communityRankingStore";
 
@@ -341,6 +342,45 @@ export default function CommunityDetail() {
 
       <div className="bg-linear-to-br from-stone-100 to-amber-50 rounded-2xl shadow-lg mt-6 pb-8 border border-stone-200">
         <div className="mt-8 px-4 md:px-8 py-2">
+          {community.isMember && (
+            <div className="mb-6">
+              <PostsBarComponent
+                communityId={communityId}
+                userId={(() => {
+                  // Helper function to decode JWT token and get user ID
+                  const getAccessToken = (): string | null => {
+                    if (typeof document !== 'undefined') {
+                      const cookies = document.cookie.split(';');
+                      for (const cookie of cookies) {
+                        const [name, value] = cookie.trim().split('=');
+                        if (name === 'access-token' && value) {
+                          return decodeURIComponent(value);
+                        }
+                      }
+                    }
+                    return null;
+                  };
+
+                  const decodeToken = (token: string) => {
+                    try {
+                      const payload = atob(token.split('.')[1]);
+                      return JSON.parse(payload);
+                    } catch (e) {
+                      console.error('Error decoding token:', e);
+                      return null;
+                    }
+                  };
+
+                  const token = getAccessToken();
+                  if (token) {
+                    const decoded = decodeToken(token);
+                    return decoded?.sub || decoded?.id || 0; // sub is typically used for user ID in JWT
+                  }
+                  return 0;
+                })()}
+              />
+            </div>
+          )}
           <PostsComponent communityId={communityId} />
         </div>
       </div>

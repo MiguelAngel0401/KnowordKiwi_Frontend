@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import DOMPurify from "isomorphic-dompurify";
 import { useParams, useRouter } from "next/navigation";
 import { MessageCircle, Heart, User, Edit3, Trash2 } from "lucide-react";
 import {
@@ -180,7 +181,67 @@ export default function BlogDetailPage() {
 
       <div className="prose prose-invert max-w-none text-text-color">
         <div
-          dangerouslySetInnerHTML={{ __html: blogPost.blogContent.content }}
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(blogPost.blogContent.content, {
+              ALLOWED_TAGS: [
+                "p",
+                "br",
+                "strong",
+                "em",
+                "u",
+                "h1",
+                "h2",
+                "h3",
+                "h4",
+                "h5",
+                "h6",
+                "ul",
+                "ol",
+                "li",
+                "blockquote",
+                "hr",
+                "div",
+                "pre",
+                "code",
+                "span",
+                "figure",
+                "figcaption",
+                "table",
+                "thead",
+                "tbody",
+                "tr",
+                "th",
+                "td",
+                "a",
+                "img",
+                "iframe",
+                "youtube",
+              ],
+              ALLOWED_ATTR: [
+                "href",
+                "src",
+                "alt",
+                "title",
+                "class",
+                "id",
+                "style",
+                "width",
+                "height",
+                "target",
+                "rel",
+                "controls",
+                "allowfullscreen",
+                "frameborder",
+                "data-youtube-video",
+              ],
+              ALLOWED_IFRAME_HOSTNAMES: [
+                "www.youtube.com",
+                "youtube.com",
+                "youtu.be",
+                "player.vimeo.com",
+              ],
+            }),
+          }}
         />
       </div>
 

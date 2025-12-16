@@ -85,7 +85,7 @@ export default function MenuBar({ editor }: MenuBarProps) {
   ];
 
   return (
-    <div className="border border-primary rounded-md p-1 mb-4 bg-gray-900 space-x-2 z-50">
+    <div className="border-b border-secondary  p-1 mb-4 bg-bg-default space-x-2 z-50">
       {options.map((option, index) => (
         <Button
           key={index}
@@ -94,7 +94,7 @@ export default function MenuBar({ editor }: MenuBarProps) {
           className={`p-2 rounded-md transition-colors ${
             option.pressed
               ? "bg-gray-700 text-white"
-              : "text-gray-400 hover:bg-gray-800 hover:text-white"
+              : "text-gray-600 hover:bg-secondary hover:text-white"
           }`}
         >
           {option.icon}

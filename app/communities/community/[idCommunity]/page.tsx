@@ -15,6 +15,9 @@ import {
 import { CommunityWithOwnership } from "@/types/community";
 import LeaveCommunityModal from "../../components/modals/LeaveCommunityModal";
 import PostsComponent from "../../components/ui/posts/PostsComponent";
+import PostsBarComponent from "../../components/ui/posts/PostsBarComponent";
+import UserGamificationBar from "@/app/communities/components/gamification/UserGamificationBar";
+import { useCommunityRankingStore } from "@/store/communityRankingStore";
 
 export default function CommunityDetail() {
   const params = useParams();
@@ -30,6 +33,10 @@ export default function CommunityDetail() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // Get community ranking data from the store
+  const { communityRanking, updateCommunityRankingIfNeeded } =
+    useCommunityRankingStore();
+
   useEffect(() => {
     if (!communityId) {
       setError("ID de comunidad no proporcionado.");
@@ -43,7 +50,19 @@ export default function CommunityDetail() {
       try {
         const data = await getCommunityById(communityId);
         setCommunity(data);
-      } catch (err) {
+
+        // Extract the ranking information from the API response and store it in the Zustand store
+        const rankingData = {
+          userTotalXp: data.userTotalXp || 0,
+          userCurrentRank: data.userCurrentRank || "Novato",
+          userNextRankXp: data.userNextRankXp || 100,
+          userNextRankName: data.userNextRankName || "Aprendiz",
+        };
+        console.log(rankingData);
+
+        // Update the store with the new ranking data for this community
+        updateCommunityRankingIfNeeded(communityId, rankingData);
+      } catch (err: any) {
         setError(
           err.response?.data?.message ||
             "No se pudo cargar la comunidad. Inténtalo más tarde.",
@@ -55,7 +74,7 @@ export default function CommunityDetail() {
     };
 
     fetchCommunity();
-  }, [communityId]);
+  }, [communityId, updateCommunityRankingIfNeeded]);
 
   const handleJoin = async () => {
     try {
@@ -95,7 +114,7 @@ export default function CommunityDetail() {
   if (!community) {
     return (
       <div className="text-center py-12">
-        <h3 className="text-lg font-medium text-gray-900 dark:text-white">
+        <h3 className="text-lg font-medium text-text-color">
           No se encontró la comunidad
         </h3>
       </div>
@@ -103,65 +122,70 @@ export default function CommunityDetail() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto p-6">
+    <div className="max-w-100 md:max-w-4xl lg:max-w-6xl mx-auto p-2 sm:p-4 md:p-6">
       {/* Banner de la comunidad */}
-      <div className="relative h-64 rounded-t-xl overflow-hidden">
-        {community.banner ? (
-          <Image
-            src={community.banner.trim()}
-            width={800}
-            height={200}
-            alt={`Banner de ${community.name}`}
-            className="w-full h-full object-cover"
-            onError={(e) => {
-              const target = e.target as HTMLImageElement;
-              target.parentElement!.innerHTML = `
-                <div class="w-full h-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
-                  <span class="text-white text-2xl font-bold">${community.name}</span>
-                </div>
-              `;
-            }}
-          />
-        ) : (
-          <div className="w-full h-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
-            <span className="text-white text-2xl font-bold">
-              {community.name}
-            </span>
-          </div>
-        )}
-
-        {/* Avatar de la comunidad */}
-        <div className="absolute bottom-0 left-8 transform translate-y-1/2">
-          {community.avatar ? (
-            <Image
-              src={community.avatar.trim()}
-              width={400}
-              height={400}
-              alt={community.name}
-              className="w-48 h-48 rounded-full border-4 border-white dark:border-gray-800 object-cover shadow-lg"
-              onError={(e) => {
-                const target = e.target as HTMLImageElement;
-                target.style.display = "none";
-              }}
-            />
+      <div className="p-1 shadow-lg rounded-2xl bg-white/50">
+        <div className="relative h-48 md:h-64 rounded-2xl overflow-hidden">
+          {community.banner ? (
+            <>
+              <Image
+                src={community.banner.trim()}
+                width={800}
+                height={200}
+                alt={`Banner de ${community.name}`}
+                className="w-full h-full object-cover z-0"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.parentElement!.innerHTML = `
+                    <div class="w-full h-full bg-linear-to-r from-blue-500 to-purple-600 flex items-center justify-center">
+                      <span class="text-white text-2xl font-bold">${community.name}</span>
+                    </div>
+                  `;
+                }}
+              />
+              <div className="absolute inset-0 bg-warm-gray-800/20"></div>
+            </>
           ) : (
-            <div className="w-24 h-24 rounded-full border-4 border-white dark:border-gray-800 bg-gray-200 flex items-center justify-center shadow-lg z-10">
-              <span className="text-3xl font-bold text-gray-600">
-                {community.name.charAt(0).toUpperCase()}
+            <div className="w-full h-full bg-linear-to-r from-blue-500 to-purple-600 flex items-center justify-center">
+              <span className="text-white text-2xl font-bold">
+                {community.name}
               </span>
             </div>
           )}
+
+          {/* Avatar de la comunidad */}
+          <div className="absolute bottom-0 left-4 md:left-8 transform translate-y-1/2 z-50">
+            {community.avatar ? (
+              <Image
+                src={community.avatar.trim()}
+                width={400}
+                height={400}
+                alt={community.name}
+                className="w-24 h-24 md:w-48 md:h-48 rounded-full border-4 border-white object-cover shadow-lg z-10"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = "none";
+                }}
+              />
+            ) : (
+              <div className="w-24 h-24 rounded-full border-4 border-white bg-gray-200 flex items-center justify-center shadow-lg z-10">
+                <span className="text-2xl md:text-3xl font-bold text-gray-600">
+                  {community.name.charAt(0).toUpperCase()}
+                </span>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
       {/* Contenido principal */}
-      <div className="bg-bg-gray rounded-b-xl shadow-lg pb-8">
+      <div className="bg-bg-default rounded-b-xl shadow-lg pb-8">
         {/* Información principal de la comunidad */}
-        <div className="pt-16 px-8">
-          <div className="flex flex-wrap justify-between items-start gap-4">
+        <div className="pt-16 px-4 md:px-8">
+          <div className="flex flex-col md:flex-row justify-between items-start gap-4">
             <div>
               <div className="flex items-center gap-3 mb-2">
-                <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+                <h1 className="text-2xl md:text-3xl font-bold text-text-color">
                   {community.name}
                 </h1>
                 {community.isPrivate ? (
@@ -171,18 +195,22 @@ export default function CommunityDetail() {
                 )}
               </div>
 
-              <p className="text-gray-600 dark:text-gray-300 max-w-3xl">
+              <p className="text-gray-600 max-w-3xl my-2">
                 {community.description}
               </p>
             </div>
           </div>
 
-          {/* Etiquetas */}
-          <div className="flex flex-wrap gap-2 mt-6">
+          {/* Etiquetas con estilo washi tape */}
+          <div className="flex flex-wrap gap-2 mb-6">
             {community.tags.map((tag) => (
               <span
                 key={tag.id}
-                className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100"
+                className="inline-flex items-center px-3 py-2 text-sm font-medium text-stone-700 bg-transparent border border-opacity-30 rounded-sm shadow-sm"
+                style={{
+                  backgroundColor: `hsl(${(tag.id * 37) % 360}, 50%, 95%)`,
+                  borderColor: `hsl(${(tag.id * 37) % 360}, 40%, 70%)`,
+                }}
               >
                 <Tag className="w-4 h-4 mr-1" />
                 {tag.name}
@@ -190,18 +218,11 @@ export default function CommunityDetail() {
             ))}
           </div>
 
-          {community.isOwner && (
-            <p className="text-terciary italic mt-8">
-              ¡Eres dueño de esta comunidad! Puedes editar su información o
-              incluso eliminarla.
-            </p>
-          )}
-
-          <div className="flex gap-3 flex-wrap mt-4">
+          <div className="flex gap-3 flex-wrap mb-6">
             {/* Botón de Unirse: solo si no es miembro ni dueño */}
             {!community.isOwner && !community.isMember && (
               <button
-                className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition-colors"
+                className="px-4 py-2 bg-amber-100 text-amber-800 rounded-lg hover:bg-amber-200 transition-all border border-amber-200"
                 onClick={handleJoin}
               >
                 {isJoining ? "Uniendo..." : "Unirse"}
@@ -212,7 +233,7 @@ export default function CommunityDetail() {
             {!community.isOwner && community.isMember && (
               <button
                 onClick={() => setIsLeaving(true)}
-                className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors"
+                className="px-4 py-2 bg-stone-100 text-stone-700 rounded-lg hover:bg-stone-200 transition-all border border-stone-200"
               >
                 Salir
               </button>
@@ -221,71 +242,145 @@ export default function CommunityDetail() {
             {/* Acciones del dueño */}
             {community.isOwner && (
               <>
-                <Link
-                  href={`/communities/community/${community.id}/editar`}
-                  className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition-colors"
-                >
-                  Editar
-                </Link>
-                <button
-                  onClick={() => setIsDeleting(true)}
-                  className="px-4 py-2 bg-text-error text-white rounded-lg hover:bg-red-700 transition-colors"
-                >
-                  Eliminar
+                <div className="relative group">
+                  {/* Botón de configuración con menú desplegable */}
+                  <button className="px-4 py-2 bg-lavender-100 text-lavender-800 rounded-lg hover:bg-lavender-200 transition-all border border-lavender-200 flex items-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="w-4 h-4 mr-1"
+                    >
+                      <circle cx="12" cy="12" r="3"></circle>
+                      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1 1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33h-.09a1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82V15a1.65 1.65 0 0 0-1.51-1H3z"></path>
+                    </svg>
+                    Config.
+                  </button>
+
+                  {/* Menú desplegable */}
+                  <div className="absolute right-0 mt-1 w-48 bg-white rounded-lg shadow-lg py-2 z-10 border border-stone-200 hidden group-hover:block">
+                    <Link
+                      href={`/communities/community/${community.id}/editar`}
+                      className="block px-4 py-2 text-sm text-stone-700 hover:bg-stone-50 transition-colors"
+                    >
+                      Editar Comunidad
+                    </Link>
+                    <button
+                      onClick={() => setIsDeleting(true)}
+                      className="w-full text-left px-4 py-2 text-sm text-rose-600 hover:bg-rose-50 transition-colors"
+                    >
+                      Eliminar Comunidad
+                    </button>
+                  </div>
+                </div>
+
+                {/* Botón de compartir con estilo "ghost" */}
+                <button className="px-4 py-2 border border-stone-300 text-stone-600 rounded-lg hover:bg-stone-50 transition-all">
+                  Compartir
                 </button>
               </>
             )}
 
-            {/* Botón de compartir siempre visible */}
-            <button className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-              Compartir
-            </button>
+            {/* Botón de compartir para no dueños */}
+            {!community.isOwner && !community.isMember && (
+              <button className="px-4 py-2 border border-stone-300 text-stone-600 rounded-lg hover:bg-stone-50 transition-all">
+                Compartir
+              </button>
+            )}
           </div>
 
-          {/* Información adicional */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8 pt-6 border-t dark:border-gray-700">
-            <div className="flex items-center">
-              <Calendar className="w-5 h-5 text-gray-500 dark:text-gray-400 mr-2" />
+          {/* Gamification Bar - Only show if user is a member of the community */}
+          {community.isMember && (
+            <div className="mt-6">
+              <UserGamificationBar
+                currentRank={communityRanking?.userCurrentRank || "Novato"}
+                currentXp={communityRanking?.userTotalXp || 0}
+                nextRankXp={communityRanking?.userNextRankXp || 100}
+                nextRankName={communityRanking?.userNextRankName || "Aprendiz"}
+              />
+            </div>
+          )}
+
+          {/* Información adicional con estilo bullet journal */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 border-t border-stone-300 border-dashed">
+            <div className="flex items-center bg-stone-50 p-4 rounded-xl">
+              <Calendar className="w-6 h-6 text-stone-600 mr-3" />
               <div>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Creada
-                </p>
-                <p className="font-medium text-gray-900 dark:text-white">
+                <p className="text-sm text-stone-500">Creada</p>
+                <p className="font-medium text-stone-800">
                   {formatDate(community.createdAt)}
                 </p>
               </div>
             </div>
 
-            <div className="flex items-center">
-              <Users className="w-5 h-5 text-gray-500 dark:text-gray-400 mr-2" />
+            <div className="flex items-center bg-stone-50 p-4 rounded-xl">
+              <Users className="w-6 h-6 text-stone-600 mr-3" />
               <div>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Miembros
-                </p>
-                <p className="font-medium text-gray-900 dark:text-white">
+                <p className="text-sm text-stone-500">Miembros</p>
+                <p className="font-medium text-stone-800">
                   {community.memberCount} miembros
                 </p>
               </div>
             </div>
 
-            <div className="flex items-center">
-              <div className="bg-gray-200 border-2 border-dashed rounded-xl w-16 h-16" />
+            <div className="flex items-center bg-stone-50 p-4 rounded-xl">
+              <div className="bg-linear-to-br from-stone-200 to-stone-300 border-2 border-dashed rounded-xl w-16 h-16" />
               <div className="ml-3">
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Creador
-                </p>
-                <p className="font-medium text-gray-900 dark:text-white">
-                  Usuario
-                </p>
+                <p className="text-sm text-stone-500">Creador</p>
+                <p className="font-medium text-stone-800">Usuario</p>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="bg-bg-gray rounded-xl shadow-lg pb-8">
-        {/* Secciones futuras */}
-        <div className="mt-12 px-8 py-2">
+      <div className="bg-linear-to-br from-stone-100 to-amber-50 rounded-2xl shadow-lg mt-6 pb-8 border border-stone-200">
+        <div className="mt-8 px-4 md:px-8 py-2">
+          {community.isMember && (
+            <div className="mb-6">
+              <PostsBarComponent
+                communityId={communityId}
+                userId={(() => {
+                  // Helper function to decode JWT token and get user ID
+                  const getAccessToken = (): string | null => {
+                    if (typeof document !== "undefined") {
+                      const cookies = document.cookie.split(";");
+                      for (const cookie of cookies) {
+                        const [name, value] = cookie.trim().split("=");
+                        if (name === "access-token" && value) {
+                          return decodeURIComponent(value);
+                        }
+                      }
+                    }
+                    return null;
+                  };
+
+                  const decodeToken = (token: string) => {
+                    try {
+                      const payload = atob(token.split(".")[1]);
+                      return JSON.parse(payload);
+                    } catch (e) {
+                      console.error("Error decoding token:", e);
+                      return null;
+                    }
+                  };
+
+                  const token = getAccessToken();
+                  if (token) {
+                    const decoded = decodeToken(token);
+                    return decoded?.sub || decoded?.id || 0; // sub is typically used for user ID in JWT
+                  }
+                  return 0;
+                })()}
+              />
+            </div>
+          )}
           <PostsComponent communityId={communityId} />
         </div>
       </div>
@@ -295,7 +390,7 @@ export default function CommunityDetail() {
           isOpen={isDeleting}
           onClose={() => setIsDeleting(false)}
           communityName={community.name}
-          communityId={community.id}
+          communityId={community.id.toString()}
         />
       )}
 
@@ -314,7 +409,7 @@ export default function CommunityDetail() {
           isOpen={isLeaving}
           onClose={() => setIsLeaving(false)}
           communityName={community.name}
-          communityId={community.id}
+          communityId={community.id.toString()}
         />
       )}
     </div>

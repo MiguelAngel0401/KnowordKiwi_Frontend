@@ -44,7 +44,7 @@ export default function TagPage() {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-terciary"></div>
       </div>
     );
   }
@@ -54,7 +54,7 @@ export default function TagPage() {
   }
 
   return (
-    <main className="min-h-screen text-white p-6">
+    <main className="min-h-screen text-text-color p-6 mb-24">
       <h1 className="text-2xl font-bold mb-6 capitalize">
         Comunidades de {tagForApi}
       </h1>
@@ -64,7 +64,7 @@ export default function TagPage() {
           <Link
             href={`/communities/community/${community.id}`}
             key={community.id}
-            className="bg-[#121212] rounded-xl overflow-hidden hover:bg-[#1f1f1f] hover:-translate-y-1 transition-all duration-300 hover:shadow-lg"
+            className="bg-bg-gray rounded-xl overflow-hidden hover:bg-bg-default hover:-translate-y-1 transition-all duration-300 hover:shadow-lg"
           >
             {/* Banner de la comunidad */}
             <div className="h-24 relative">
@@ -80,18 +80,18 @@ export default function TagPage() {
               )}
 
               {/* Avatar de la comunidad */}
-              <div className="absolute -bottom-6 left-4">
+              <div className="absolute -bottom-8 left-4">
                 {community.avatar ? (
                   <Image
                     src={community.avatar}
                     alt={community.name}
-                    className="w-12 h-12 rounded-full border-2 border-[#121212] object-cover"
-                    width={48}
-                    height={48}
+                    className="w-16 h-16 rounded-full border-4 border-bg-gray object-cover"
+                    width={64}
+                    height={64}
                   />
                 ) : (
-                  <div className="w-12 h-12 rounded-full border-2 border-[#121212] bg-gray-700 flex items-center justify-center">
-                    <span className="text-lg font-bold text-white">
+                  <div className="w-16 h-16 rounded-full border-4 border-bg-gray bg-gray-700 flex items-center justify-center">
+                    <span className="text-2xl font-bold text-white">
                       {community.name.charAt(0).toUpperCase()}
                     </span>
                   </div>
@@ -108,11 +108,11 @@ export default function TagPage() {
 
             {/* Contenido de la tarjeta */}
             <div className="pt-8 pb-4 px-4">
-              <h2 className="text-lg font-bold text-white mb-1 truncate">
+              <h2 className="text-lg font-bold text-text-color mb-1 truncate">
                 {community.name}
               </h2>
 
-              <p className="text-gray-400 text-sm mb-3 line-clamp-2">
+              <p className="text-gray-600 text-sm mb-3 line-clamp-2">
                 {community.description}
               </p>
 
@@ -121,13 +121,13 @@ export default function TagPage() {
                 {community.tags.slice(0, 2).map((tag) => (
                   <span
                     key={tag.id}
-                    className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-900 text-blue-200"
+                    className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-tag text-white font-bold"
                   >
                     {tag.name}
                   </span>
                 ))}
                 {community.tags.length > 2 && (
-                  <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-700 text-gray-300">
+                  <span className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-secondary text-white font-bold">
                     +{community.tags.length - 2}
                   </span>
                 )}

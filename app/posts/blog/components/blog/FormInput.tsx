@@ -26,12 +26,12 @@ export default function FormInput({
       <div className="flex justify-between items-center h-5">
         <label
           htmlFor={`blog-${name}`}
-          className="text-sm font-medium text-gray-300"
+          className="text-sm font-medium text-gray-600"
         >
           {label}
         </label>
         {savingStatus && savingStatus !== "idle" && savingStatusText && (
-          <span className="text-xs text-gray-500">
+          <span className="text-xs text-gray-600">
             {savingStatusText[savingStatus as keyof typeof savingStatusText]}
           </span>
         )}
@@ -44,7 +44,7 @@ export default function FormInput({
             id={`blog-${name}`}
             type="text"
             {...field}
-            className={`px-4 py-3 bg-bg-gray border ${formState.errors[name] ? "border-red-400" : "border-gray-700"} rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent`}
+            className={`font-lora px-4 py-3 bg-bg-default border-b ${formState.errors[name] ? "border-red-400" : "border-secondary"} text-text-color placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent`}
             placeholder={placeholder}
           />
         )}

@@ -230,10 +230,10 @@ const QuizQuestionCreator: React.FC<QuizQuestionCreatorProps> = ({
   };
 
   return (
-    <div className="w-full p-8 my-8 text-gray-100 font-sans">
+    <div className="w-full p-8 my-8 text-text-color font-sans">
       {/* Encabezado */}
       <div className="text-center mb-8">
-        <h3 className="text-2xl font-extrabold text-white">Crear Nuevo Quiz</h3>
+        <h3 className="text-2xl font-extrabold">Crear Nuevo Quiz</h3>
         <div className="mt-3">
           <div className="w-full bg-gray-700 rounded-full h-2.5">
             <div
@@ -247,7 +247,7 @@ const QuizQuestionCreator: React.FC<QuizQuestionCreatorProps> = ({
               style={{ width: `${(questions.length / 10) * 100}%` }}
             ></div>
           </div>
-          <p className="text-gray-400 mt-2">
+          <p className="text-gray-600 mt-2">
             Preguntas agregadas: {questions.length}/10
           </p>
         </div>
@@ -255,20 +255,18 @@ const QuizQuestionCreator: React.FC<QuizQuestionCreatorProps> = ({
 
       {/* Formulario para nueva pregunta */}
       <div className="mb-10 p-6  rounded-xl">
-        <h4 className="text-xl font-bold text-white mb-4">
-          Agregar Nueva Pregunta
-        </h4>
+        <h4 className="text-xl font-bold mb-4">Agregar Nueva Pregunta</h4>
         {/* Área de la Pregunta */}
         <div className="mb-6">
           <label
             htmlFor="question-text"
-            className="block mb-3 text-lg font-medium text-gray-300"
+            className="block mb-3 text-lg font-medium text-gray-700"
           >
             Título de la Pregunta:
           </label>
           <Input
             id="question-text"
-            className="w-full p-4 border border-gray-700 rounded-xl bg-bg-gray placeholder-gray-500 focus:ring-primary focus:border-primary-hover transition duration-200 text-white"
+            className="w-full p-4 border border-gray-700 rounded-xl bg-bg-gray placeholder-gray-600 focus:ring-primary focus:border-primary-hover transition duration-200"
             placeholder="Escribe el texto de tu pregunta aquí..."
             {...register("questionTitle")}
           />
@@ -279,7 +277,7 @@ const QuizQuestionCreator: React.FC<QuizQuestionCreatorProps> = ({
           )}
         </div>
 
-        <p className="mb-5 text-gray-300">
+        <p className="mb-5 text-gray-700">
           Selecciona la respuesta correcta y escribe todas las opciones para tu
           pregunta.
         </p>
@@ -310,7 +308,7 @@ const QuizQuestionCreator: React.FC<QuizQuestionCreatorProps> = ({
               {/* Input de la Opción */}
               <input
                 type="text"
-                className="flex-grow bg-transparent border-none text-white text-base placeholder-gray-400 focus:ring-0 focus:outline-none p-0"
+                className="flex-grow bg-transparent border-none text-base placeholder-gray-600 focus:ring-0 focus:outline-none p-0"
                 value={option.text}
                 onChange={(e) => handleOptionTextChange(index, e.target.value)}
                 placeholder={`Escribe la respuesta ${option.id} aquí...`}
@@ -323,7 +321,7 @@ const QuizQuestionCreator: React.FC<QuizQuestionCreatorProps> = ({
 
         {/* Mensaje de Error */}
         {errorMessage && (
-          <div className="mt-4 mb-6 p-4 bg-opacity-20 border border-red-500 text-red-300 rounded-lg">
+          <div className="mt-4 mb-6 p-4 bg-opacity-20 border border-red-500 text-text-error rounded-lg">
             <p className="text-sm">{errorMessage}</p>
           </div>
         )}
@@ -340,9 +338,7 @@ const QuizQuestionCreator: React.FC<QuizQuestionCreatorProps> = ({
       {/* Lista de preguntas agregadas */}
       {questions.length > 0 && (
         <div className="mb-8">
-          <h4 className="text-xl font-bold text-white mb-4">
-            Preguntas del Quiz
-          </h4>
+          <h4 className="text-xl font-bold mb-4">Preguntas del Quiz</h4>
           <div className="space-y-4 max-h-96 overflow-y-auto pr-2">
             {questions.map((question, index) => (
               <div
@@ -350,7 +346,7 @@ const QuizQuestionCreator: React.FC<QuizQuestionCreatorProps> = ({
                 className="p-4 bg-bg-gray rounded-xl border border-gray-700 flex justify-between items-start"
               >
                 <div>
-                  <h5 className="font-semibold text-white">
+                  <h5 className="font-semibold">
                     Pregunta {index + 1}: {question.title}
                   </h5>
                   <div className="mt-2 space-y-1">
@@ -360,7 +356,7 @@ const QuizQuestionCreator: React.FC<QuizQuestionCreatorProps> = ({
                           className={`w-6 h-6 rounded-full flex items-center justify-center text-xs mr-2 ${
                             option.isCorrect
                               ? "bg-green-500 text-white"
-                              : "bg-gray-700 text-gray-300"
+                              : "bg-tag text-white"
                           }`}
                         >
                           {String.fromCharCode(65 + optIndex)}
@@ -368,8 +364,8 @@ const QuizQuestionCreator: React.FC<QuizQuestionCreatorProps> = ({
                         <span
                           className={
                             option.isCorrect
-                              ? "text-green-400 font-medium"
-                              : "text-gray-300"
+                              ? "text-green-500 font-medium"
+                              : "text-gray-800"
                           }
                         >
                           {option.text} {option.isCorrect && "(Correcta)"}

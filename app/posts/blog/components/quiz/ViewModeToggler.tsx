@@ -16,11 +16,11 @@ const ViewModeToggler: React.FC<ViewModeTogglerProps> = ({
     `px-3 py-2 rounded-md flex items-center gap-2 transition-colors duration-200 ${
       activeView === view
         ? "bg-primary text-white"
-        : "hover:bg-gray-900 text-gray-300"
+        : "hover:bg-secondary-hover text-white"
     }`;
 
   return (
-    <div className="bg-bg-gray rounded-md flex p-1">
+    <div className="bg-secondary rounded-md flex p-1">
       <Button
         className={getButtonClass("quiz")}
         onClick={() => onViewChange("quiz")}

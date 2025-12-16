@@ -12,7 +12,7 @@ interface CommunitySuccessModalProps {
   isOpen: boolean;
   onClose: () => void;
   message?: string;
-  communityId?: string;
+  communityId?: string | number;
 }
 
 export default function CommunitySuccessModal({

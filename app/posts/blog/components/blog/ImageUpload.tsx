@@ -62,7 +62,7 @@ export default function ImageUpload({ editor }: ImageUploadProps) {
         className={`p-2 rounded-md transition-colors ${
           isUploading
             ? "bg-gray-700 text-gray-400 cursor-not-allowed"
-            : "text-gray-400 hover:bg-gray-800 hover:text-white"
+            : "text-gray-600 hover:bg-secondary hover:text-white"
         }`}
         title={isUploading ? "Subiendo imagen..." : "Insertar imagen"}
       >

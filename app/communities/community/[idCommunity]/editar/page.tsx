@@ -213,7 +213,7 @@ export default function CommunityEditForm() {
   }
 
   return (
-    <div className="min-h-screen p-6 text-white">
+    <div className="min-h-screen p-6 text-text-color mb-24">
       <h1 className="text-2xl font-bold mb-6">Editar Comunidad</h1>
 
       <form
@@ -222,21 +222,21 @@ export default function CommunityEditForm() {
       >
         {/* Información de la comunidad */}
         <Fieldset className="bg-bg-gray rounded-lg shadow-md p-6">
-          <Legend className="text-lg font-semibold text-white mb-1">
+          <Legend className="text-lg font-semibold text-text-color mb-1">
             Información de la comunidad
           </Legend>
-          <p className="text-sm text-gray-400 mb-6">
+          <p className="text-sm text-gray-600 mb-6">
             Actualiza el nombre y descripción de tu comunidad.
           </p>
 
           <Field className="mb-6">
-            <Label className="block text-sm font-medium mb-1 text-white">
+            <Label className="block text-sm font-medium mb-1 text-text-color">
               Título de la comunidad
             </Label>
             <Input
               type="text"
               placeholder="Ej. Matemáticas y física"
-              className={`w-full px-4 py-2 rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-secondary ${
+              className={`w-full px-4 py-2 rounded-lg bg-green-100 text-text-color placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-secondary ${
                 errors.name
                   ? "focus:ring-red-500 border border-red-500"
                   : "focus:ring-primary"
@@ -249,13 +249,13 @@ export default function CommunityEditForm() {
           </Field>
 
           <Field>
-            <Label className="block text-sm font-medium mb-1 text-white">
+            <Label className="block text-sm font-medium mb-1 text-text-color">
               Descripción de la comunidad
             </Label>
             <Input
               type="text"
               placeholder="Ej. Un lugar para discutir y aprender sobre matemáticas y física."
-              className={`w-full px-4 py-2 rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-secondary ${
+              className={`w-full px-4 py-2 rounded-lg bg-green-100 text-text-color placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-secondary ${
                 errors.description
                   ? "focus:ring-red-500 border border-red-500"
                   : "focus:ring-primary"
@@ -272,10 +272,10 @@ export default function CommunityEditForm() {
 
         {/* Etiquetas */}
         <Fieldset className="bg-bg-gray rounded-lg shadow-md p-6">
-          <Legend className="text-lg font-semibold text-white mb-1">
+          <Legend className="text-lg font-semibold text-text-color mb-1">
             Temas de la comunidad
           </Legend>
-          <p className="text-sm text-gray-400 mb-4">
+          <p className="text-sm text-gray-600 mb-4">
             Añade o edita etiquetas para mejorar la visibilidad de tu comunidad.
           </p>
 
@@ -303,13 +303,13 @@ export default function CommunityEditForm() {
               <Input
                 type="text"
                 placeholder="Ej. programación"
-                className="w-full border border-gray-600 rounded px-3 py-2 text-sm bg-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-600"
+                className="w-full rounded px-3 py-2 text-sm bg-green-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-secondary"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyDown={handleNewTag}
               />
               {isSearching && (
-                <p className="text-sm text-gray-400 italic flex items-center gap-2 mt-2">
+                <p className="text-sm text-gray-600 italic flex items-center gap-2 mt-2">
                   <span className="animate-pulse">🔍</span> Buscando...
                 </p>
               )}
@@ -320,7 +320,7 @@ export default function CommunityEditForm() {
                       key={suggestion}
                       type="button"
                       onClick={() => handleAddTag(suggestion)}
-                      className="group flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-gray-800 to-gray-700 hover:from-gray-700 hover:to-gray-600 text-gray-100 text-sm font-medium rounded-full transition-all duration-200 transform hover:scale-105 hover:shadow-lg"
+                      className="group flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary to-primary-hover hover:secondary-hover hover:to-secondary text-gray-100 text-sm font-medium rounded-full transition-all duration-200 transform hover:scale-105 hover:shadow-lg"
                     >
                       + {suggestion}
                     </button>
@@ -331,7 +331,7 @@ export default function CommunityEditForm() {
           )}
 
           {selectedTags.length >= maxTags && (
-            <p className="text-sm text-gray-400 mt-2">
+            <p className="text-sm text-gray-600 mt-2">
               Has alcanzado el máximo de {maxTags} etiquetas.
             </p>
           )}
@@ -341,10 +341,10 @@ export default function CommunityEditForm() {
 
         {/* Imágenes */}
         <Fieldset className="bg-bg-gray rounded-lg shadow-md p-6 w-full">
-          <Legend className="text-lg font-semibold text-white mb-1">
+          <Legend className="text-lg font-semibold text-text-color mb-1">
             Imágenes de la comunidad
           </Legend>
-          <p className="text-sm text-gray-400 mb-6">
+          <p className="text-sm text-gray-600 mb-6">
             Añade un banner y un avatar representativo para que tu comunidad se
             vea única.
           </p>
@@ -411,10 +411,10 @@ export default function CommunityEditForm() {
               </div>
 
               <div className="flex flex-col">
-                <strong className="text-sm text-white mb-1">
+                <strong className="text-sm text-text-color mb-1">
                   Sube un avatar
                 </strong>
-                <p className="text-sm text-zinc-400">
+                <p className="text-sm text-zinc-800">
                   El formato ideal es cuadrado con un tamaño de 512 píxeles.
                 </p>
               </div>

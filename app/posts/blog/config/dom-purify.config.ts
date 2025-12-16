@@ -32,6 +32,7 @@ export const DOM_PURIFY_CONFIG: Config = {
     'td',
     'a',
     'img',
+    'iframe',
   ],
   ALLOWED_ATTR: [
     'href',
@@ -45,7 +46,17 @@ export const DOM_PURIFY_CONFIG: Config = {
     'height',
     'target',
     'rel',
+    'controls',
+    'allowfullscreen',
+    'frameborder',
+    'data-youtube-video',
   ],
-  FORBID_TAGS: ['script', 'object', 'embed', 'iframe', 'frame', 'frameset'],
-  FORBID_ATTR: ['srcdoc', 'src'],
+  ALLOWED_IFRAME_HOSTNAMES: [
+    'www.youtube.com',
+    'youtube.com',
+    'youtu.be',
+    'player.vimeo.com',
+  ],
+  FORBID_TAGS: ['script', 'object', 'embed', 'frame', 'frameset'],
+  FORBID_ATTR: ['srcdoc'],
 };

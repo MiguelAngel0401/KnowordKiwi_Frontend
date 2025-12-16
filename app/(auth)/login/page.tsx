@@ -81,8 +81,8 @@ export default function LoginPage() {
       await login(data);
 
       // Si login() es exitoso (no lanza error), las cookies ya están seteadas.
-      router.push("/profile/me");
       setIsAuthenticated(true);
+      router.push("/profile/me");
     } catch (error: any) {
       if (
         error.response &&

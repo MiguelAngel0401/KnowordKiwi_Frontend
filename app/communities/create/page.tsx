@@ -174,29 +174,31 @@ export default function CreateCommunityPage() {
 
   return (
     <div className="min-h-screen p-6">
-      <h1 className="text-2xl font-bold mb-6 text-white">Crear Comunidad</h1>
+      <h1 className="text-2xl font-bold mb-6 text-text-color">
+        Crear Comunidad
+      </h1>
       <form
         className="space-y-6"
         onSubmit={handleSubmit(submitCreateCommunityForm)}
       >
         {/* Información de la comunidad */}
         <Fieldset className="bg-bg-gray rounded-lg shadow-md p-6 w-5/6 mx-auto">
-          <Legend className="text-lg font-semibold text-white mb-1">
+          <Legend className="text-lg font-semibold text-text-color mb-1">
             Información de la comunidad
           </Legend>
-          <p className="text-sm text-gray-400 mb-6">
+          <p className="text-sm text-gray-600 mb-6">
             Estamos emocionados de ver tu comunidad cobrar vida. Cuéntanos un
             poco de lo que tienes en mente.
           </p>
 
           <Field className="mb-6">
-            <Label className="block text-sm font-medium mb-1 text-white">
+            <Label className="block text-sm font-medium mb-1 text-text-color">
               Título de la comunidad
             </Label>
             <Input
               type="text"
               placeholder="Ej. Matemáticas y física"
-              className={`w-full px-4 py-2 rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-600 ${errors.name ? "border-text-error focus:border-text-error focus:ring-red-500" : "border-gray-300 focus:ring-secondary focus:border-secondary"}`}
+              className={`w-full px-4 py-2 rounded-lg bg-green-100 text-text-color placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-600 ${errors.name ? "border-text-error focus:border-text-error focus:ring-red-500" : "border-gray-300 focus:ring-secondary focus:border-secondary"}`}
               {...register("name")}
             />
             {errors.name && (
@@ -205,13 +207,13 @@ export default function CreateCommunityPage() {
           </Field>
 
           <Field className="mb-6">
-            <Label className="block text-sm font-medium mb-1 text-white">
+            <Label className="block text-sm font-medium mb-1 text-text-color">
               Descripción de la comunidad
             </Label>
             <Input
               type="text"
               placeholder="Ej. Un lugar para discutir y aprender sobre matemáticas y física."
-              className={`w-full px-4 py-2 rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-600 ${errors.description ? "border-text-error focus:border-text-error focus:ring-red-500" : "border-gray-300 focus:ring-secondary focus:border-secondary"}`}
+              className={`w-full px-4 py-2 rounded-lg bg-green-100 text-text-color placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-600 ${errors.description ? "border-text-error focus:border-text-error focus:ring-red-500" : "border-gray-300 focus:ring-secondary focus:border-secondary"}`}
               {...register("description")}
             />
             {errors.description && (
@@ -221,7 +223,7 @@ export default function CreateCommunityPage() {
             )}
           </Field>
           <Field className="mb-6">
-            <Label className="block text-sm font-medium mb-1 text-white">
+            <Label className="block text-sm font-medium mb-1 text-text-color">
               Privacidad de la comunidad.
             </Label>
             <Switch
@@ -238,7 +240,7 @@ export default function CreateCommunityPage() {
                   mediante un enlace de confirmación
                 </p>
               )}
-              <p className="text-sm text-gray-400">
+              <p className="text-sm text-gray-600">
                 {!isPrivate &&
                   "La comunidad será pública, es decir que cualquiera puede unirse y ver su contenido."}
               </p>
@@ -248,10 +250,10 @@ export default function CreateCommunityPage() {
 
         {/* Etiquetas */}
         <Fieldset className="bg-bg-gray rounded-lg shadow-md p-6 w-5/6 mx-auto">
-          <Legend className="text-lg font-semibold text-white mb-1">
+          <Legend className="text-lg font-semibold text-text-color mb-1">
             Temas de la comunidad
           </Legend>
-          <p className="text-sm text-gray-400 mb-4">
+          <p className="text-sm text-gray-600 mb-4">
             Añade al menos 3 etiquetas para que los demás puedan encontrar tu
             comunidad fácilmente.
           </p>
@@ -280,7 +282,7 @@ export default function CreateCommunityPage() {
               <Input
                 type="text"
                 placeholder="Ej. programación"
-                className="w-50 border border-gray-600 rounded px-3 py-2 text-sm bg-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-600"
+                className="w-50 rounded px-3 py-2 text-sm bg-green-100 placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-600"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyDown={handleKeyDown}
@@ -309,7 +311,7 @@ export default function CreateCommunityPage() {
           )}
 
           {selectedTags.length >= maxTags && (
-            <p className="text-sm text-gray-400 mt-2">
+            <p className="text-sm text-gray-600 mt-2">
               Has agregado el máximo de {maxTags} etiquetas.
             </p>
           )}
@@ -320,10 +322,10 @@ export default function CreateCommunityPage() {
 
         {/* Imágenes */}
         <Fieldset className="bg-bg-gray rounded-lg shadow-md p-6 w-5/6 mx-auto">
-          <Legend className="text-lg font-semibold text-white mb-1">
+          <Legend className="text-lg font-semibold text-text-color mb-1">
             Imágenes de la comunidad
           </Legend>
-          <p className="text-sm text-gray-400 mb-6">
+          <p className="text-sm text-gray-600 mb-6">
             Añade un banner y un avatar representativo para que tu comunidad se
             vea única.
           </p>
@@ -354,10 +356,10 @@ export default function CreateCommunityPage() {
               ) : (
                 !isUploadingBanner && (
                   <>
-                    <strong className="block text-white mb-1">
+                    <strong className="block text-text-color mb-1">
                       Sube la cabecera
                     </strong>
-                    <p className="text-sm text-zinc-400">
+                    <p className="text-sm text-zinc-900">
                       Pulsa aquí para elegir una imagen. Debe tener un tamaño de
                       1840 x 560 píxeles.
                     </p>
@@ -390,10 +392,10 @@ export default function CreateCommunityPage() {
               </div>
 
               <div className="flex flex-col">
-                <strong className="text-sm text-white mb-1">
+                <strong className="text-sm text-text-color mb-1">
                   Sube un avatar
                 </strong>
-                <p className="text-sm text-zinc-400">
+                <p className="text-sm text-zinc-900">
                   El formato ideal es cuadrado con un tamaño de 512 píxeles.
                 </p>
               </div>
@@ -412,7 +414,7 @@ export default function CreateCommunityPage() {
         <div className="flex mt-6 justify-center">
           <button
             type="submit"
-            className="px-4 py-2 bg-primary text-color-text font-bold rounded hover:bg-primary-hover transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-4 py-2 bg-primary text-white font-bold rounded hover:bg-primary-hover transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
             disabled={
               isUploadingBanner ||
               isUploadingAvatar ||
@@ -428,7 +430,7 @@ export default function CreateCommunityPage() {
           <button
             type="button"
             onClick={() => router.push("/communities")}
-            className="px-4 py-2 bg-gray-600 text-color-text font-bold rounded hover:bg-gray-700 transition duration-300 ml-4"
+            className="px-4 py-2 bg-gray-600 text-white font-bold rounded hover:bg-gray-700 transition duration-300 ml-4"
           >
             Cancelar
           </button>

@@ -21,6 +21,7 @@ import { useDebounce } from "../../hooks/useDebounce";
 import { BlogPostFormData, blogPostSchema } from "../../schemas";
 import { DOM_PURIFY_CONFIG } from "../../config/dom-purify.config";
 import QuizSection from "../../components/quiz/QuizSection";
+import BlogLayout from "../../components/blog/BlogLayout";
 
 const sanitizeContent = (content: string) => {
   return DOMPurify.sanitize(content, DOM_PURIFY_CONFIG);
@@ -57,12 +58,14 @@ export default function EditBlogPost() {
   });
   const [loading, setLoading] = useState(true);
   const [quizChanged, setQuizChanged] = useState(false);
+  const [blogPost, setBlogPost] = useState<BlogById | null>(null);
 
   // Cargar datos del blog existente
   const fetchBlogPost = useCallback(async () => {
     try {
       setLoading(true);
       const data: BlogById = await getBlogPostById(id);
+      setBlogPost(data); // Store the blog post data
 
       // Convertir las preguntas existentes al formato correcto si existen
       const quizData =
@@ -245,12 +248,12 @@ export default function EditBlogPost() {
         <div className="flex justify-between items-center h-5">
           <label
             htmlFor="blog-title"
-            className="text-sm font-medium text-gray-300"
+            className="text-sm font-medium text-text-color"
           >
             Título del blog
           </label>
           {savingStatus !== "idle" && (
-            <span className="text-xs text-gray-500">
+            <span className="text-xs text-gray-600">
               {savingStatusText[savingStatus]}
             </span>
           )}
@@ -269,9 +272,9 @@ export default function EditBlogPost() {
               type="text"
               value={field.value}
               onChange={field.onChange}
-              className={`px-4 py-3 bg-bg-gray border ${
+              className={`font-lora px-4 py-3 bg-bg-default border-b border-secondary ${
                 errors.title ? "border-red-500" : "border-gray-700"
-              } rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent`}
+              }  text-text-color placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent`}
               placeholder="Escribe el título de tu blog..."
             />
           )}
@@ -285,7 +288,7 @@ export default function EditBlogPost() {
         <div className="flex justify-between items-center h-5">
           <label
             htmlFor="blog-subtitle"
-            className="text-sm font-medium text-gray-300"
+            className="text-sm font-medium text-text-color"
           >
             Subtítulo del blog
           </label>
@@ -304,9 +307,9 @@ export default function EditBlogPost() {
               type="text"
               value={field.value}
               onChange={field.onChange}
-              className={`px-4 py-3 bg-bg-gray border ${
+              className={`font-lora px-4 py-3 bg-bg-default border-b border-secondary ${
                 errors.subtitle ? "border-red-500" : "border-gray-700"
-              } rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent`}
+              } text-text-color placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent`}
               placeholder="Escribe el subtítulo atractivo para tu blog..."
             />
           )}
@@ -349,6 +352,7 @@ export default function EditBlogPost() {
         <div>
           <QuizSection
             formMethods={formMethods}
+            postId={id}
             onQuizChange={() => setQuizChanged(true)}
           />
         </div>

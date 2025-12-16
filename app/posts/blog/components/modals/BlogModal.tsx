@@ -50,13 +50,13 @@ export default function BlogModal({
         <TransitionChild
           as={Fragment}
           enter="ease-out duration-300"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
+          enterFrom="opacity-0 scale-95"
+          enterTo="opacity-100 scale-100"
           leave="ease-in duration-200"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
+          leaveFrom="opacity-100 scale-100"
+          leaveTo="opacity-0 scale-95"
         >
-          <div className="fixed inset-0 bg-black bg-opacity-50" />
+          <div className="fixed inset-0 bg-black/50 bg-opacity-50" />
         </TransitionChild>
 
         <div className="fixed inset-0 overflow-y-auto">
@@ -70,15 +70,15 @@ export default function BlogModal({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <DialogPanel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-gray-800 p-6 text-left align-middle shadow-xl transition-all">
+              <DialogPanel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-bg-default p-6 text-left align-middle shadow-xl transition-all">
                 <DialogTitle
-                  as="h3"
-                  className="text-lg font-medium leading-6 text-white"
+                  as="h2"
+                  className="text-xl font-medium leading-6 text-text-color"
                 >
                   {title}
                 </DialogTitle>
                 <div className="mt-4">
-                  <p className="text-sm text-gray-300">{children}</p>
+                  <p className="text-md text-gray-600">{children}</p>
                 </div>
 
                 <div className="mt-6 flex justify-end space-x-3">
@@ -93,7 +93,7 @@ export default function BlogModal({
                   )}
                   <button
                     type="button"
-                    className="inline-flex justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-secondary"
+                    className="inline-flex justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm  text-white font-bold hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-secondary"
                     onClick={handleConfirm}
                   >
                     {confirmText}

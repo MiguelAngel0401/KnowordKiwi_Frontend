@@ -172,6 +172,7 @@ export default function CreateBlogPost() {
       ) : (
         <>
           <div className="relative">
+            <p className="text-sm text-gray-600 mb-2">Contenido</p>
             <Controller
               name="content"
               control={control}
@@ -193,7 +194,7 @@ export default function CreateBlogPost() {
             )}
           </div>
           <div>
-            <QuizSection formMethods={formMethods} />
+            <QuizSection formMethods={formMethods} postId={undefined} />
           </div>
         </>
       )}
@@ -235,11 +236,11 @@ export default function CreateBlogPost() {
             o prefieres empezar un nuevo post desde cero?
           </div>
           {loadedDraft && (
-            <div className="p-3 bg-gray-700/50 border border-gray-600 rounded-lg text-sm">
-              <div className="font-bold text-white truncate">
+            <div className="p-3 bg-bg-gray border border-gray-600 rounded-lg text-sm">
+              <div className="font-bold text-text-color truncate">
                 {loadedDraft.title}
               </div>
-              <div className="text-gray-400 truncate">
+              <div className="text-gray-800 truncate">
                 {loadedDraft.subtitle}
               </div>
             </div>

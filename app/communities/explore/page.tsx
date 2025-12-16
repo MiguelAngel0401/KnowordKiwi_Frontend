@@ -24,7 +24,9 @@ export default function ExploreCommunitiesPage() {
     async function fetchCategories() {
       try {
         const response = await exploreCommunities();
-        setTagToCommunitiesData(response);
+        // Sort tags by number of communities in descending order
+        const sortedResponse = response.sort((a, b) => b.communities.length - a.communities.length);
+        setTagToCommunitiesData(sortedResponse);
       } catch (err) {
         console.error("Error fetching tags:", err);
         setError(

@@ -21,6 +21,7 @@ import { useDebounce } from "../../hooks/useDebounce";
 import { BlogPostFormData, blogPostSchema } from "../../schemas";
 import { DOM_PURIFY_CONFIG } from "../../config/dom-purify.config";
 import QuizSection from "../../components/quiz/QuizSection";
+import BlogLayout from "../../components/blog/BlogLayout";
 
 const sanitizeContent = (content: string) => {
   return DOMPurify.sanitize(content, DOM_PURIFY_CONFIG);
@@ -57,12 +58,14 @@ export default function EditBlogPost() {
   });
   const [loading, setLoading] = useState(true);
   const [quizChanged, setQuizChanged] = useState(false);
+  const [blogPost, setBlogPost] = useState<BlogById | null>(null);
 
   // Cargar datos del blog existente
   const fetchBlogPost = useCallback(async () => {
     try {
       setLoading(true);
       const data: BlogById = await getBlogPostById(id);
+      setBlogPost(data); // Store the blog post data
 
       // Convertir las preguntas existentes al formato correcto si existen
       const quizData =
